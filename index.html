@@ -417,68 +417,82 @@ h2{font-size:clamp(20px,2.3vw,32px);font-weight:800;line-height:1.1;letter-spaci
 <div class="wrap">
   <div class="tag tag-r rv">Jornada de sucesso</div>
   <h2 class="rv">Fluxo conversacional — <span class="hl">Vendas</span></h2>
-  <p class="lead rv" style="margin-bottom:32px">Do primeiro contato ao especialista — caminho direto sem desvios.</p>
+  <p class="lead rv" style="margin-bottom:32px">O cliente pode chegar por entrypoint de campanha <em>ou</em> pelo menu do Bot Principal — a jornada converge no mesmo fluxo.</p>
   <div class="rv" style="overflow-x:auto;padding-bottom:8px">
-  <svg viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg" style="min-width:700px;width:100%;font-family:'Inter',system-ui,sans-serif">
+  <svg viewBox="0 0 980 260" xmlns="http://www.w3.org/2000/svg" style="min-width:780px;width:100%;font-family:'Inter',system-ui,sans-serif">
     <defs>
       <marker id="vArr" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
         <path d="M0,0 L0,7 L8,3.5z" fill="rgba(255,255,255,.2)"/>
       </marker>
     </defs>
-    <!-- NODES: x positions 20,160,290,430,570,700,830 width=110 height=64 -->
-    <!-- Node 1: Campanha -->
-    <rect x="20" y="68" width="110" height="64" rx="10" fill="rgba(200,16,46,.15)" stroke="rgba(200,16,46,.5)" stroke-width="1.2"/>
-    <text x="75" y="94" text-anchor="middle" fill="#f4b0bc" font-size="11" font-weight="700">📣 Campanha</text>
-    <text x="75" y="110" text-anchor="middle" fill="rgba(244,176,188,.65)" font-size="9.5">#midiapaga</text>
-    <text x="75" y="124" text-anchor="middle" fill="rgba(244,176,188,.65)" font-size="9.5">#awareness…</text>
-    <!-- Arrow -->
-    <line x1="130" y1="100" x2="152" y2="100" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#vArr)"/>
-    <!-- Node 2: Checa horário -->
-    <rect x="157" y="68" width="110" height="64" rx="10" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
-    <text x="212" y="94" text-anchor="middle" fill="#c8bfff" font-size="11" font-weight="700">⏱ Horário</text>
-    <text x="212" y="110" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9.5">Verifica se está</text>
-    <text x="212" y="124" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9.5">dentro do expediente</text>
-    <!-- Arrow -->
-    <line x1="267" y1="100" x2="289" y2="100" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#vArr)"/>
-    <!-- Node 3: Coleta CPF -->
-    <rect x="294" y="68" width="110" height="64" rx="10" fill="rgba(245,158,11,.12)" stroke="rgba(245,158,11,.4)" stroke-width="1.2"/>
-    <text x="349" y="94" text-anchor="middle" fill="#fce4a0" font-size="11" font-weight="700">🪪 Coleta CPF</text>
-    <text x="349" y="110" text-anchor="middle" fill="rgba(252,228,160,.65)" font-size="9.5">Solicita e valida</text>
-    <text x="349" y="124" text-anchor="middle" fill="rgba(252,228,160,.65)" font-size="9.5">dígito verificador</text>
-    <!-- Arrow -->
-    <line x1="404" y1="100" x2="426" y2="100" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#vArr)"/>
-    <!-- Node 4: Checa atendentes -->
-    <rect x="431" y="68" width="110" height="64" rx="10" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
-    <text x="486" y="94" text-anchor="middle" fill="#c8bfff" font-size="11" font-weight="700">👥 Atendente</text>
-    <text x="486" y="110" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9.5">Verifica disponib.</text>
-    <text x="486" y="124" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9.5">no Blip Desk</text>
-    <!-- Arrow -->
-    <line x1="541" y1="100" x2="563" y2="100" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#vArr)"/>
-    <!-- Node 5: Transbordo -->
-    <rect x="568" y="68" width="110" height="64" rx="10" fill="rgba(37,211,102,.1)" stroke="rgba(37,211,102,.35)" stroke-width="1.2"/>
-    <text x="623" y="94" text-anchor="middle" fill="#a8e8c4" font-size="11" font-weight="700">🔀 Transbordo</text>
-    <text x="623" y="110" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9.5">Especialista de</text>
-    <text x="623" y="124" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9.5">vendas conectado</text>
-    <!-- Arrow -->
-    <line x1="678" y1="100" x2="700" y2="100" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#vArr)"/>
-    <!-- Node 6: Atendimento -->
-    <rect x="705" y="68" width="110" height="64" rx="10" fill="rgba(37,211,102,.1)" stroke="rgba(37,211,102,.35)" stroke-width="1.2"/>
-    <text x="760" y="92" text-anchor="middle" fill="#a8e8c4" font-size="11" font-weight="700">✅ Atendimento</text>
-    <text x="760" y="108" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9.5">Humano inicia</text>
-    <text x="760" y="122" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9.5">conversa + CSAT</text>
-    <!-- Labels below arrows -->
-    <text x="144" y="88" text-anchor="middle" fill="rgba(255,255,255,.25)" font-size="8">entrypoint</text>
-    <text x="281" y="88" text-anchor="middle" fill="rgba(255,255,255,.25)" font-size="8">dentro</text>
-    <text x="418" y="88" text-anchor="middle" fill="rgba(255,255,255,.25)" font-size="8">válido</text>
-    <text x="555" y="88" text-anchor="middle" fill="rgba(255,255,255,.25)" font-size="8">disponível</text>
-    <text x="692" y="88" text-anchor="middle" fill="rgba(255,255,255,.25)" font-size="8">ok</text>
+
+    <!-- === ORIGEM DUPLA === -->
+    <!-- Origem A: Campanha (topo) -->
+    <rect x="20" y="20" width="118" height="60" rx="9" fill="rgba(200,16,46,.15)" stroke="rgba(200,16,46,.5)" stroke-width="1.2"/>
+    <text x="79" y="44" text-anchor="middle" fill="#f4b0bc" font-size="10.5" font-weight="700">📣 Campanha</text>
+    <text x="79" y="58" text-anchor="middle" fill="rgba(244,176,188,.65)" font-size="9">#midiapaga</text>
+    <text x="79" y="71" text-anchor="middle" fill="rgba(244,176,188,.65)" font-size="9">#awareness…</text>
+
+    <!-- Origem B: Bot Principal (baixo) -->
+    <rect x="20" y="170" width="118" height="60" rx="9" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
+    <text x="79" y="194" text-anchor="middle" fill="#c8bfff" font-size="10.5" font-weight="700">🤖 Bot Principal</text>
+    <text x="79" y="208" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">Menu → "Comprar</text>
+    <text x="79" y="221" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">aqui na Renner"</text>
+
+    <!-- Convergência: linhas para nó central -->
+    <!-- A → Onboarding -->
+    <line x1="138" y1="50" x2="192" y2="115" stroke="rgba(255,255,255,.18)" stroke-width="1.5" marker-end="url(#vArr)"/>
+    <!-- B → Onboarding -->
+    <line x1="138" y1="200" x2="192" y2="135" stroke="rgba(255,255,255,.18)" stroke-width="1.5" marker-end="url(#vArr)"/>
+
+    <!-- Nó 1: Onboarding / Entrypoint -->
+    <rect x="198" y="95" width="118" height="60" rx="9" fill="rgba(200,16,46,.15)" stroke="rgba(200,16,46,.5)" stroke-width="1.2"/>
+    <text x="257" y="119" text-anchor="middle" fill="#f4b0bc" font-size="10.5" font-weight="700">🔀 Onboarding</text>
+    <text x="257" y="133" text-anchor="middle" fill="rgba(244,176,188,.65)" font-size="9">Define origem</text>
+    <text x="257" y="146" text-anchor="middle" fill="rgba(244,176,188,.65)" font-size="9">e variável fila</text>
+    <line x1="316" y1="125" x2="338" y2="125" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#vArr)"/>
+
+    <!-- Nó 2: Checa horário via API -->
+    <rect x="344" y="95" width="118" height="60" rx="9" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
+    <text x="403" y="117" text-anchor="middle" fill="#c8bfff" font-size="10.5" font-weight="700">⏱ Horário</text>
+    <text x="403" y="131" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">API Nice/Renner</text>
+    <text x="403" y="144" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">valida expediente</text>
+    <line x1="462" y1="125" x2="484" y2="125" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#vArr)"/>
+
+    <!-- Nó 3: Coleta CPF -->
+    <rect x="490" y="95" width="118" height="60" rx="9" fill="rgba(245,158,11,.12)" stroke="rgba(245,158,11,.4)" stroke-width="1.2"/>
+    <text x="549" y="119" text-anchor="middle" fill="#fce4a0" font-size="10.5" font-weight="700">🪪 Coleta CPF</text>
+    <text x="549" y="133" text-anchor="middle" fill="rgba(252,228,160,.65)" font-size="9">Solicita e valida</text>
+    <text x="549" y="146" text-anchor="middle" fill="rgba(252,228,160,.65)" font-size="9">dígito verificador</text>
+    <line x1="608" y1="125" x2="630" y2="125" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#vArr)"/>
+
+    <!-- Nó 4: Disponibilidade -->
+    <rect x="636" y="95" width="118" height="60" rx="9" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
+    <text x="695" y="119" text-anchor="middle" fill="#c8bfff" font-size="10.5" font-weight="700">👥 Atendente</text>
+    <text x="695" y="133" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">Disponib. Blip</text>
+    <text x="695" y="146" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">Desk</text>
+    <line x1="754" y1="125" x2="776" y2="125" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#vArr)"/>
+
+    <!-- Nó 5: Transbordo + Atendimento -->
+    <rect x="782" y="95" width="178" height="60" rx="9" fill="rgba(37,211,102,.1)" stroke="rgba(37,211,102,.35)" stroke-width="1.2"/>
+    <text x="871" y="117" text-anchor="middle" fill="#a8e8c4" font-size="10.5" font-weight="700">✅ Transbordo → Especialista</text>
+    <text x="871" y="131" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9">Atendimento humano</text>
+    <text x="871" y="144" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9">+ CSAT ao encerrar</text>
+
+    <!-- Arrow labels -->
+    <text x="160" y="72"  fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">entrypoint</text>
+    <text x="160" y="178" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">redirect</text>
+    <text x="330" y="113" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">roteado</text>
+    <text x="476" y="113" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">dentro</text>
+    <text x="622" y="113" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">válido</text>
+    <text x="768" y="113" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">disponível</text>
+
     <!-- Step numbers -->
-    <text x="75" y="59" text-anchor="middle" fill="rgba(200,16,46,.7)" font-size="8.5" font-weight="700">1</text>
-    <text x="212" y="59" text-anchor="middle" fill="rgba(98,54,255,.7)" font-size="8.5" font-weight="700">2</text>
-    <text x="349" y="59" text-anchor="middle" fill="rgba(245,158,11,.7)" font-size="8.5" font-weight="700">3</text>
-    <text x="486" y="59" text-anchor="middle" fill="rgba(98,54,255,.7)" font-size="8.5" font-weight="700">4</text>
-    <text x="623" y="59" text-anchor="middle" fill="rgba(37,211,102,.7)" font-size="8.5" font-weight="700">5</text>
-    <text x="760" y="59" text-anchor="middle" fill="rgba(37,211,102,.7)" font-size="8.5" font-weight="700">6</text>
+    <text x="257" y="86"  text-anchor="middle" fill="rgba(200,16,46,.7)"  font-size="8" font-weight="700">1</text>
+    <text x="403" y="86"  text-anchor="middle" fill="rgba(98,54,255,.7)"  font-size="8" font-weight="700">2</text>
+    <text x="549" y="86"  text-anchor="middle" fill="rgba(245,158,11,.7)" font-size="8" font-weight="700">3</text>
+    <text x="695" y="86"  text-anchor="middle" fill="rgba(98,54,255,.7)"  font-size="8" font-weight="700">4</text>
+    <text x="871" y="86"  text-anchor="middle" fill="rgba(37,211,102,.7)" font-size="8" font-weight="700">5</text>
   </svg>
   </div>
 </div>
@@ -692,62 +706,74 @@ h2{font-size:clamp(20px,2.3vw,32px);font-weight:800;line-height:1.1;letter-spaci
 <div class="wrap">
   <div class="tag tag-t rv">Jornada de sucesso</div>
   <h2 class="rv">Fluxo conversacional — <span class="hl-t">CSC</span></h2>
-  <p class="lead rv" style="margin-bottom:32px">Da entrada ao CSAT — atendimento humano com pesquisa de satisfação ao final.</p>
+  <p class="lead rv" style="margin-bottom:32px">O cliente vem sempre pelo Bot Principal — feriado e horário são validados por API Nice/Renner antes do transbordo.</p>
   <div class="rv" style="overflow-x:auto;padding-bottom:8px">
-  <svg viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg" style="min-width:700px;width:100%;font-family:'Inter',system-ui,sans-serif">
+  <svg viewBox="0 0 980 240" xmlns="http://www.w3.org/2000/svg" style="min-width:780px;width:100%;font-family:'Inter',system-ui,sans-serif">
     <defs>
       <marker id="cArr" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
         <path d="M0,0 L0,7 L8,3.5z" fill="rgba(255,255,255,.2)"/>
       </marker>
     </defs>
-    <!-- Node 1: Entrada -->
-    <rect x="20" y="68" width="110" height="64" rx="10" fill="rgba(20,184,166,.12)" stroke="rgba(20,184,166,.4)" stroke-width="1.2"/>
-    <text x="75" y="94" text-anchor="middle" fill="#a0e4e0" font-size="11" font-weight="700">📥 Entrada</text>
-    <text x="75" y="110" text-anchor="middle" fill="rgba(160,228,224,.65)" font-size="9.5">Cliente vindo do</text>
-    <text x="75" y="124" text-anchor="middle" fill="rgba(160,228,224,.65)" font-size="9.5">bot principal</text>
-    <line x1="130" y1="100" x2="152" y2="100" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#cArr)"/>
-    <!-- Node 2: Valida feriado -->
-    <rect x="157" y="68" width="110" height="64" rx="10" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
-    <text x="212" y="94" text-anchor="middle" fill="#c8bfff" font-size="11" font-weight="700">📅 Feriado?</text>
-    <text x="212" y="110" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9.5">Não é feriado</text>
-    <text x="212" y="124" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9.5">→ segue fluxo</text>
-    <line x1="267" y1="100" x2="289" y2="100" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#cArr)"/>
-    <!-- Node 3: Valida horário -->
-    <rect x="294" y="68" width="110" height="64" rx="10" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
-    <text x="349" y="94" text-anchor="middle" fill="#c8bfff" font-size="11" font-weight="700">⏱ Horário?</text>
-    <text x="349" y="110" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9.5">Dentro do</text>
-    <text x="349" y="124" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9.5">expediente</text>
-    <line x1="404" y1="100" x2="426" y2="100" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#cArr)"/>
-    <!-- Node 4: Transbordo -->
-    <rect x="431" y="68" width="110" height="64" rx="10" fill="rgba(37,211,102,.1)" stroke="rgba(37,211,102,.35)" stroke-width="1.2"/>
-    <text x="486" y="94" text-anchor="middle" fill="#a8e8c4" font-size="11" font-weight="700">🔀 Transbordo</text>
-    <text x="486" y="110" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9.5">Especialista CSC</text>
-    <text x="486" y="124" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9.5">atende o cliente</text>
-    <line x1="541" y1="100" x2="563" y2="100" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#cArr)"/>
-    <!-- Node 5: Atendimento -->
-    <rect x="568" y="68" width="110" height="64" rx="10" fill="rgba(37,211,102,.1)" stroke="rgba(37,211,102,.35)" stroke-width="1.2"/>
-    <text x="623" y="94" text-anchor="middle" fill="#a8e8c4" font-size="11" font-weight="700">👤 Humano</text>
-    <text x="623" y="110" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9.5">Atendimento e</text>
-    <text x="623" y="124" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9.5">encerramento</text>
-    <line x1="678" y1="100" x2="700" y2="100" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#cArr)"/>
-    <!-- Node 6: CSAT -->
-    <rect x="705" y="68" width="110" height="64" rx="10" fill="rgba(20,184,166,.12)" stroke="rgba(20,184,166,.4)" stroke-width="1.2"/>
-    <text x="760" y="92" text-anchor="middle" fill="#a0e4e0" font-size="11" font-weight="700">⭐ CSAT</text>
-    <text x="760" y="108" text-anchor="middle" fill="rgba(160,228,224,.65)" font-size="9.5">Avaliação em</text>
-    <text x="760" y="122" text-anchor="middle" fill="rgba(160,228,224,.65)" font-size="9.5">3 níveis + NPS</text>
-    <!-- Labels -->
-    <text x="144" y="88" text-anchor="middle" fill="rgba(255,255,255,.25)" font-size="8">#start</text>
-    <text x="281" y="88" text-anchor="middle" fill="rgba(255,255,255,.25)" font-size="8">não</text>
-    <text x="418" y="88" text-anchor="middle" fill="rgba(255,255,255,.25)" font-size="8">dentro</text>
-    <text x="555" y="88" text-anchor="middle" fill="rgba(255,255,255,.25)" font-size="8">ok</text>
-    <text x="692" y="88" text-anchor="middle" fill="rgba(255,255,255,.25)" font-size="8">encerra</text>
+
+    <!-- Nó 0: Bot Principal (origem) -->
+    <rect x="20" y="85" width="118" height="60" rx="9" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
+    <text x="79" y="108" text-anchor="middle" fill="#c8bfff" font-size="10.5" font-weight="700">🤖 Bot Principal</text>
+    <text x="79" y="122" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">Cliente seleciona</text>
+    <text x="79" y="135" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">opção de suporte</text>
+    <line x1="138" y1="115" x2="160" y2="115" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#cArr)"/>
+
+    <!-- Nó 1: API Nice/Renner – Feriado + Horário -->
+    <rect x="166" y="85" width="140" height="60" rx="9" fill="rgba(20,184,166,.12)" stroke="rgba(20,184,166,.4)" stroke-width="1.2"/>
+    <text x="236" y="106" text-anchor="middle" fill="#a0e4e0" font-size="10.5" font-weight="700">🔌 API Nice/Renner</text>
+    <text x="236" y="120" text-anchor="middle" fill="rgba(160,228,224,.65)" font-size="9">Valida feriado</text>
+    <text x="236" y="133" text-anchor="middle" fill="rgba(160,228,224,.65)" font-size="9">e horário em tempo real</text>
+    <line x1="306" y1="115" x2="328" y2="115" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#cArr)"/>
+
+    <!-- Nó 2: Dentro do expediente -->
+    <rect x="334" y="85" width="130" height="60" rx="9" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
+    <text x="399" y="108" text-anchor="middle" fill="#c8bfff" font-size="10.5" font-weight="700">✅ Disponível</text>
+    <text x="399" y="122" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">Não é feriado</text>
+    <text x="399" y="135" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">dentro do horário</text>
+    <line x1="464" y1="115" x2="486" y2="115" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#cArr)"/>
+
+    <!-- Nó 3: Transbordo -->
+    <rect x="492" y="85" width="130" height="60" rx="9" fill="rgba(37,211,102,.1)" stroke="rgba(37,211,102,.35)" stroke-width="1.2"/>
+    <text x="557" y="108" text-anchor="middle" fill="#a8e8c4" font-size="10.5" font-weight="700">🔀 Transbordo</text>
+    <text x="557" y="122" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9">Especialista CSC</text>
+    <text x="557" y="135" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9">Blip Desk</text>
+    <line x1="622" y1="115" x2="644" y2="115" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#cArr)"/>
+
+    <!-- Nó 4: Atendimento humano -->
+    <rect x="650" y="85" width="130" height="60" rx="9" fill="rgba(37,211,102,.1)" stroke="rgba(37,211,102,.35)" stroke-width="1.2"/>
+    <text x="715" y="108" text-anchor="middle" fill="#a8e8c4" font-size="10.5" font-weight="700">👤 Atendimento</text>
+    <text x="715" y="122" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9">Especialista resolve</text>
+    <text x="715" y="135" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9">e encerra ticket</text>
+    <line x1="780" y1="115" x2="802" y2="115" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#cArr)"/>
+
+    <!-- Nó 5: CSAT -->
+    <rect x="808" y="85" width="148" height="60" rx="9" fill="rgba(20,184,166,.12)" stroke="rgba(20,184,166,.4)" stroke-width="1.2"/>
+    <text x="882" y="106" text-anchor="middle" fill="#a0e4e0" font-size="10.5" font-weight="700">⭐ CSAT</text>
+    <text x="882" y="120" text-anchor="middle" fill="rgba(160,228,224,.65)" font-size="9">Avaliação 3 níveis</text>
+    <text x="882" y="133" text-anchor="middle" fill="rgba(160,228,224,.65)" font-size="9">tag Nice → NPS</text>
+
+    <!-- Borda API info -->
+    <rect x="166" y="165" width="140" height="30" rx="6" fill="rgba(20,184,166,.06)" stroke="rgba(20,184,166,.2)" stroke-width="1"/>
+    <text x="236" y="184" text-anchor="middle" fill="rgba(160,228,224,.5)" font-size="8.5">Feriados e horários automáticos</text>
+
+    <!-- Arrow labels -->
+    <text x="152" y="103" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">redirect</text>
+    <text x="320" y="103" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">retorno</text>
+    <text x="478" y="103" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">ok</text>
+    <text x="636" y="103" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">conectado</text>
+    <text x="794" y="103" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">encerra</text>
+
     <!-- Step numbers -->
-    <text x="75" y="59" text-anchor="middle" fill="rgba(20,184,166,.7)" font-size="8.5" font-weight="700">1</text>
-    <text x="212" y="59" text-anchor="middle" fill="rgba(98,54,255,.7)" font-size="8.5" font-weight="700">2</text>
-    <text x="349" y="59" text-anchor="middle" fill="rgba(98,54,255,.7)" font-size="8.5" font-weight="700">3</text>
-    <text x="486" y="59" text-anchor="middle" fill="rgba(37,211,102,.7)" font-size="8.5" font-weight="700">4</text>
-    <text x="623" y="59" text-anchor="middle" fill="rgba(37,211,102,.7)" font-size="8.5" font-weight="700">5</text>
-    <text x="760" y="59" text-anchor="middle" fill="rgba(20,184,166,.7)" font-size="8.5" font-weight="700">6</text>
+    <text x="79"  y="76" text-anchor="middle" fill="rgba(98,54,255,.7)"   font-size="8" font-weight="700">0</text>
+    <text x="236" y="76" text-anchor="middle" fill="rgba(20,184,166,.7)"  font-size="8" font-weight="700">1</text>
+    <text x="399" y="76" text-anchor="middle" fill="rgba(98,54,255,.7)"   font-size="8" font-weight="700">2</text>
+    <text x="557" y="76" text-anchor="middle" fill="rgba(37,211,102,.7)"  font-size="8" font-weight="700">3</text>
+    <text x="715" y="76" text-anchor="middle" fill="rgba(37,211,102,.7)"  font-size="8" font-weight="700">4</text>
+    <text x="882" y="76" text-anchor="middle" fill="rgba(20,184,166,.7)"  font-size="8" font-weight="700">5</text>
   </svg>
   </div>
 </div>
@@ -805,7 +831,7 @@ h2{font-size:clamp(20px,2.3vw,32px);font-weight:800;line-height:1.1;letter-spaci
     <div class="compare-col">
       <div class="col-head det">🔒 Atual · Determinístico</div>
       <div class="col-items">
-        <div class="col-item"><span class="badge lim">Limite</span><b>Feriado via variável manual.</b> Alguém precisa atualizar a variável para cada feriado.</div>
+        <div class="col-item"><span class="badge lim">Limite</span><b>Dependência da API Nice/Renner.</b> Se a API de feriados/horários estiver fora do ar, o fluxo não consegue validar disponibilidade e pode bloquear o atendimento.</div>
         <div class="col-item"><span class="badge lim">Limite</span><b>CSAT por palavras-chave regex.</b> "Muito satisfeito" com erro de digitação pode não ser capturado.</div>
         <div class="col-item"><span class="badge lim">Limite</span><b>Tags Nice como saída.</b> O destino pós-atendimento depende do atendente colocar a tag correta.</div>
         <div class="col-item"><span class="badge lim">Limite</span><b>Fila passiva.</b> Cliente que escolhe esperar não recebe estimativa de tempo.</div>
@@ -814,7 +840,7 @@ h2{font-size:clamp(20px,2.3vw,32px);font-weight:800;line-height:1.1;letter-spaci
     <div class="compare-col">
       <div class="col-head agt">🤖 Proposto · Agente LLM</div>
       <div class="col-items">
-        <div class="col-item"><span class="badge gain">Ganho</span><b>Calendário de feriados via API.</b> Tool consulta calendário automaticamente — zero manutenção manual.</div>
+        <div class="col-item"><span class="badge gain">Ganho</span><b>Fallback inteligente.</b> Se a API Nice/Renner falhar, agente decide por lógica alternativa — nunca bloqueia o atendimento por erro de integração.</div>
         <div class="col-item"><span class="badge gain">Ganho</span><b>CSAT por compreensão natural.</b> LLM interpreta "adorei" = muito satisfeito sem regex frágil.</div>
         <div class="col-item"><span class="badge gain">Ganho</span><b>Classificação automática pós-atendimento.</b> Agente lê resumo da conversa e decide destino sem depender de tag humana.</div>
         <div class="col-item"><span class="badge gain">Ganho</span><b>Estimativa de espera.</b> Tool que consulta fila e informa ao cliente o tempo estimado.</div>
@@ -948,71 +974,123 @@ h2{font-size:clamp(20px,2.3vw,32px);font-weight:800;line-height:1.1;letter-spaci
 <div class="wrap">
   <div class="tag tag-b rv">Jornada de sucesso</div>
   <h2 class="rv">Fluxo conversacional — <span class="hl-b">Bot Principal</span></h2>
-  <p class="lead rv" style="margin-bottom:32px">Do primeiro contato ao autoatendimento — jornada completa de status de pedido.</p>
+  <p class="lead rv" style="margin-bottom:32px">Onboarding → Menu com 3 grandes domínios — cada um pode resolver no autoatendimento ou redirecionar para um subbot especialista.</p>
   <div class="rv" style="overflow-x:auto;padding-bottom:8px">
-  <svg viewBox="0 0 1040 220" xmlns="http://www.w3.org/2000/svg" style="min-width:800px;width:100%;font-family:'Inter',system-ui,sans-serif">
+  <svg viewBox="0 0 1100 420" xmlns="http://www.w3.org/2000/svg" style="min-width:900px;width:100%;font-family:'Inter',system-ui,sans-serif">
     <defs>
       <marker id="pArr" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
         <path d="M0,0 L0,7 L8,3.5z" fill="rgba(255,255,255,.2)"/>
       </marker>
+      <marker id="pArrR" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+        <path d="M0,0 L0,7 L8,3.5z" fill="rgba(200,16,46,.5)"/>
+      </marker>
+      <marker id="pArrT" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+        <path d="M0,0 L0,7 L8,3.5z" fill="rgba(20,184,166,.5)"/>
+      </marker>
+      <marker id="pArrA" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+        <path d="M0,0 L0,7 L8,3.5z" fill="rgba(245,158,11,.5)"/>
+      </marker>
     </defs>
-    <!-- 7 nodes, width=110, gap=20, total=(7*110)+(6*20)+40=1040 -->
-    <!-- Node 1: Saudação + LGPD -->
-    <rect x="20" y="68" width="115" height="72" rx="10" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
-    <text x="77" y="92" text-anchor="middle" fill="#c8bfff" font-size="11" font-weight="700">👋 Saudação</text>
-    <text x="77" y="108" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9.5">LGPD + coleta</text>
-    <text x="77" y="122" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9.5">primeiro nome</text>
-    <line x1="135" y1="104" x2="157" y2="104" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#pArr)"/>
-    <!-- Node 2: Optin -->
-    <rect x="162" y="68" width="115" height="72" rx="10" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
-    <text x="219" y="92" text-anchor="middle" fill="#c8bfff" font-size="11" font-weight="700">🔔 Optin</text>
-    <text x="219" y="108" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9.5">Aceite de notif.</text>
-    <text x="219" y="122" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9.5">e preferências</text>
-    <line x1="277" y1="104" x2="299" y2="104" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#pArr)"/>
-    <!-- Node 3: Menu -->
-    <rect x="304" y="68" width="115" height="72" rx="10" fill="rgba(200,16,46,.15)" stroke="rgba(200,16,46,.5)" stroke-width="1.2"/>
-    <text x="361" y="92" text-anchor="middle" fill="#f4b0bc" font-size="11" font-weight="700">📋 Menu</text>
-    <text x="361" y="108" text-anchor="middle" fill="rgba(244,176,188,.65)" font-size="9.5">Loja Virtual</text>
-    <text x="361" y="122" text-anchor="middle" fill="rgba(244,176,188,.65)" font-size="9.5">Pedidos · Cartões</text>
-    <line x1="419" y1="104" x2="441" y2="104" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#pArr)"/>
-    <!-- Node 4: Coleta CPF -->
-    <rect x="446" y="68" width="115" height="72" rx="10" fill="rgba(245,158,11,.12)" stroke="rgba(245,158,11,.4)" stroke-width="1.2"/>
-    <text x="503" y="92" text-anchor="middle" fill="#fce4a0" font-size="11" font-weight="700">🪪 CPF</text>
-    <text x="503" y="108" text-anchor="middle" fill="rgba(252,228,160,.65)" font-size="9.5">Coleta e valida</text>
-    <text x="503" y="122" text-anchor="middle" fill="rgba(252,228,160,.65)" font-size="9.5">identificação</text>
-    <line x1="561" y1="104" x2="583" y2="104" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#pArr)"/>
-    <!-- Node 5: API -->
-    <rect x="588" y="68" width="115" height="72" rx="10" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
-    <text x="645" y="92" text-anchor="middle" fill="#c8bfff" font-size="11" font-weight="700">🔌 API</text>
-    <text x="645" y="108" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9.5">Consulta pedido</text>
-    <text x="645" y="122" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9.5">até 10 remessas</text>
-    <line x1="703" y1="104" x2="725" y2="104" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#pArr)"/>
-    <!-- Node 6: Status -->
-    <rect x="730" y="68" width="115" height="72" rx="10" fill="rgba(37,211,102,.1)" stroke="rgba(37,211,102,.35)" stroke-width="1.2"/>
-    <text x="787" y="92" text-anchor="middle" fill="#a8e8c4" font-size="11" font-weight="700">📦 Status</text>
-    <text x="787" y="108" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9.5">Exibe resultado</text>
-    <text x="787" y="122" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9.5">+ Algo mais?</text>
-    <line x1="845" y1="104" x2="867" y2="104" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#pArr)"/>
-    <!-- Node 7: CSAT -->
-    <rect x="872" y="68" width="115" height="72" rx="10" fill="rgba(37,211,102,.1)" stroke="rgba(37,211,102,.35)" stroke-width="1.2"/>
-    <text x="929" y="92" text-anchor="middle" fill="#a8e8c4" font-size="11" font-weight="700">⭐ CSAT</text>
-    <text x="929" y="108" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9.5">Autoatendimento</text>
-    <text x="929" y="122" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9.5">+ encerramento</text>
-    <!-- Labels -->
-    <text x="149" y="92" text-anchor="middle" fill="rgba(255,255,255,.25)" font-size="8">nome ok</text>
-    <text x="291" y="92" text-anchor="middle" fill="rgba(255,255,255,.25)" font-size="8">aceito</text>
-    <text x="433" y="92" text-anchor="middle" fill="rgba(255,255,255,.25)" font-size="8">pedidos</text>
-    <text x="575" y="92" text-anchor="middle" fill="rgba(255,255,255,.25)" font-size="8">válido</text>
-    <text x="717" y="92" text-anchor="middle" fill="rgba(255,255,255,.25)" font-size="8">encontrado</text>
-    <text x="859" y="92" text-anchor="middle" fill="rgba(255,255,255,.25)" font-size="8">resolvido</text>
-    <!-- Step numbers -->
-    <text x="77"  y="59" text-anchor="middle" fill="rgba(98,54,255,.7)"   font-size="8.5" font-weight="700">1</text>
-    <text x="219" y="59" text-anchor="middle" fill="rgba(98,54,255,.7)"   font-size="8.5" font-weight="700">2</text>
-    <text x="361" y="59" text-anchor="middle" fill="rgba(200,16,46,.7)"   font-size="8.5" font-weight="700">3</text>
-    <text x="503" y="59" text-anchor="middle" fill="rgba(245,158,11,.7)"  font-size="8.5" font-weight="700">4</text>
-    <text x="645" y="59" text-anchor="middle" fill="rgba(98,54,255,.7)"   font-size="8.5" font-weight="700">5</text>
-    <text x="787" y="59" text-anchor="middle" fill="rgba(37,211,102,.7)"  font-size="8.5" font-weight="700">6</text>
-    <text x="929" y="59" text-anchor="middle" fill="rgba(37,211,102,.7)"  font-size="8.5" font-weight="700">7</text>
+
+    <!-- ── COLUNA 1: ONBOARDING ── -->
+    <!-- LGPD + nome -->
+    <rect x="20" y="170" width="118" height="70" rx="9" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
+    <text x="79" y="193" text-anchor="middle" fill="#c8bfff" font-size="10.5" font-weight="700">👋 Onboarding</text>
+    <text x="79" y="207" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">LGPD · Nome</text>
+    <text x="79" y="220" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">Optin · STT</text>
+    <line x1="138" y1="205" x2="160" y2="205" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#pArr)"/>
+
+    <!-- ── COLUNA 2: MENU PRINCIPAL ── -->
+    <rect x="166" y="160" width="130" height="90" rx="9" fill="rgba(200,16,46,.15)" stroke="rgba(200,16,46,.5)" stroke-width="1.5"/>
+    <text x="231" y="185" text-anchor="middle" fill="#f4b0bc" font-size="10.5" font-weight="700">📋 Menu Principal</text>
+    <!-- 3 opções dentro do nó -->
+    <rect x="176" y="193" width="110" height="17" rx="4" fill="rgba(200,16,46,.12)"/>
+    <text x="231" y="205" text-anchor="middle" fill="rgba(244,176,188,.8)" font-size="8.5">🛍️ Loja Virtual</text>
+    <rect x="176" y="213" width="110" height="17" rx="4" fill="rgba(200,16,46,.12)"/>
+    <text x="231" y="225" text-anchor="middle" fill="rgba(244,176,188,.8)" font-size="8.5">📦 Meus Pedidos</text>
+    <rect x="176" y="233" width="110" height="17" rx="4" fill="rgba(200,16,46,.12)"/>
+    <text x="231" y="245" text-anchor="middle" fill="rgba(244,176,188,.8)" font-size="8.5">💳 Cartões / Realize</text>
+
+    <!-- Setas saindo do menu para 3 branches -->
+    <!-- → Loja Virtual (topo) -->
+    <line x1="296" y1="202" x2="336" y2="90"  stroke="rgba(255,255,255,.18)" stroke-width="1.4" marker-end="url(#pArr)"/>
+    <!-- → Pedidos (meio) -->
+    <line x1="296" y1="222" x2="336" y2="222" stroke="rgba(255,255,255,.18)" stroke-width="1.4" marker-end="url(#pArr)"/>
+    <!-- → Cartões (baixo) -->
+    <line x1="296" y1="242" x2="336" y2="350" stroke="rgba(255,255,255,.18)" stroke-width="1.4" marker-end="url(#pArr)"/>
+
+    <!-- ══════════ BRANCH 1: LOJA VIRTUAL (topo) ══════════ -->
+    <rect x="342" y="50" width="138" height="62" rx="9" fill="rgba(200,16,46,.1)" stroke="rgba(200,16,46,.35)" stroke-width="1.2"/>
+    <text x="411" y="72" text-anchor="middle" fill="#f4b0bc" font-size="10" font-weight="700">🛍️ Loja Virtual</text>
+    <text x="411" y="86" text-anchor="middle" fill="rgba(244,176,188,.65)" font-size="8.5">Catálogo · Estoque</text>
+    <text x="411" y="99" text-anchor="middle" fill="rgba(244,176,188,.65)" font-size="8.5">Campanhas · Quizzes</text>
+    <line x1="480" y1="81" x2="502" y2="81" stroke="rgba(200,16,46,.5)" stroke-width="1.4" marker-end="url(#pArrR)"/>
+    <!-- → Redirect Vendas -->
+    <rect x="508" y="50" width="148" height="62" rx="9" fill="rgba(200,16,46,.15)" stroke="rgba(200,16,46,.5)" stroke-width="1.5"/>
+    <text x="582" y="70" text-anchor="middle" fill="#f4b0bc" font-size="10" font-weight="700">🔴 Bot de Vendas</text>
+    <text x="582" y="84" text-anchor="middle" fill="rgba(244,176,188,.7)" font-size="8.5">Redirect → especialista</text>
+    <text x="582" y="97" text-anchor="middle" fill="rgba(244,176,188,.7)" font-size="8.5">de vendas Renner</text>
+    <!-- label -->
+    <text x="494" y="69" text-anchor="middle" fill="rgba(200,16,46,.6)" font-size="7.5">comprar aqui</text>
+
+    <!-- ══════════ BRANCH 2: MEUS PEDIDOS (meio) ══════════ -->
+    <rect x="342" y="185" width="138" height="80" rx="9" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
+    <text x="411" y="207" text-anchor="middle" fill="#c8bfff" font-size="10" font-weight="700">📦 Meus Pedidos</text>
+    <!-- submenus -->
+    <rect x="350" y="213" width="122" height="14" rx="3" fill="rgba(98,54,255,.1)"/>
+    <text x="411" y="223" text-anchor="middle" fill="rgba(200,191,255,.75)" font-size="8">Status · Rastreio (API)</text>
+    <rect x="350" y="230" width="122" height="14" rx="3" fill="rgba(98,54,255,.1)"/>
+    <text x="411" y="240" text-anchor="middle" fill="rgba(200,191,255,.75)" font-size="8">Troca · Devolução (API)</text>
+    <rect x="350" y="247" width="122" height="14" rx="3" fill="rgba(98,54,255,.1)"/>
+    <text x="411" y="257" text-anchor="middle" fill="rgba(200,191,255,.75)" font-size="8">Reembolso · Vale-troca</text>
+    <!-- Setas de Pedidos -->
+    <line x1="480" y1="215" x2="502" y2="215" stroke="rgba(255,255,255,.18)" stroke-width="1.4" marker-end="url(#pArr)"/>
+    <line x1="480" y1="237" x2="502" y2="237" stroke="rgba(20,184,166,.5)" stroke-width="1.4" marker-end="url(#pArrT)"/>
+    <!-- → Autoatendimento / Status -->
+    <rect x="508" y="195" width="148" height="36" rx="7" fill="rgba(37,211,102,.1)" stroke="rgba(37,211,102,.3)" stroke-width="1.2"/>
+    <text x="582" y="211" text-anchor="middle" fill="#a8e8c4" font-size="9.5" font-weight="700">✅ Autoatendimento</text>
+    <text x="582" y="224" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="8">Status + CSAT pós-resolução</text>
+    <!-- → CSC Transbordo -->
+    <rect x="508" y="218" width="148" height="36" rx="7" fill="rgba(20,184,166,.12)" stroke="rgba(20,184,166,.35)" stroke-width="1.2"/>
+    <text x="582" y="234" text-anchor="middle" fill="#a0e4e0" font-size="9.5" font-weight="700">🟢 Bot CSC</text>
+    <text x="582" y="247" text-anchor="middle" fill="rgba(160,228,224,.65)" font-size="8">Redirect → especialista CSC</text>
+    <!-- label CSC -->
+    <text x="494" y="246" text-anchor="middle" fill="rgba(20,184,166,.6)" font-size="7.5">suporte</text>
+
+    <!-- ══════════ BRANCH 3: CARTÕES / REALIZE (baixo) ══════════ -->
+    <rect x="342" y="318" width="138" height="80" rx="9" fill="rgba(245,158,11,.12)" stroke="rgba(245,158,11,.38)" stroke-width="1.2"/>
+    <text x="411" y="340" text-anchor="middle" fill="#fce4a0" font-size="10" font-weight="700">💳 Cartões · Realize</text>
+    <rect x="350" y="347" width="122" height="14" rx="3" fill="rgba(245,158,11,.08)"/>
+    <text x="411" y="357" text-anchor="middle" fill="rgba(252,228,160,.75)" font-size="8">Fatura · Boleto · Limite</text>
+    <rect x="350" y="364" width="122" height="14" rx="3" fill="rgba(245,158,11,.08)"/>
+    <text x="411" y="374" text-anchor="middle" fill="rgba(252,228,160,.75)" font-size="8">Saque · Bloqueio · Saldo</text>
+    <line x1="480" y1="360" x2="502" y2="360" stroke="rgba(245,158,11,.5)" stroke-width="1.4" marker-end="url(#pArrA)"/>
+    <!-- → Bot Realize -->
+    <rect x="508" y="330" width="148" height="60" rx="9" fill="rgba(245,158,11,.12)" stroke="rgba(245,158,11,.4)" stroke-width="1.5"/>
+    <text x="582" y="352" text-anchor="middle" fill="#fce4a0" font-size="10" font-weight="700">🟡 Bot Realize</text>
+    <text x="582" y="366" text-anchor="middle" fill="rgba(252,228,160,.7)" font-size="8.5">Redirect → especialista</text>
+    <text x="582" y="379" text-anchor="middle" fill="rgba(252,228,160,.7)" font-size="8.5">financeiro Realize</text>
+    <text x="494" y="348" text-anchor="middle" fill="rgba(245,158,11,.6)" font-size="7.5">precisa suporte</text>
+
+    <!-- ── COLUNA FINAL: CSAT / FIM ── -->
+    <!-- CSAT de autoatendimento (branch 2) -->
+    <line x1="656" y1="213" x2="720" y2="213" stroke="rgba(37,211,102,.3)" stroke-width="1.3" marker-end="url(#pArr)"/>
+    <rect x="726" y="185" width="148" height="60" rx="9" fill="rgba(37,211,102,.08)" stroke="rgba(37,211,102,.25)" stroke-width="1.2"/>
+    <text x="800" y="207" text-anchor="middle" fill="#a8e8c4" font-size="10" font-weight="700">⭐ CSAT Auto</text>
+    <text x="800" y="221" text-anchor="middle" fill="rgba(168,232,196,.6)" font-size="8.5">Satisfação pós-resolução</text>
+    <text x="800" y="234" text-anchor="middle" fill="rgba(168,232,196,.6)" font-size="8.5">+ Encerramento</text>
+
+    <!-- Step legend -->
+    <rect x="726" y="20" width="350" height="70" rx="8" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+    <text x="742" y="40" fill="rgba(255,255,255,.4)" font-size="8.5" font-weight="700">LEGENDA</text>
+    <rect x="742" y="48" width="8" height="8" rx="2" fill="rgba(200,16,46,.4)"/>
+    <text x="756" y="57" fill="rgba(244,176,188,.7)" font-size="8">Fluxo principal / Bot Vendas</text>
+    <rect x="742" y="62" width="8" height="8" rx="2" fill="rgba(20,184,166,.4)"/>
+    <text x="756" y="71" fill="rgba(160,228,224,.7)" font-size="8">Bot CSC (suporte e trocas)</text>
+    <rect x="900" y="48" width="8" height="8" rx="2" fill="rgba(245,158,11,.4)"/>
+    <text x="914" y="57" fill="rgba(252,228,160,.7)" font-size="8">Bot Realize (financeiro)</text>
+    <rect x="900" y="62" width="8" height="8" rx="2" fill="rgba(37,211,102,.4)"/>
+    <text x="914" y="71" fill="rgba(168,232,196,.7)" font-size="8">Autoatendimento resolvido</text>
   </svg>
   </div>
 </div>
