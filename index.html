@@ -2,1369 +2,698 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Renner × Blip · Hub de Bots · 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Blip × Renner · Jornada Conversacional · 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0c0c0f;--bg2:#111116;--bg3:#17171e;
-  --renner:#C8102E;--renner-lo:rgba(200,16,46,.12);--renner-mid:rgba(200,16,46,.28);
-  --blip:#6236FF;--blip-lo:rgba(98,54,255,.12);
-  --wa:#25d366;--wa-lo:rgba(37,211,102,.08);
-  --amber:#F59E0B;--amber-lo:rgba(245,158,11,.1);
-  --teal:#14B8A6;--teal-lo:rgba(20,184,166,.1);
-  --text:#f0f0f2;--text-mute:#7a7a8c;--text-dim:#44445a;
-  --card:rgba(255,255,255,.025);--card-hi:rgba(255,255,255,.05);
-  --border:rgba(255,255,255,.06);--border-hi:rgba(255,255,255,.1);
-  --f:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+  --blip:#0096FA;--blip-b:#1968F0;--blip-d:#0C4EC0;--navy:#072F73;--pale:#C5D9FB;
+  --renner:#C8102E;--renner-d:#9A0C22;--renner-lo:rgba(200,16,46,.12);--renner-mid:rgba(200,16,46,.35);
+  --blip-lo:rgba(0,150,250,.12);
+  --verde:#6CCB95;--verde-lo:rgba(108,203,149,.1);
+  --pz:#FFC629;--pz-lo:rgba(255,198,41,.08);
+  --bad:#F25A5A;--ok:#6CCB95;
+  --ink:#FFFFFF;--head:#DDE5F7;--body:#A6B4D6;--dim:#7A88AE;--faint:#4E5B80;
+  --card:rgba(255,255,255,.05);--card-bd:rgba(255,255,255,.12);
+  --f:'Inter',system-ui,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --r:22px;--r-s:14px;--mx:min(1240px,90vw);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:var(--f);color:var(--text);background:var(--bg);overflow-x:hidden}
+body{font-family:var(--f);color:var(--body);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.5;
+  background:#050A1C;
+  padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+body::before{content:"";position:fixed;inset:0;z-index:-2;
+  background:
+   radial-gradient(58% 48% at 86% 3%,rgba(0,150,250,.30),transparent 62%),
+   radial-gradient(54% 56% at 4% 96%,rgba(200,16,46,.18),transparent 62%),
+   radial-gradient(42% 38% at 62% 118%,rgba(25,104,240,.30),transparent 62%),
+   linear-gradient(165deg,#050A1C 0%,#071634 30%,#0A2255 58%,#152253 82%,#1B1F4D 100%)}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.4;
+  background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+  background-size:72px 72px;mask-image:radial-gradient(circle at 50% 26%,#000,transparent 82%)}
+::selection{background:rgba(200,16,46,.4);color:#fff}
+img{max-width:100%;display:block}
 
-/* ── TOP BAR ── */
-.topbar{position:fixed;top:0;left:0;right:0;height:50px;z-index:200;
-  background:rgba(12,12,15,.92);backdrop-filter:blur(18px);
-  display:flex;align-items:center;gap:0;border-bottom:1px solid var(--border)}
-.tb-brand{display:flex;align-items:center;gap:10px;padding:0 20px;
-  border-right:1px solid var(--border);height:100%;min-width:max-content}
-.r-logo{width:22px;height:22px;background:var(--renner);border-radius:4px;
-  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff}
-.tb-brand span{font-weight:800;font-size:14px}
-.blip-txt{color:var(--blip);font-weight:700;font-size:15px}
+/* progress */
+.progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--renner),var(--blip));width:0;z-index:100;transition:width .1s linear}
 
-/* ── BOT TABS ── */
-.bot-tabs{display:flex;height:100%;flex:1;overflow:hidden}
-.bot-tab{display:flex;align-items:center;gap:9px;padding:0 20px;
-  border-right:1px solid var(--border);cursor:pointer;
-  font-size:12.5px;font-weight:500;color:var(--text-dim);
-  transition:all .2s;white-space:nowrap;position:relative;user-select:none}
-.bot-tab:hover{color:var(--text);background:var(--card)}
-.bot-tab.active{color:var(--text);background:rgba(200,16,46,.06)}
-.bot-tab.active::after{content:'';position:absolute;bottom:0;left:0;right:0;
-  height:2px;background:var(--renner)}
-.bot-tab .tb-ico{width:18px;height:18px;border-radius:5px;
-  display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;
-  flex:0 0 auto}
-.ico-v{background:var(--renner-lo);color:var(--renner)}
-.ico-c{background:var(--teal-lo);color:var(--teal)}
-.ico-p{background:var(--blip-lo);color:var(--blip)}
-.bot-tab .tb-count{font-size:9px;font-family:var(--mono);
-  padding:1px 5px;border-radius:6px;background:var(--card);color:var(--text-dim)}
+/* topbar */
+.topbar{position:fixed;top:0;left:0;right:0;height:62px;z-index:90;
+  background:rgba(5,10,28,.82);backdrop-filter:blur(16px);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 max(24px,4vw);border-bottom:1px solid rgba(255,255,255,.08);transition:.35s}
+.topbar .brand{display:flex;align-items:center;gap:12px}
+.topbar .brand .rlogo{width:28px;height:28px;background:var(--renner);border-radius:6px;
+  display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff}
+.topbar .brand span{font-weight:800;font-size:15px;color:#fff}
+.topbar .brand .x{color:var(--dim);font-size:14px;font-weight:300;margin:0 4px}
+.topbar .brand .blip{color:var(--blip);font-weight:700;font-size:15px}
 
-/* ── SIDE DOTS ── */
-.dots{position:fixed;right:14px;top:50%;transform:translateY(-50%);
-  z-index:150;display:flex;flex-direction:column;gap:7px}
-.dots button{width:5px;height:5px;border-radius:50%;border:none;
-  background:var(--text-dim);cursor:pointer;padding:0;transition:all .25s}
-.dots button.active{background:var(--renner);height:16px;border-radius:3px}
+/* tabs */
+.tabs{position:fixed;left:0;right:0;z-index:88;top:62px;display:flex;gap:8px;padding:10px max(24px,4vw);
+  background:rgba(5,10,28,.72);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.06)}
+.tabs .tb{font:inherit;font-size:13px;font-weight:500;color:var(--body);background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:7px 14px;cursor:pointer;transition:.25s}
+.tabs .tb:hover{border-color:rgba(255,255,255,.22);color:var(--head)}
+.tabs .tb.on{background:var(--renner);border-color:var(--renner);color:#fff;font-weight:600;box-shadow:0 8px 24px rgba(200,16,46,.3)}
+.tabpanel{display:none}.tabpanel.on{display:block}
 
-/* ── BOT PAGES ── */
-.bot-page{display:none;flex-direction:column}
-.bot-page.active{display:flex}
+/* wrap */
+.wrap{width:100%;max-width:var(--mx);margin:0 auto}
+section{padding:clamp(80px,14vh,140px) max(24px,4vw);position:relative;overflow:hidden}
 
-/* ── SECTIONS ── */
-.scroller{height:100vh;overflow-y:scroll;scroll-snap-type:y proximity}
-.scroller::-webkit-scrollbar{width:0}
-section{position:relative;min-height:100vh;scroll-snap-align:start;
-  display:flex;align-items:center;padding:90px 6vw 64px;background:var(--bg)}
-section:nth-child(even){background:var(--bg2)}
-.wrap{width:100%;max-width:1200px;margin:0 auto}
+/* reveal */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s cubic-bezier(.2,.7,.2,1),transform .65s cubic-bezier(.2,.7,.2,1)}
+.reveal.show{opacity:1;transform:none}
 
-/* ── REVEAL ── */
-.rv{opacity:0;transform:translateY(20px);
-  transition:opacity .6s cubic-bezier(.2,.8,.2,1),transform .6s cubic-bezier(.2,.8,.2,1)}
-.in .rv{opacity:1;transform:none}
-.in .rv:nth-child(2){transition-delay:.07s}
-.in .rv:nth-child(3){transition-delay:.14s}
-.in .rv:nth-child(4){transition-delay:.21s}
-.in .rv:nth-child(5){transition-delay:.28s}
+/* typo */
+h1{font-size:clamp(28px,4.4vw,64px);font-weight:900;line-height:1.05;letter-spacing:-.03em;color:var(--head)}
+h2{font-size:clamp(22px,2.6vw,38px);font-weight:800;line-height:1.12;letter-spacing:-.02em;color:var(--head);margin-bottom:14px}
+h3{font-size:clamp(17px,1.6vw,24px);font-weight:700;color:var(--head);margin-bottom:10px}
+.lead{font-size:clamp(14px,1.1vw,17px);color:var(--body);line-height:1.65;max-width:680px;font-weight:300}
+.lead b{color:var(--head);font-weight:600}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;margin-bottom:18px;padding:5px 14px;
+  border-radius:99px;border:1px solid var(--renner-mid);background:var(--renner-lo);color:var(--renner)}
+.eyebrow.b{border-color:rgba(0,150,250,.3);background:var(--blip-lo);color:var(--blip)}
+.eyebrow.g{border-color:rgba(108,203,149,.3);background:var(--verde-lo);color:var(--verde)}
+.eyebrow.y{border-color:rgba(255,198,41,.3);background:var(--pz-lo);color:var(--pz)}
+.r{color:var(--renner)}.b{color:var(--blip)}.g{color:var(--verde)}.y{color:var(--pz)}
 
-/* ── UTILS ── */
-.tag{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;
-  border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.8px;
-  text-transform:uppercase;margin-bottom:18px}
-.tag-r{background:var(--renner-lo);color:var(--renner);border:1px solid var(--renner-mid)}
-.tag-b{background:var(--blip-lo);color:var(--blip);border:1px solid rgba(98,54,255,.3)}
-.tag-g{background:var(--wa-lo);color:var(--wa);border:1px solid rgba(37,211,102,.2)}
-.tag-a{background:var(--amber-lo);color:var(--amber);border:1px solid rgba(245,158,11,.22)}
-.tag-t{background:var(--teal-lo);color:var(--teal);border:1px solid rgba(20,184,166,.22)}
+/* hero */
+.hero{padding-top:160px;min-height:100vh;display:flex;align-items:center}
+.hero-sub{font-size:clamp(13px,1vw,16px);color:var(--body);margin-top:18px;line-height:1.6;max-width:600px;font-weight:300}
+.hero-sub b{color:var(--head);font-weight:600}
+.hero-badge{display:inline-flex;gap:6px;align-items:center;margin-top:24px;font-size:11px;font-weight:600;
+  color:var(--pz);background:var(--pz-lo);border:1px solid rgba(255,198,41,.3);padding:6px 14px;border-radius:99px}
 
-h1{font-size:clamp(30px,4vw,62px);font-weight:900;line-height:1.05;letter-spacing:-.4px}
-h2{font-size:clamp(20px,2.3vw,32px);font-weight:800;line-height:1.1;letter-spacing:-.3px;margin-bottom:12px}
-.lead{color:var(--text-mute);font-size:clamp(13.5px,1.1vw,17px);line-height:1.65;max-width:680px}
-.lead b{color:var(--text);font-weight:600}
-.hl{color:var(--renner)}.hl-b{color:var(--blip)}.hl-t{color:var(--teal)}
+/* grid */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:32px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:32px}
+@media(max-width:900px){.g2,.g3,.g4,.g5{grid-template-columns:1fr}}
 
-/* ── TWO COL ── */
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
-@media(max-width:860px){.two-col{grid-template-columns:1fr}}
+/* card */
+.card{background:var(--card);border:1px solid var(--card-bd);border-radius:var(--r);padding:22px 20px;transition:.3s}
+.card:hover{border-color:rgba(0,150,250,.35);transform:translateY(-2px)}
+.card .ic{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:20px}
+.card .ic.r{background:var(--renner-lo)}.card .ic.b{background:var(--blip-lo)}.card .ic.g{background:var(--verde-lo)}.card .ic.y{background:var(--pz-lo)}
+.card h4{font-size:15px;font-weight:700;color:var(--head);margin-bottom:6px}
+.card p{font-size:12.5px;color:var(--body);line-height:1.55;font-weight:300}
+.card .badge{display:inline-block;margin-top:10px;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 10px;border-radius:99px}
+.badge-r{background:var(--renner-lo);color:var(--renner)}
+.badge-b{background:var(--blip-lo);color:var(--blip)}
+.badge-g{background:var(--verde-lo);color:var(--verde)}
+.badge-y{background:var(--pz-lo);color:var(--pz)}
 
-/* ── OBJ LIST ── */
-.obj-list{display:flex;flex-direction:column;gap:10px;margin-top:24px}
-.obj-item{display:flex;gap:12px;align-items:flex-start;
-  padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:12px;
-  transition:border-color .25s}
-.obj-item:hover{border-color:rgba(200,16,46,.3)}
-.obj-num{min-width:26px;height:26px;border-radius:7px;background:var(--renner-lo);
-  color:var(--renner);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
-.obj-text{font-size:13px;color:var(--text-mute);line-height:1.5}
-.obj-text b{color:var(--text);font-weight:600}
+/* kpis with animated counter */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:3vh}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--card);border:1px solid var(--card-bd);border-radius:var(--r);padding:20px;text-align:center}
+.kpi .n{font-size:clamp(28px,3vw,42px);font-weight:900;color:var(--blip);line-height:1}
+.kpi .d{font-size:12px;color:var(--body);margin-top:8px;font-weight:300;line-height:1.4}
 
-/* ── EP GRID ── */
-.ep-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:24px}
-.ep-card{padding:11px 13px;background:var(--card);border:1px solid var(--border);border-radius:9px}
-.ep-code{font-family:var(--mono);font-size:10px;color:var(--blip);margin-bottom:3px}
-.ep-label{font-size:11.5px;color:var(--text-mute)}
-@media(max-width:500px){.ep-grid{grid-template-columns:1fr}}
+/* ring journey */
+.cyclegrid{display:grid;grid-template-columns:minmax(260px,480px) 1fr;gap:4vw;align-items:start;margin-top:6vh}
+@media(max-width:1000px){.cyclegrid{grid-template-columns:1fr;gap:4vh}}
+.ringwrap{position:relative;width:100%;max-width:520px;aspect-ratio:1;margin:0 auto}
+.ringsvg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ringbase{stroke:rgba(255,255,255,.12);stroke-width:2;fill:none}
+.ringcomet{stroke:var(--blip);stroke-width:3;fill:none;stroke-linecap:round;
+  stroke-dasharray:130 1345;stroke-dashoffset:0;animation:comet 9s linear infinite;filter:drop-shadow(0 0 7px rgba(0,150,250,.55))}
+@keyframes comet{to{stroke-dashoffset:-1475}}
+@media(prefers-reduced-motion:reduce){.ringcomet{animation:none;opacity:.55}}
+.hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:30%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 50% 35%,rgba(200,16,46,.25),rgba(5,10,28,.95) 68%);
+  border:1px solid rgba(200,16,46,.25);box-shadow:0 0 60px rgba(200,16,46,.15);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.hub .rlogo{width:36px;height:36px;background:var(--renner);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#fff}
+.hub .x{color:var(--dim);font-size:14px;font-weight:200}
+.hub .blip-txt{color:var(--blip);font-weight:700;font-size:14px}
+.nodes{position:absolute;inset:0}
+.rnode{position:absolute;transform:translate(-50%,-50%);width:110px;text-align:center;cursor:pointer;background:none;border:0;font:inherit;padding:0;color:inherit}
+.rnode .ric{display:flex;width:50px;height:50px;border-radius:15px;margin:0 auto 8px;background:linear-gradient(150deg,#0a1530,#121f45);
+  border:1px solid rgba(255,255,255,.12);align-items:center;justify-content:center;transition:.35s;font-size:20px}
+.rnode .rlb{display:block;font-size:11.5px;font-weight:600;color:var(--head);line-height:1.2}
+.rnode .rsb{display:block;font-size:9.5px;color:var(--dim);margin-top:2px;font-weight:300}
+.rnode:hover .ric{border-color:rgba(200,16,46,.5);transform:translateY(-2px)}
+.rnode.on .ric{background:linear-gradient(150deg,var(--renner),var(--renner-d));border-color:rgba(200,16,46,.6);box-shadow:0 0 0 5px rgba(200,16,46,.12),0 10px 24px rgba(200,16,46,.3)}
+.rnode.on .rlb{color:#fff}
 
-/* ── ARCH LANES ── */
-.arch-grid{display:grid;gap:0;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--bg2);margin-top:28px}
-.lane-hd{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--text-dim);text-align:center;padding:10px 6px 14px;border-bottom:1px solid var(--border)}
-.arch-lane{padding:12px 8px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:6px}
-.arch-lane:last-child{border-right:none}
-.a-node{padding:9px 11px;border-radius:8px;font-size:11px;line-height:1.35;
-  font-weight:500;border:1px solid;text-align:center}
-.a-node small{display:block;font-size:9.5px;opacity:.65;margin-top:2px;font-family:var(--mono)}
-.a-node.r{background:var(--renner-lo);border-color:var(--renner-mid);color:#f4c0c8}
-.a-node.b{background:var(--blip-lo);border-color:rgba(98,54,255,.3);color:#c8bfff}
-.a-node.g{background:var(--wa-lo);border-color:rgba(37,211,102,.22);color:#a8e8c4}
-.a-node.a{background:var(--amber-lo);border-color:rgba(245,158,11,.25);color:#fce4a0}
-.a-node.t{background:var(--teal-lo);border-color:rgba(20,184,166,.25);color:#a0e4e0}
-.a-node.n{background:var(--card);border-color:var(--border);color:var(--text-mute)}
-.a-arr{text-align:center;color:var(--text-dim);font-size:15px;line-height:1;padding:2px 0}
-.a-split{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+/* cycle panel */
+.cyclepanel{background:var(--card);border:1px solid var(--card-bd);border-radius:var(--r);padding:28px 26px;min-height:320px;position:sticky;top:140px;backdrop-filter:blur(8px)}
+.cp-step{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.06em}
+.cp-name{font-size:clamp(24px,2.6vw,34px);font-weight:800;letter-spacing:-.025em;color:#fff;margin-top:8px;line-height:1.1}
+.cp-product{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 12px;border-radius:99px;margin-top:12px;background:var(--blip-lo);color:var(--blip);border:1px solid rgba(0,150,250,.3)}
+.cp-what{font-size:14px;color:var(--body);font-weight:300;line-height:1.65;margin-top:16px}
+.cp-what b{color:var(--head);font-weight:600}
+.cp-opp{margin-top:16px;border-radius:var(--r-s);padding:14px 16px;background:var(--pz-lo);border:1px solid rgba(255,198,41,.22)}
+.cp-opp .cp-lab{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--pz);margin-bottom:6px}
+.cp-opp p{font-size:13px;color:var(--pale);font-weight:300;line-height:1.55}
+.cp-dots{display:flex;gap:6px;margin-top:20px}
+.cp-dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.15);display:block;transition:.3s;cursor:pointer}
+.cp-dots i.on{background:var(--renner);width:18px;border-radius:4px}
 
-/* ── PHONE ── */
-.phone-scene{display:flex;justify-content:center;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-top:36px}
-.phone{width:310px;height:640px;background:#000;border-radius:34px;
-  border:2.5px solid #1e1e1e;overflow:hidden;flex:0 0 auto;display:flex;flex-direction:column;
-  box-shadow:0 40px 90px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.04)}
-.ph-status{height:26px;background:#075e54;display:flex;align-items:center;
-  justify-content:space-between;padding:0 12px;font-size:9px;color:rgba(255,255,255,.6)}
-.ph-header{display:flex;align-items:center;gap:8px;padding:6px 10px;background:#075e54}
-.ph-back{color:rgba(255,255,255,.6);font-size:13px}
-.ph-av{width:29px;height:29px;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-weight:900;font-size:12px;color:#fff;flex:0 0 auto}
-.ph-av.r{background:var(--renner)}
-.ph-av.t{background:var(--teal)}
-.ph-av.p{background:var(--blip)}
-.ph-info{flex:1}
-.ph-name{font-size:11.5px;font-weight:700;color:#fff}
-.ph-sub{font-size:9px;color:rgba(255,255,255,.5)}
-.ph-dots{color:rgba(255,255,255,.5);font-size:15px;letter-spacing:2px;line-height:1}
-.ph-body{flex:1;background:#0b141a;padding:8px;overflow-y:auto;display:flex;flex-direction:column;gap:4px}
-.ph-body::-webkit-scrollbar{width:0}
-.b-in{max-width:88%;padding:6px 9px;border-radius:8px 8px 8px 2px;
-  font-size:11px;line-height:1.45;color:#dde0e0;background:#1f2c34;align-self:flex-start}
-.b-in b{font-weight:600;color:#fff}
-.b-in .t{display:block;text-align:right;font-size:8px;color:rgba(255,255,255,.3);margin-top:2px}
-.b-out{max-width:88%;padding:6px 9px;border-radius:8px 8px 2px 8px;
-  font-size:11px;line-height:1.45;color:#e8ece8;background:#005c4b;align-self:flex-end}
-.b-out .t{display:block;text-align:right;font-size:8px;color:rgba(255,255,255,.3);margin-top:2px}
-.b-date{align-self:center;padding:2px 9px;background:rgba(255,255,255,.06);
-  border-radius:6px;font-size:9px;color:rgba(255,255,255,.4);margin:3px 0}
-.b-typing{max-width:55px;padding:9px 12px;border-radius:8px;background:#1f2c34;align-self:flex-start;display:none}
-.b-typing span{display:inline-block;width:5px;height:5px;border-radius:50%;
-  background:rgba(255,255,255,.35);animation:blink 1.2s infinite}
-.b-typing span:nth-child(2){animation-delay:.2s}
-.b-typing span:nth-child(3){animation-delay:.4s}
-@keyframes blink{0%,60%,100%{opacity:.3}30%{opacity:1}}
+/* phone mockup */
+.phone{width:100%;max-width:300px;aspect-ratio:9/19;margin:0 auto;background:#000;border-radius:36px;border:10px solid #0c0c14;
+  box-shadow:0 30px 70px rgba(0,0,0,.5);overflow:hidden;display:flex;flex-direction:column;position:relative}
+.phone::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:40%;height:20px;background:#0c0c14;border-radius:0 0 14px 14px;z-index:5}
+.ph-status{height:28px;background:#075e54;display:flex;align-items:flex-end;justify-content:space-between;padding:0 16px 4px;font-size:10px;color:rgba(255,255,255,.7)}
+.ph-head{display:flex;align-items:center;gap:8px;padding:6px 10px;background:#075e54}
+.ph-av{width:32px;height:32px;border-radius:50%;background:var(--renner);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;flex:0 0 auto}
+.ph-name{font-size:12px;font-weight:600;color:#fff}
+.ph-sub{font-size:9px;color:rgba(255,255,255,.6)}
+.ph-body{flex:1;padding:10px 8px;background:#ece5dd;display:flex;flex-direction:column;gap:4px;overflow:hidden;justify-content:flex-end}
+.bub{max-width:85%;padding:6px 8px 4px;border-radius:8px;font-size:11px;line-height:1.4;color:#111;box-shadow:0 1px .5px rgba(0,0,0,.1)}
+.bub.in{background:#fff;align-self:flex-start;border-top-left-radius:1px}
+.bub.out{background:#dcf8c6;align-self:flex-end;border-top-right-radius:1px}
+.bub b{font-weight:600}
+.bub .t{font-size:8px;color:#999;float:right;margin:3px -1px -1px 8px}
+.ph-input{height:38px;background:#f0f0f0;display:flex;align-items:center;padding:0 10px;gap:8px}
+.ph-input .field{flex:1;background:#fff;border:1px solid #ddd;border-radius:16px;padding:6px 12px;font-size:10px;color:#888}
 
-/* ── PHONE ASIDE ── */
-.phone-aside{max-width:320px;display:flex;flex-direction:column;gap:14px;padding-top:12px}
-.aside-block{padding:14px;background:var(--card);border:1px solid var(--border);border-radius:11px}
-.aside-block .alabel{font-size:9.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
-  color:var(--text-dim);margin-bottom:9px}
-.aside-block p{font-size:12px;color:var(--text-mute);line-height:1.55}
-.aside-block p b{color:var(--text);font-weight:600}
-.flow-steps{display:flex;flex-direction:column;gap:5px}
-.fs-item{display:flex;align-items:center;gap:9px;padding:8px 11px;
-  border-radius:8px;border:1px solid var(--border);background:var(--card);
-  font-size:11.5px;color:var(--text-dim);transition:all .25s;
-  cursor:pointer;user-select:none;position:relative}
-.fs-item:hover:not(.done):not(.active){border-color:var(--border-hi);color:var(--text-mute);background:var(--card-hi)}
-.fs-item.active{border-color:var(--renner-mid);background:var(--renner-lo);color:var(--text);cursor:default}
-.fs-item.done{border-color:rgba(37,211,102,.2);background:var(--wa-lo);color:#a0d8b8;cursor:default}
-.fs-item.locked{opacity:.35;cursor:not-allowed}
-.fs-dot{width:7px;height:7px;border-radius:50%;background:var(--text-dim);flex:0 0 auto;transition:background .25s}
-.fs-item.active .fs-dot{background:var(--renner)}
-.fs-item.done .fs-dot{background:var(--wa)}
-.fs-item .fs-hint{margin-left:auto;font-size:9px;color:var(--text-dim);white-space:nowrap;transition:opacity .2s}
-.fs-item:not(.done):not(.active):not(.locked) .fs-hint{opacity:.6}
-.fs-item.done .fs-hint,.fs-item.active .fs-hint{opacity:0;width:0;overflow:hidden}
-.next-btn{display:none;align-items:center;gap:6px;margin-top:4px;padding:8px 12px;
-  border-radius:8px;border:1px solid var(--renner-mid);background:var(--renner-lo);
-  color:var(--renner);font-size:11px;font-weight:700;cursor:pointer;
-  transition:all .2s;width:100%;justify-content:center}
-.next-btn:hover{background:rgba(200,16,46,.2)}
-.next-btn.visible{display:flex}
+/* org chart - mapa de onde estamos */
+.orgmap{margin-top:32px;border-radius:var(--r);overflow:hidden;border:1px solid var(--card-bd);background:var(--card)}
+.orgmap-head{background:rgba(255,255,255,.08);padding:14px 20px;font-size:15px;font-weight:700;color:var(--head);text-align:center;border-bottom:1px solid var(--card-bd)}
+.orgmap-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.orgmap-col{border-right:1px solid rgba(255,255,255,.06);padding:0}
+.orgmap-col:last-child{border-right:0}
+.orgmap-col-head{background:rgba(255,255,255,.06);padding:10px 14px;font-size:13px;font-weight:700;color:var(--head);text-align:center;border-bottom:1px solid rgba(255,255,255,.06)}
+.orgmap-col-body{padding:14px}
+.orgmap-block{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.orgmap-block:last-child{margin-bottom:0}
+.orgmap-block-title{font-size:12px;font-weight:700;color:var(--head);margin-bottom:6px}
+.orgmap-block p,.orgmap-block li{font-size:11.5px;color:var(--body);line-height:1.5;font-weight:300}
+.orgmap-block ul{list-style:none;padding:0}
+.orgmap-block ul li::before{content:"- ";color:var(--dim)}
+/* rows for CSC section */
+.orgmap-row{border-top:1px solid rgba(255,255,255,.06);padding:14px 20px}
+.orgmap-row-title{font-size:13px;font-weight:700;color:var(--head);text-align:center;margin-bottom:6px}
+.orgmap-row p{font-size:12px;color:var(--body);line-height:1.5;font-weight:300;text-align:center}
+@media(max-width:800px){
+  .orgmap-cols{grid-template-columns:1fr 1fr}
+  .orgmap-col:nth-child(2){border-right:0}
+}
+@media(max-width:500px){.orgmap-cols{grid-template-columns:1fr}
+  .orgmap-col{border-right:0;border-bottom:1px solid rgba(255,255,255,.06)}
+}
 
-/* ── COMPARE ── */
-.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:32px}
-@media(max-width:760px){.compare-grid{grid-template-columns:1fr}}
-.compare-col{border-radius:13px;overflow:hidden;border:1px solid var(--border)}
-.col-head{padding:14px 18px;font-size:12px;font-weight:700;letter-spacing:.4px;
-  display:flex;align-items:center;gap:8px}
-.col-head.det{background:rgba(200,16,46,.08);color:var(--renner);border-bottom:1px solid var(--renner-mid)}
-.col-head.agt{background:rgba(98,54,255,.08);color:var(--blip);border-bottom:1px solid rgba(98,54,255,.25)}
-.col-items{display:flex;flex-direction:column}
-.col-item{padding:13px 18px;border-bottom:1px solid var(--border);
-  font-size:12px;color:var(--text-mute);line-height:1.5}
-.col-item:last-child{border-bottom:none}
-.col-item b{color:var(--text);font-weight:600}
-.badge{display:inline-block;padding:1px 7px;border-radius:10px;
-  font-size:9.5px;font-weight:700;margin-right:5px;vertical-align:middle}
-.lim{background:rgba(200,16,46,.15);color:#f4a0a8}
-.gain{background:rgba(37,211,102,.12);color:#a0dab8}
+/* roadmap */
+.roadmap{position:relative;padding-left:40px;margin-top:32px}
+.rm-track{position:absolute;left:14px;top:8px;bottom:8px;width:2px;background:rgba(255,255,255,.08);border-radius:2px}
+.rm-step{position:relative;padding:16px 0}
+.rm-dot{position:absolute;left:-40px;top:18px;width:28px;height:28px;border-radius:50%;background:var(--card);border:2px solid var(--card-bd);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--dim);z-index:2}
+.rm-step.current .rm-dot{background:var(--renner);border-color:var(--renner);color:#fff;box-shadow:0 0 0 4px rgba(200,16,46,.2)}
+.rm-badge{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--renner);margin-bottom:4px}
+.rm-title{font-size:15px;font-weight:700;color:var(--head);margin-bottom:4px}
+.rm-desc{font-size:12.5px;color:var(--body);line-height:1.55;font-weight:300}
 
-/* ── IMPR GRID ── */
-.impr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:26px}
-@media(max-width:900px){.impr-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:540px){.impr-grid{grid-template-columns:1fr}}
-.impr-card{padding:16px;border-radius:11px;background:var(--card);border:1px solid var(--border);
-  transition:border-color .25s,transform .25s}
-.impr-card:hover{border-color:rgba(98,54,255,.35);transform:translateY(-2px)}
-.impr-ico{font-size:18px;margin-bottom:8px}
-.impr-title{font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:5px}
-.impr-text{font-size:11.5px;color:var(--text-mute);line-height:1.5}
-.impr-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700;margin-top:9px}
+/* highlight msg */
+.mres{font-size:14px;color:var(--body);line-height:1.6;font-weight:300;padding:18px 22px;border-radius:var(--r);
+  border:1px solid var(--card-bd);background:var(--card);margin-top:4vh}
+.mres b{color:var(--head);font-weight:600}
+.mres.r{border-color:var(--renner-mid);background:var(--renner-lo)}
+.mres.g{border-color:rgba(108,203,149,.3);background:var(--verde-lo)}
+.mres.y{border-color:rgba(255,198,41,.3);background:var(--pz-lo)}
 
-/* ── CLOSING ── */
-.cl-logo{display:flex;align-items:center;gap:8px;font-size:20px;font-weight:900;margin-bottom:22px;color:#fff}
-.cl-bub{width:18px;height:18px;background:var(--blip);border-radius:50% 50% 50% 4px}
-.cl-line{color:var(--text-mute);font-size:14px;line-height:1.65;max-width:580px;margin-bottom:30px}
-.cl-team{padding:20px;background:var(--card);border:1px solid var(--border);border-radius:12px;max-width:440px}
-.cl-team p{font-size:12.5px;color:var(--text-mute);line-height:1.7}
-.cl-team p b{color:var(--text)}
-.cl-tag{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:10px}
+/* footer */
+footer{padding:36px max(24px,4vw) 46px;border-top:1px solid rgba(255,255,255,.06);text-align:center;
+  font-size:11px;color:var(--faint);font-weight:300;line-height:1.7}
 
-/* ── SPECIAL PATHS CARDS ── */
-.sp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
-@media(max-width:700px){.sp-grid{grid-template-columns:1fr 1fr}}
-.sp-card{padding:13px;background:var(--card);border:1px solid var(--border);border-radius:9px}
-.sp-card .sp-lbl{font-size:9.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
-  color:var(--text-dim);margin-bottom:7px}
-.sp-card p{font-size:11.5px;color:var(--text-mute);line-height:1.5}
-.sp-card p b{color:var(--text)}
-
-/* ── STAT ROW ── */
-.stat-row{display:flex;gap:24px;flex-wrap:wrap;margin-top:24px}
-.stat-item .lbl{font-size:9px;letter-spacing:2px;font-weight:700;color:var(--text-dim);margin-bottom:4px}
-.stat-item .val{font-size:13px;font-weight:600}
+/* responsive */
+@media(max-width:600px){
+  .tabs{overflow-x:auto;flex-wrap:nowrap}
+  .tabs .tb{white-space:nowrap;font-size:12px}
+  .cyclegrid{grid-template-columns:1fr}
+  .ringwrap{max-width:320px}
+  .rnode{width:85px}
+  .rnode .ric{width:40px;height:40px;border-radius:12px;font-size:16px}
+  .rnode .rlb{font-size:10px}
+  .rnode .rsb{font-size:8px}
+}
 </style>
 </head>
 <body>
 
+<!-- PROGRESS -->
+<div class="progress" id="progress"></div>
+
 <!-- TOP BAR -->
-<header class="topbar">
-  <div class="tb-brand">
-    <div class="r-logo">R</div>
+<header class="topbar" id="topbar">
+  <div class="brand">
+    <div class="rlogo">R</div>
     <span>Renner</span>
-    <span style="color:var(--text-dim);font-size:11px;font-weight:400;margin-left:2px">× blip</span>
+    <span class="x">×</span>
+    <span class="blip">blip</span>
   </div>
-  <div class="bot-tabs">
-    <div class="bot-tab active" onclick="switchBot('vendas')" id="tab-vendas">
-      <div class="tb-ico ico-v">V</div>
-      Vendas · Transbordo
-      <span class="tb-count">59</span>
-    </div>
-    <div class="bot-tab" onclick="switchBot('csc')" id="tab-csc">
-      <div class="tb-ico ico-c">C</div>
-      CSC · Transbordo
-      <span class="tb-count">37</span>
-    </div>
-    <div class="bot-tab" onclick="switchBot('principal')" id="tab-principal">
-      <div class="tb-ico ico-p">P</div>
-      Bot Principal
-      <span class="tb-count">424</span>
-    </div>
-  </div>
+  <div style="font-size:11px;color:var(--dim);font-weight:400">Setembro 2026 · Confidencial</div>
 </header>
 
-<div class="dots" id="dots"></div>
+<!-- TABS -->
+<nav class="tabs">
+  <button class="tb on" onclick="switchTab('blip')">Sobre a Blip</button>
+  <button class="tb" onclick="switchTab('jornada')">Jornada do cliente</button>
+  <button class="tb" onclick="switchTab('demo')">Demonstração</button>
+  <button class="tb" onclick="switchTab('lupa')">Lupa na operação</button>
+  <button class="tb" onclick="switchTab('proximo')">Próximos passos</button>
+</nav>
 
-<!-- ══════════════════════════════════════════
-     BOT 1 · VENDAS TRANSBORDO
-═══════════════════════════════════════════ -->
-<div class="bot-page active" id="page-vendas">
-<div class="scroller" id="scroller-vendas">
+<!-- ═══════════════════════════════════
+     TAB 1 · SOBRE A BLIP
+═══════════════════════════════════ -->
+<div class="tabpanel on" id="tab-blip">
 
-<!-- V·S1 HERO -->
-<section id="vs1">
-<div class="wrap">
-  <div class="tag tag-r rv">● Determinístico · 59 blocos</div>
-  <h1 class="rv">Bot de <span class="hl">Vendas</span><br>com Transbordo</h1>
-  <p class="lead rv" style="margin-top:14px">Fluxo de <b>captura e qualificação de leads</b> via múltiplos entrypoints de campanha, com coleta de CPF e transferência para especialista de vendas.</p>
-  <div class="stat-row rv">
-    <div class="stat-item"><div class="lbl">Estados</div><div class="val">59</div></div>
-    <div class="stat-item"><div class="lbl">Entrypoints</div><div class="val">10+</div></div>
-    <div class="stat-item"><div class="lbl">Modelo</div><div class="val">Determinístico</div></div>
-    <div class="stat-item"><div class="lbl">Transbordo</div><div class="val">Blip Desk</div></div>
+<section class="hero">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Blip × Renner · Setembro 2026</div>
+      <h1>Panorama, jornada <span class="r">e evolução.</span></h1>
+      <p class="hero-sub">Documento de alinhamento sobre a operação conversacional da Renner. Reúne o que está em produção hoje, a plataforma Blip, o mapa de oportunidades e o escopo possível para o próximo ciclo.</p>
+      <div class="hero-badge">📋 Documento confidencial · Time Blip + Renner</div>
+    </div>
   </div>
-</div>
 </section>
 
-<!-- V·S2 OBJETIVOS -->
-<section id="vs2">
-<div class="wrap">
-<div class="two-col">
-  <div>
-    <div class="tag tag-r rv">Objetivos</div>
-    <h2 class="rv">O que o fluxo faz</h2>
-    <p class="lead rv">Recebe leads de campanhas, <b>valida CPF</b>, checa disponibilidade de atendente e faz o <b>transbordo com contexto de origem</b>.</p>
-    <div class="obj-list rv">
-      <div class="obj-item"><div class="obj-num">1</div><div class="obj-text"><b>Entrada multicanal</b> — 10 hashtags de entrypoint (mídia paga, Instagram, lojas, cashback, item faltante, Dia das Mães)</div></div>
-      <div class="obj-item"><div class="obj-num">2</div><div class="obj-text"><b>Verificação de horário</b> antes de encaminhar — fila de espera ou mensagem de retorno fora do horário</div></div>
-      <div class="obj-item"><div class="obj-num">3</div><div class="obj-text"><b>Coleta e validação de CPF</b> com algoritmo de dígito verificador — até 3 tentativas</div></div>
-      <div class="obj-item"><div class="obj-num">4</div><div class="obj-text"><b>Checa disponibilidade</b> no Blip Desk antes de transbordar — fila de espera como fallback</div></div>
-      <div class="obj-item"><div class="obj-num">5</div><div class="obj-text"><b>Transbordo humanizado</b> passando origem, fila e CPF como metadados ao especialista</div></div>
-      <div class="obj-item"><div class="obj-num">6</div><div class="obj-text"><b>Encerramento</b> com CSAT + finalização automática por inatividade + TrackEvent global</div></div>
+<!-- AGENDA -->
+<section>
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow b">Agenda</div>
+      <h2>Cinco capítulos, <span class="b">um caminho.</span></h2>
+    </div>
+    <div class="g5 reveal" style="margin-top:4vh">
+      <div class="card" style="cursor:pointer" onclick="switchTab('blip')">
+        <div style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--blip);margin-bottom:10px">01</div>
+        <h4>Sobre a Blip</h4>
+        <p>Quem somos, posicionamento e os números da plataforma.</p>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="switchTab('jornada')">
+        <div style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--renner);margin-bottom:10px">02</div>
+        <h4>A jornada do cliente</h4>
+        <p>O ciclo completo do consumidor Renner no WhatsApp — e onde a Blip entra.</p>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="switchTab('demo')">
+        <div style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--verde);margin-bottom:10px">03</div>
+        <h4>Demonstração</h4>
+        <p>Blip Marketing, Blip Studio e Blip Desk em ação.</p>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="switchTab('lupa')">
+        <div style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--pz);margin-bottom:10px">04</div>
+        <h4>Lupa na operação</h4>
+        <p>O que já roda nos bots atuais da Renner no WhatsApp.</p>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="switchTab('proximo')">
+        <div style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ok);margin-bottom:10px">05</div>
+        <h4>Próximos passos</h4>
+        <p>Roadmap sugerido para transformar conversa em venda.</p>
+      </div>
     </div>
   </div>
-  <div>
-    <div class="tag tag-b rv">Entrypoints</div>
-    <h2 class="rv">De onde chegam</h2>
-    <p class="lead rv">Cada <b>hashtag</b> define a jornada e a variável de fila enviada ao desk.</p>
-    <div class="ep-grid rv">
-      <div class="ep-card"><div class="ep-code">#awareness / #midiapaga</div><div class="ep-label">Mídia paga Facebook</div></div>
-      <div class="ep-card"><div class="ep-code">#awarenessInsta</div><div class="ep-label">Campanhas Instagram</div></div>
-      <div class="ep-card"><div class="ep-code">#beleza</div><div class="ep-label">Campanha beleza/moda</div></div>
-      <div class="ep-card"><div class="ep-code">#entrypointPrioritario</div><div class="ep-label">Leads prioritários</div></div>
-      <div class="ep-card"><div class="ep-code">#redessociais</div><div class="ep-label">Fila redes sociais</div></div>
-      <div class="ep-card"><div class="ep-code">#entrypointLojas</div><div class="ep-label">QR Code lojas físicas</div></div>
-      <div class="ep-card"><div class="ep-code">#cashBack</div><div class="ep-label">CashBack Realize</div></div>
-      <div class="ep-card"><div class="ep-code">#itemfaltante</div><div class="ep-label">Item faltante no pedido</div></div>
-      <div class="ep-card"><div class="ep-code">#entrypointDiaDasMaes</div><div class="ep-label">Campanha sazonal</div></div>
-      <div class="ep-card"><div class="ep-code">#transferencia-csc</div><div class="ep-label">Direto ao CSC</div></div>
-    </div>
-  </div>
-</div>
-</div>
 </section>
 
-<!-- V·S3 ARQUITETURA -->
-<section id="vs3">
-<div class="wrap">
-  <div class="tag tag-b rv">Macro arquitetura</div>
-  <h2 class="rv">Estrutura em 5 fases</h2>
-  <p class="lead rv">Do entrypoint ao encerramento com analytics em cada bloco.</p>
-  <div class="arch-grid rv" style="grid-template-columns:repeat(5,1fr)">
-    <div class="lane-hd" style="background:rgba(200,16,46,.07)">📥 Entrada</div>
-    <div class="lane-hd" style="background:rgba(98,54,255,.07)">⏱ Verificação</div>
-    <div class="lane-hd" style="background:rgba(245,158,11,.07)">🪪 CPF</div>
-    <div class="lane-hd" style="background:rgba(37,211,102,.07)">🔀 Transbordo</div>
-    <div class="lane-hd" style="background:rgba(255,255,255,.03)">🏁 Fim</div>
-    <div class="arch-lane">
-      <div class="a-node r">10+ Entrypoints<small>#awareness #beleza #lojas...</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node r">onboarding<small>avalia hashtag → rota</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node n">Script JS<small>define var "fila"</small></div>
+<!-- SOBRE A BLIP -->
+<section>
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow b">Sobre a Blip</div>
+      <h2>A principal plataforma agêntica <span class="b">conversacional do mundo.</span></h2>
+      <p class="lead">Aplicativos de mensagem deixaram de ser canal de comunicação. Viraram a plataforma onde <b>marketing, vendas e serviços convergem</b>.</p>
     </div>
-    <div class="arch-lane">
-      <div class="a-node b">Checa horário<small>TV100</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-split">
-        <div class="a-node g" style="font-size:10px">Dentro<small>→ CPF</small></div>
-        <div class="a-node a" style="font-size:10px">Fora<small>→ Fila</small></div>
-      </div>
-      <div class="a-arr">↓</div>
-      <div class="a-node b">Checa atendentes<small>TV101</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-split">
-        <div class="a-node g" style="font-size:10px">OK<small>→ Desk</small></div>
-        <div class="a-node a" style="font-size:10px">Fila<small>espera</small></div>
+    <div class="g3 reveal" style="margin-top:4vh">
+      <div class="card"><div class="ic b">🚀</div><h4>Marketing mais inteligente</h4><p>Campanhas conversacionais, Click-to-WhatsApp e escuta social em tempo real.</p></div>
+      <div class="card"><div class="ic g">💳</div><h4>Transações sem atrito</h4><p>Checkout nativo dentro do WhatsApp — Pix, Open Finance e conciliação automática.</p></div>
+      <div class="card"><div class="ic r">📈</div><h4>Crescimento em tempo real</h4><p>Agentes de IA que convertem, retêm e fidelizam 24/7.</p></div>
+    </div>
+
+    <div class="reveal" style="margin-top:5vh">
+      <h3>Blip em números</h3>
+      <div class="kpis">
+        <div class="kpi"><div class="n"><span class="count" data-to="4" data-pre="+" data-suf="k">0</span></div><div class="d">clientes em 35 países</div></div>
+        <div class="kpi"><div class="n"><span class="count" data-to="365" data-pre="+" data-suf="k">0</span></div><div class="d">agentes e bots na plataforma</div></div>
+        <div class="kpi"><div class="n"><span class="count" data-to="40" data-suf=" Mi">0</span></div><div class="d">de usuários únicos por mês</div></div>
+        <div class="kpi"><div class="n"><span class="count" data-to="27">0</span></div><div class="d">anos de experiência</div></div>
       </div>
     </div>
-    <div class="arch-lane">
-      <div class="a-node a">Coleta CPF<small>cpf1000</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node a">Valida CPF<small>dígito verificador</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-split">
-        <div class="a-node g" style="font-size:10px">Válido</div>
-        <div class="a-node r" style="font-size:10px">Retry<small>max 3x</small></div>
-      </div>
-    </div>
-    <div class="arch-lane">
-      <div class="a-node g">Pré-transbordo<small>TV110</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node g">Transbordo<small>TV120/121</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node n">Especialista<small>Blip Desk</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node b">Checa fim<small>TV103</small></div>
-    </div>
-    <div class="arch-lane">
-      <div class="a-node n">Finalização<small>manual</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node n">CSAT<small>subbot</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node r">Inatividade<small>TV140 auto</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node b">TrackEvent<small>global analytics</small></div>
+
+    <div class="g3 reveal" style="margin-top:4vh">
+      <div class="card" style="border-color:rgba(255,198,41,.3)"><div style="font-size:11px;font-weight:700;color:var(--pz);margin-bottom:8px">★ META PREMIUM PARTNER</div><p style="font-size:12px">Meta Premium Partner for Messaging API e Business Solution Provider.</p></div>
+      <div class="card" style="border-color:rgba(108,203,149,.3)"><div style="font-size:11px;font-weight:700;color:var(--verde);margin-bottom:8px">★ PRÊMIOS</div><p style="font-size:12px">Finance Best-in-class Use Case Maker · Click to WhatsApp Most Relevant Player · Revenue Growth Spotlight (Meta 2023/2024).</p></div>
+      <div class="card" style="border-color:rgba(0,150,250,.3)"><div style="font-size:11px;font-weight:700;color:var(--blip);margin-bottom:8px">🔒 CERTIFICAÇÕES</div><p style="font-size:12px">ISO 27001 · SOC 1 e SOC 2 · GDPR · Microsoft Gold Partner · +400 parceiros. Investida por Warburg Pincus, SoftBank e Microsoft.</p></div>
     </div>
   </div>
-</div>
 </section>
-
-<!-- V·S4 FLUXOGRAMA -->
-<section id="vs4f">
-<div class="wrap">
-  <div class="tag tag-r rv">Jornada de sucesso</div>
-  <h2 class="rv">Fluxo conversacional — <span class="hl">Vendas</span></h2>
-  <p class="lead rv" style="margin-bottom:32px">O cliente pode chegar por entrypoint de campanha <em>ou</em> pelo menu do Bot Principal — a jornada converge no mesmo fluxo.</p>
-  <div class="rv" style="overflow-x:auto;padding-bottom:8px">
-  <svg viewBox="0 0 980 260" xmlns="http://www.w3.org/2000/svg" style="min-width:780px;width:100%;font-family:'Inter',system-ui,sans-serif">
-    <defs>
-      <marker id="vArr" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
-        <path d="M0,0 L0,7 L8,3.5z" fill="rgba(255,255,255,.2)"/>
-      </marker>
-    </defs>
-
-    <!-- === ORIGEM DUPLA === -->
-    <!-- Origem A: Campanha (topo) -->
-    <rect x="20" y="20" width="118" height="60" rx="9" fill="rgba(200,16,46,.15)" stroke="rgba(200,16,46,.5)" stroke-width="1.2"/>
-    <text x="79" y="44" text-anchor="middle" fill="#f4b0bc" font-size="10.5" font-weight="700">📣 Campanha</text>
-    <text x="79" y="58" text-anchor="middle" fill="rgba(244,176,188,.65)" font-size="9">#midiapaga</text>
-    <text x="79" y="71" text-anchor="middle" fill="rgba(244,176,188,.65)" font-size="9">#awareness…</text>
-
-    <!-- Origem B: Bot Principal (baixo) -->
-    <rect x="20" y="170" width="118" height="60" rx="9" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
-    <text x="79" y="194" text-anchor="middle" fill="#c8bfff" font-size="10.5" font-weight="700">🤖 Bot Principal</text>
-    <text x="79" y="208" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">Menu → "Comprar</text>
-    <text x="79" y="221" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">aqui na Renner"</text>
-
-    <!-- Convergência: linhas para nó central -->
-    <!-- A → Onboarding -->
-    <line x1="138" y1="50" x2="192" y2="115" stroke="rgba(255,255,255,.18)" stroke-width="1.5" marker-end="url(#vArr)"/>
-    <!-- B → Onboarding -->
-    <line x1="138" y1="200" x2="192" y2="135" stroke="rgba(255,255,255,.18)" stroke-width="1.5" marker-end="url(#vArr)"/>
-
-    <!-- Nó 1: Onboarding / Entrypoint -->
-    <rect x="198" y="95" width="118" height="60" rx="9" fill="rgba(200,16,46,.15)" stroke="rgba(200,16,46,.5)" stroke-width="1.2"/>
-    <text x="257" y="119" text-anchor="middle" fill="#f4b0bc" font-size="10.5" font-weight="700">🔀 Onboarding</text>
-    <text x="257" y="133" text-anchor="middle" fill="rgba(244,176,188,.65)" font-size="9">Define origem</text>
-    <text x="257" y="146" text-anchor="middle" fill="rgba(244,176,188,.65)" font-size="9">e variável fila</text>
-    <line x1="316" y1="125" x2="338" y2="125" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#vArr)"/>
-
-    <!-- Nó 2: Checa horário via API -->
-    <rect x="344" y="95" width="118" height="60" rx="9" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
-    <text x="403" y="117" text-anchor="middle" fill="#c8bfff" font-size="10.5" font-weight="700">⏱ Horário</text>
-    <text x="403" y="131" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">API Nice/Renner</text>
-    <text x="403" y="144" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">valida expediente</text>
-    <line x1="462" y1="125" x2="484" y2="125" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#vArr)"/>
-
-    <!-- Nó 3: Coleta CPF -->
-    <rect x="490" y="95" width="118" height="60" rx="9" fill="rgba(245,158,11,.12)" stroke="rgba(245,158,11,.4)" stroke-width="1.2"/>
-    <text x="549" y="119" text-anchor="middle" fill="#fce4a0" font-size="10.5" font-weight="700">🪪 Coleta CPF</text>
-    <text x="549" y="133" text-anchor="middle" fill="rgba(252,228,160,.65)" font-size="9">Solicita e valida</text>
-    <text x="549" y="146" text-anchor="middle" fill="rgba(252,228,160,.65)" font-size="9">dígito verificador</text>
-    <line x1="608" y1="125" x2="630" y2="125" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#vArr)"/>
-
-    <!-- Nó 4: Disponibilidade -->
-    <rect x="636" y="95" width="118" height="60" rx="9" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
-    <text x="695" y="119" text-anchor="middle" fill="#c8bfff" font-size="10.5" font-weight="700">👥 Atendente</text>
-    <text x="695" y="133" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">Disponib. Blip</text>
-    <text x="695" y="146" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">Desk</text>
-    <line x1="754" y1="125" x2="776" y2="125" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#vArr)"/>
-
-    <!-- Nó 5: Transbordo + Atendimento -->
-    <rect x="782" y="95" width="178" height="60" rx="9" fill="rgba(37,211,102,.1)" stroke="rgba(37,211,102,.35)" stroke-width="1.2"/>
-    <text x="871" y="117" text-anchor="middle" fill="#a8e8c4" font-size="10.5" font-weight="700">✅ Transbordo → Especialista</text>
-    <text x="871" y="131" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9">Atendimento humano</text>
-    <text x="871" y="144" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9">+ CSAT ao encerrar</text>
-
-    <!-- Arrow labels -->
-    <text x="160" y="72"  fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">entrypoint</text>
-    <text x="160" y="178" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">redirect</text>
-    <text x="330" y="113" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">roteado</text>
-    <text x="476" y="113" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">dentro</text>
-    <text x="622" y="113" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">válido</text>
-    <text x="768" y="113" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">disponível</text>
-
-    <!-- Step numbers -->
-    <text x="257" y="86"  text-anchor="middle" fill="rgba(200,16,46,.7)"  font-size="8" font-weight="700">1</text>
-    <text x="403" y="86"  text-anchor="middle" fill="rgba(98,54,255,.7)"  font-size="8" font-weight="700">2</text>
-    <text x="549" y="86"  text-anchor="middle" fill="rgba(245,158,11,.7)" font-size="8" font-weight="700">3</text>
-    <text x="695" y="86"  text-anchor="middle" fill="rgba(98,54,255,.7)"  font-size="8" font-weight="700">4</text>
-    <text x="871" y="86"  text-anchor="middle" fill="rgba(37,211,102,.7)" font-size="8" font-weight="700">5</text>
-  </svg>
-  </div>
 </div>
-</section>
 
-<!-- V·S5 MOCKUP -->
-<section id="vs4" style="background:var(--bg2)">
-<div class="wrap">
-  <div class="tag tag-g rv">Simulação</div>
-  <h2 class="rv">Jornada típica — <span class="hl">mídia paga</span></h2>
-  <p class="lead rv">Lead chega via #midiapaga dentro do horário. Coleta de CPF e transbordo para especialista.</p>
-  <div class="phone-scene rv">
-    <div class="phone">
-      <div class="ph-status"><span>9:41</span><span>▲▲ 📶 🔋</span></div>
-      <div class="ph-header">
-        <span class="ph-back">‹</span>
-        <div class="ph-av r">R</div>
-        <div class="ph-info"><div class="ph-name">Renner Vendas ✓</div><div class="ph-sub">online agora</div></div>
-        <span class="ph-dots">⋮</span>
-      </div>
-      <div class="ph-body" id="v-body">
-        <div class="b-date">hoje</div>
-        <div class="b-typing" id="v-typing"><span></span><span></span><span></span></div>
-      </div>
+<!-- ═══════════════════════════════════
+     TAB 2 · JORNADA DO CLIENTE
+═══════════════════════════════════ -->
+<div class="tabpanel" id="tab-jornada">
+
+<section style="padding-top:160px">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">A jornada do cliente Renner</div>
+      <h2>Seis momentos, <span class="r">um canal só.</span></h2>
+      <p class="lead">Cada passo da jornada do consumidor pode acontecer dentro do WhatsApp. Abaixo, o ciclo completo e o que a Blip entrega em cada um.</p>
     </div>
-    <div class="phone-aside">
-      <div class="aside-block">
-        <div class="alabel">Etapas do fluxo</div>
-        <div class="flow-steps" id="v-steps">
-          <div class="fs-item active" data-step="0"><div class="fs-dot"></div>Entrypoint (#midiapaga)<span class="fs-hint">clique para avançar →</span></div>
-          <div class="fs-item locked" data-step="1"><div class="fs-dot"></div>Horário → dentro</div>
-          <div class="fs-item locked" data-step="2"><div class="fs-dot"></div>Solicita CPF</div>
-          <div class="fs-item locked" data-step="3"><div class="fs-dot"></div>Valida CPF</div>
-          <div class="fs-item locked" data-step="4"><div class="fs-dot"></div>CPF ok → aguarda atendente</div>
-          <div class="fs-item locked" data-step="5"><div class="fs-dot"></div>Transbordo especialista</div>
-          <div class="fs-item locked" data-step="6"><div class="fs-dot"></div>Atendimento iniciado</div>
+    <div class="cyclegrid">
+      <div class="ringwrap reveal">
+        <svg class="ringsvg" viewBox="0 0 500 500">
+          <circle class="ringbase" cx="250" cy="250" r="200"/>
+          <circle class="ringcomet" cx="250" cy="250" r="200"/>
+        </svg>
+        <div class="hub">
+          <div class="rlogo">R</div>
+          <span class="x" style="margin:2px 0">×</span>
+          <span class="blip-txt">blip</span>
         </div>
-        <button class="next-btn" id="v-next-btn" onclick="vChat.next()">Próxima etapa →</button>
+        <div class="nodes" id="ringNodes"></div>
       </div>
-      <div class="aside-block">
-        <div class="alabel">Contexto enviado ao desk</div>
-        <p><b>fila:</b> midiaPaga<br><b>cpf:</b> validado<br><b>validateCpf:</b> true<br><b>inputEntrypoint:</b> #midiapaga<br><b>idUser:</b> contact.identity</p>
-      </div>
+      <div class="cyclepanel reveal" id="cyclePanel"></div>
     </div>
   </div>
-</div>
 </section>
-
-<!-- V·S5 MELHORIAS -->
-<section id="vs5">
-<div class="wrap">
-  <div class="tag tag-b rv">Evolução</div>
-  <h2 class="rv">Determinístico vs <span class="hl-b">Agente</span></h2>
-  <div class="compare-grid rv">
-    <div class="compare-col">
-      <div class="col-head det">🔒 Atual · Determinístico</div>
-      <div class="col-items">
-        <div class="col-item"><span class="badge lim">Limite</span><b>Entrypoints por hashtag.</b> Nova campanha = novo bloco + redeploy.</div>
-        <div class="col-item"><span class="badge lim">Limite</span><b>Zero NLU.</b> Bot não entende linguagem livre, apenas reage a hashtags.</div>
-        <div class="col-item"><span class="badge lim">Limite</span><b>Coleta linear de CPF.</b> Obrigatória antes do transbordo mesmo quando desnecessário.</div>
-        <div class="col-item"><span class="badge lim">Limite</span><b>Sem memória.</b> Contexto zerado se cliente retorna após sair.</div>
-        <div class="col-item"><span class="badge lim">Limite</span><b>Lead não qualificado.</b> Passa só CPF — não captura interesse, produto ou urgência.</div>
-      </div>
-    </div>
-    <div class="compare-col">
-      <div class="col-head agt">🤖 Proposto · Agente LLM</div>
-      <div class="col-items">
-        <div class="col-item"><span class="badge gain">Ganho</span><b>Roteamento semântico.</b> Um entrypoint genérico — LLM entende intenção e aciona tools.</div>
-        <div class="col-item"><span class="badge gain">Ganho</span><b>Conversa natural.</b> Coleta CPF e interesse de forma fluida, sem menus fixos.</div>
-        <div class="col-item"><span class="badge gain">Ganho</span><b>CPF como tool.</b> Coletado quando necessário, não sempre — menos atrito.</div>
-        <div class="col-item"><span class="badge gain">Ganho</span><b>Memória persistente.</b> Cliente que volta retoma o contexto anterior.</div>
-        <div class="col-item"><span class="badge gain">Ganho</span><b>Lead qualificado.</b> Passa CPF + produto de interesse + urgência ao especialista.</div>
-      </div>
-    </div>
-  </div>
-  <div class="impr-grid rv" style="margin-top:28px">
-    <div class="impr-card"><div class="impr-ico">🧠</div><div class="impr-title">NLU e intenções</div><div class="impr-text">Substituir hashtag por classificação semântica — um entrypoint cobre todas as campanhas.</div><span class="impr-badge tag-b">Alta prioridade</span></div>
-    <div class="impr-card"><div class="impr-ico">🪪</div><div class="impr-title">CPF como tool</div><div class="impr-text">Agente decide quando coletar CPF baseado na intenção — não é obrigatório em todo fluxo.</div><span class="impr-badge tag-b">Alta prioridade</span></div>
-    <div class="impr-card"><div class="impr-ico">🎯</div><div class="impr-title">Qualificação de lead</div><div class="impr-text">Produto de interesse, faixa de preço e urgência extraídos durante a conversa — lead rico para o especialista.</div><span class="impr-badge tag-g">Maior impacto</span></div>
-  </div>
 </div>
+
+<!-- ═══════════════════════════════════
+     TAB 3 · DEMONSTRAÇÃO
+═══════════════════════════════════ -->
+<div class="tabpanel" id="tab-demo">
+<section style="padding-top:160px">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow b">Demonstração da plataforma</div>
+      <h1>Blip Marketing, Studio <span class="b">e Desk.</span></h1>
+      <p class="hero-sub">Neste capítulo, vamos navegar juntos pela plataforma Blip e mostrar como cada produto se conecta à jornada do consumidor Renner.</p>
+    </div>
+    <div class="g3 reveal" style="margin-top:5vh">
+      <div class="card"><div class="ic b">📢</div><h4>Blip Marketing</h4><p>Campanhas conversacionais, Click-to-WhatsApp, audiências, disparo inteligente e gestão de opt-out.</p><span class="badge badge-b">Aquisição</span></div>
+      <div class="card"><div class="ic g">🤖</div><h4>Blip Studio</h4><p>Construção de fluxos, agentes LLM, Multi Agents, orquestração de skills e tools conectadas a APIs.</p><span class="badge badge-g">Automação</span></div>
+      <div class="card"><div class="ic r">🎧</div><h4>Blip Desk</h4><p>Atendimento humano com Copilot de IA, sugestão de resposta, resumo de conversa e base de conhecimento.</p><span class="badge badge-r">Atendimento</span></div>
+    </div>
+    <div class="mres b reveal" style="margin-top:5vh;border-color:rgba(0,150,250,.3);background:var(--blip-lo)"><b>Esta seção é uma demonstração ao vivo.</b> Vamos navegar pela plataforma juntos, mostrando cada produto em contexto real.</div>
+  </div>
 </section>
-
-</div><!-- /scroller-vendas -->
-</div><!-- /page-vendas -->
-
-
-<!-- ══════════════════════════════════════════
-     BOT 2 · CSC TRANSBORDO
-═══════════════════════════════════════════ -->
-<div class="bot-page" id="page-csc">
-<div class="scroller" id="scroller-csc">
-
-<!-- C·S1 HERO -->
-<section id="cs1">
-<div class="wrap">
-  <div class="tag tag-t rv">● Determinístico · 37 blocos</div>
-  <h1 class="rv">Bot de <span class="hl-t">Atendimento</span><br>CSC · Transbordo</h1>
-  <p class="lead rv" style="margin-top:14px">Fluxo de <b>atendimento ao consumidor</b> com validação de feriado, horário comercial, fila de espera e CSAT completo pós-atendimento.</p>
-  <div class="stat-row rv">
-    <div class="stat-item"><div class="lbl">Estados</div><div class="val">37</div></div>
-    <div class="stat-item"><div class="lbl">CSAT</div><div class="val">4 níveis</div></div>
-    <div class="stat-item"><div class="lbl">Modelo</div><div class="val">Determinístico</div></div>
-    <div class="stat-item"><div class="lbl">Validação</div><div class="val">Feriado + Horário</div></div>
-  </div>
 </div>
-</section>
 
-<!-- C·S2 OBJETIVOS -->
-<section id="cs2">
-<div class="wrap">
-<div class="two-col">
-  <div>
-    <div class="tag tag-t rv">Objetivos</div>
-    <h2 class="rv">O que o fluxo faz</h2>
-    <p class="lead rv">Recebe clientes vindos do bot principal, valida <b>disponibilidade de atendimento</b> e transfere para o CSC com CSAT automatizado.</p>
-    <div class="obj-list rv">
-      <div class="obj-item"><div class="obj-num">1</div><div class="obj-text"><b>Validação de feriado</b> — consulta variável de feriado antes de qualquer ação</div></div>
-      <div class="obj-item"><div class="obj-num">2</div><div class="obj-text"><b>Validação de horário</b> — fluxo diferente para dentro e fora do horário de atendimento</div></div>
-      <div class="obj-item"><div class="obj-num">3</div><div class="obj-text"><b>Item faltante</b> — path dedicado que solicita CPF antes do transbordo</div></div>
-      <div class="obj-item"><div class="obj-num">4</div><div class="obj-text"><b>Fila de espera inteligente</b> — cliente escolhe esperar ou voltar ao menu; notificado quando atendente libera</div></div>
-      <div class="obj-item"><div class="obj-num">5</div><div class="obj-text"><b>CSAT pós-atendimento</b> — muito satisfeito / satisfeito / insatisfeito — com reinquirição em caso de inatividade</div></div>
-      <div class="obj-item"><div class="obj-num">6</div><div class="obj-text"><b>Roteamento Nice</b> — lê tags do atendimento humano para direcionar para CSAT correto ou finalização</div></div>
+<!-- ═══════════════════════════════════
+     TAB 4 · LUPA NA OPERAÇÃO
+═══════════════════════════════════ -->
+<div class="tabpanel" id="tab-lupa">
+<section style="padding-top:160px">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow y">Lupa na operação</div>
+      <h2>O que já roda <span class="y">nos bots da Renner.</span></h2>
+      <p class="lead">Mapa completo do que está em operação hoje nos bots de WhatsApp da Renner — por marca, por função e por canal.</p>
     </div>
-  </div>
-  <div>
-    <div class="tag tag-b rv">Paths detectados</div>
-    <h2 class="rv">Caminhos do fluxo</h2>
-    <p class="lead rv">Cada entrada pode tomar uma <b>rota diferente</b> baseada em horário, feriado e tipo de demanda.</p>
-    <div class="ep-grid rv">
-      <div class="ep-card"><div class="ep-code">#start (padrão)</div><div class="ep-label">Entrada geral ao CSC</div></div>
-      <div class="ep-card"><div class="ep-code">#itemfaltante</div><div class="ep-label">Item faltante — coleta CPF</div></div>
-      <div class="ep-card"><div class="ep-code">Feriado = Sim</div><div class="ep-label">Mensagem de indisponibilidade</div></div>
-      <div class="ep-card"><div class="ep-code">Horário = false</div><div class="ep-label">Menu: esperar / ir ao menu</div></div>
-      <div class="ep-card"><div class="ep-code">##Vendas (tag Nice)</div><div class="ep-label">Redireciona transbordo vendas</div></div>
-      <div class="ep-card"><div class="ep-code">##Pesquisa (tag Nice)</div><div class="ep-label">Direciona ao CSAT</div></div>
-      <div class="ep-card"><div class="ep-code">##Finalizacao</div><div class="ep-label">Encerramento direto</div></div>
-      <div class="ep-card"><div class="ep-code">##Cliente inativo</div><div class="ep-label">Finalização automática</div></div>
-    </div>
-  </div>
-</div>
-</div>
-</section>
 
-<!-- C·S3 ARQUITETURA -->
-<section id="cs3">
-<div class="wrap">
-  <div class="tag tag-b rv">Macro arquitetura</div>
-  <h2 class="rv">Estrutura em 5 fases</h2>
-  <p class="lead rv">Fluxo mais enxuto que o de Vendas — <b>foco em disponibilidade e CSAT</b>.</p>
-  <div class="arch-grid rv" style="grid-template-columns:repeat(5,1fr)">
-    <div class="lane-hd" style="background:rgba(20,184,166,.07)">📥 Entrada</div>
-    <div class="lane-hd" style="background:rgba(98,54,255,.07)">📅 Disponib.</div>
-    <div class="lane-hd" style="background:rgba(245,158,11,.07)">🔀 Transbordo</div>
-    <div class="lane-hd" style="background:rgba(37,211,102,.07)">👤 Humano</div>
-    <div class="lane-hd" style="background:rgba(255,255,255,.03)">⭐ CSAT</div>
-    <div class="arch-lane">
-      <div class="a-node t">onboarding<small>#start ou redirect</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node t">Transbordo CSC<small>estado inicial</small></div>
-    </div>
-    <div class="arch-lane">
-      <div class="a-node b">Valida feriado<small>variável Feriado</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-split">
-        <div class="a-node r" style="font-size:10px">Feriado<small>msg indisponível</small></div>
-        <div class="a-node g" style="font-size:10px">Normal<small>→ horário</small></div>
-      </div>
-      <div class="a-arr">↓</div>
-      <div class="a-node b">Valida horário<small>+ item faltante</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-split">
-        <div class="a-node g" style="font-size:10px">Dentro</div>
-        <div class="a-node a" style="font-size:10px">Fora<small>menu espera</small></div>
-      </div>
-    </div>
-    <div class="arch-lane">
-      <div class="a-node g">Pré-transbordo<small>coleta CPF (item falt.)</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node g">Blip Desk<small>fila CSC</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node a">Fila espera<small>TC121/130</small></div>
-    </div>
-    <div class="arch-lane">
-      <div class="a-node n">Atendimento<small>especialista CSC</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node b">Consulta ticket<small>ClosedAttendant/Client</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node b">Lê tags Nice<small>Pesquisa/Vendas/Fin.</small></div>
-    </div>
-    <div class="arch-lane">
-      <div class="a-node n">CSAT<small>muito sat./sat./insat.</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node n">Motivo CSAT<small>campo aberto</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node n">Encerramento<small>→ NPS</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node r">Auto finalização<small>inatividade</small></div>
-    </div>
-  </div>
-  <div class="sp-grid rv">
-    <div class="sp-card"><div class="sp-lbl">⚡ Diferencial</div><p><b>Validação dupla de disponibilidade</b> — feriado E horário separados, cada um com path próprio</p></div>
-    <div class="sp-card"><div class="sp-lbl">🏷️ Tags Nice</div><p><b>Tags do atendimento humano</b> controlam o destino pós-atendimento — CSAT, Vendas ou Finalização</p></div>
-    <div class="sp-card"><div class="sp-lbl">🔁 Reinquirição</div><p><b>CSAT com lembrete</b> — se cliente ficar inativo após finalização, reperguntar antes de encerrar</p></div>
-  </div>
-</div>
-</section>
+    <!-- MAPA 1 — por marca (layout do print) -->
+    <div class="reveal" style="margin-top:4vh">
+      <div class="orgmap">
+        <div class="orgmap-head">Lojas Renner S.A.</div>
+        <div class="orgmap-cols">
 
-<!-- C·S4 FLUXOGRAMA -->
-<section id="cs4f" style="background:var(--bg2)">
-<div class="wrap">
-  <div class="tag tag-t rv">Jornada de sucesso</div>
-  <h2 class="rv">Fluxo conversacional — <span class="hl-t">CSC</span></h2>
-  <p class="lead rv" style="margin-bottom:32px">O cliente vem sempre pelo Bot Principal — feriado e horário são validados por API Nice/Renner antes do transbordo.</p>
-  <div class="rv" style="overflow-x:auto;padding-bottom:8px">
-  <svg viewBox="0 0 980 240" xmlns="http://www.w3.org/2000/svg" style="min-width:780px;width:100%;font-family:'Inter',system-ui,sans-serif">
-    <defs>
-      <marker id="cArr" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
-        <path d="M0,0 L0,7 L8,3.5z" fill="rgba(255,255,255,.2)"/>
-      </marker>
-    </defs>
+          <!-- Lojas Renner SA -->
+          <div class="orgmap-col">
+            <div class="orgmap-col-head">Lojas Renner SA</div>
+            <div class="orgmap-col-body">
+              <div class="orgmap-block">
+                <div class="orgmap-block-title">Vendas</div>
+                <ul>
+                  <li>Transbordo para atendimento em loja (Blip desk)</li>
+                  <li>Checkout no app/site</li>
+                  <li>Auxilia o usuários com problemas para concluir a compra no app/site, entregas no mesmo dia e compra presentes</li>
+                  <li>Parceria com logística para envio de NA de status do pedido</li>
+                  <li>Envio de NA de algumas campanhas</li>
+                  <li>BR, ARG e UY</li>
+                  <li>Número adicional de disparo de NA: +55 (11) 91719-3178</li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
-    <!-- Nó 0: Bot Principal (origem) -->
-    <rect x="20" y="85" width="118" height="60" rx="9" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
-    <text x="79" y="108" text-anchor="middle" fill="#c8bfff" font-size="10.5" font-weight="700">🤖 Bot Principal</text>
-    <text x="79" y="122" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">Cliente seleciona</text>
-    <text x="79" y="135" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">opção de suporte</text>
-    <line x1="138" y1="115" x2="160" y2="115" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#cArr)"/>
+          <!-- Realize -->
+          <div class="orgmap-col">
+            <div class="orgmap-col-head">Realize</div>
+            <div class="orgmap-col-body">
+              <div class="orgmap-block">
+                <div class="orgmap-block-title">Cobrança</div>
+                <ul>
+                  <li>Fluxo de negociação completo</li>
+                  <li>NA para negociação, vencimento de fatura</li>
+                  <li>Número de disparo:</li>
+                </ul>
+              </div>
+              <div class="orgmap-block">
+                <div class="orgmap-block-title">Produtos</div>
+                <ul>
+                  <li>Validação de cadastro</li>
+                  <li>Faturas e carnês</li>
+                  <li>Limites</li>
+                  <li>Prazos e vencimentos</li>
+                  <li>Parcelas de faturas</li>
+                  <li>Recuperação de senha</li>
+                  <li>Saque-rápido e seguros</li>
+                  <li>Anuidade e tarifas</li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
-    <!-- Nó 1: API Nice/Renner – Feriado + Horário -->
-    <rect x="166" y="85" width="140" height="60" rx="9" fill="rgba(20,184,166,.12)" stroke="rgba(20,184,166,.4)" stroke-width="1.2"/>
-    <text x="236" y="106" text-anchor="middle" fill="#a0e4e0" font-size="10.5" font-weight="700">🔌 API Nice/Renner</text>
-    <text x="236" y="120" text-anchor="middle" fill="rgba(160,228,224,.65)" font-size="9">Valida feriado</text>
-    <text x="236" y="133" text-anchor="middle" fill="rgba(160,228,224,.65)" font-size="9">e horário em tempo real</text>
-    <line x1="306" y1="115" x2="328" y2="115" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#cArr)"/>
+          <!-- Youcom -->
+          <div class="orgmap-col">
+            <div class="orgmap-col-head">Youcom</div>
+            <div class="orgmap-col-body">
+              <div class="orgmap-block">
+                <div class="orgmap-block-title">Chat Receptivo</div>
+                <ul>
+                  <li>Transbordo para atendimento em loja (Blip desk)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
-    <!-- Nó 2: Dentro do expediente -->
-    <rect x="334" y="85" width="130" height="60" rx="9" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
-    <text x="399" y="108" text-anchor="middle" fill="#c8bfff" font-size="10.5" font-weight="700">✅ Disponível</text>
-    <text x="399" y="122" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">Não é feriado</text>
-    <text x="399" y="135" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">dentro do horário</text>
-    <line x1="464" y1="115" x2="486" y2="115" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#cArr)"/>
+          <!-- Camicado -->
+          <div class="orgmap-col">
+            <div class="orgmap-col-head">Camicado</div>
+            <div class="orgmap-col-body">
+              <div class="orgmap-block">
+                <ul>
+                  <li>Compra pelo WhatsApp (checkout no app/site)</li>
+                  <li>Meus pedidos</li>
+                  <li>Cadastro</li>
+                  <li>Benefícios e pagamentos</li>
+                  <li>Lista de presentes</li>
+                  <li>Parceiros Camicado</li>
+                  <li>Camicado empresas</li>
+                  <li>Camilovers</li>
+                  <li>Cartões</li>
+                  <li>Encontrar loja física</li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
-    <!-- Nó 3: Transbordo -->
-    <rect x="492" y="85" width="130" height="60" rx="9" fill="rgba(37,211,102,.1)" stroke="rgba(37,211,102,.35)" stroke-width="1.2"/>
-    <text x="557" y="108" text-anchor="middle" fill="#a8e8c4" font-size="10.5" font-weight="700">🔀 Transbordo</text>
-    <text x="557" y="122" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9">Especialista CSC</text>
-    <text x="557" y="135" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9">Blip Desk</text>
-    <line x1="622" y1="115" x2="644" y2="115" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#cArr)"/>
-
-    <!-- Nó 4: Atendimento humano -->
-    <rect x="650" y="85" width="130" height="60" rx="9" fill="rgba(37,211,102,.1)" stroke="rgba(37,211,102,.35)" stroke-width="1.2"/>
-    <text x="715" y="108" text-anchor="middle" fill="#a8e8c4" font-size="10.5" font-weight="700">👤 Atendimento</text>
-    <text x="715" y="122" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9">Especialista resolve</text>
-    <text x="715" y="135" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="9">e encerra ticket</text>
-    <line x1="780" y1="115" x2="802" y2="115" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#cArr)"/>
-
-    <!-- Nó 5: CSAT -->
-    <rect x="808" y="85" width="148" height="60" rx="9" fill="rgba(20,184,166,.12)" stroke="rgba(20,184,166,.4)" stroke-width="1.2"/>
-    <text x="882" y="106" text-anchor="middle" fill="#a0e4e0" font-size="10.5" font-weight="700">⭐ CSAT</text>
-    <text x="882" y="120" text-anchor="middle" fill="rgba(160,228,224,.65)" font-size="9">Avaliação 3 níveis</text>
-    <text x="882" y="133" text-anchor="middle" fill="rgba(160,228,224,.65)" font-size="9">tag Nice → NPS</text>
-
-    <!-- Borda API info -->
-    <rect x="166" y="165" width="140" height="30" rx="6" fill="rgba(20,184,166,.06)" stroke="rgba(20,184,166,.2)" stroke-width="1"/>
-    <text x="236" y="184" text-anchor="middle" fill="rgba(160,228,224,.5)" font-size="8.5">Feriados e horários automáticos</text>
-
-    <!-- Arrow labels -->
-    <text x="152" y="103" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">redirect</text>
-    <text x="320" y="103" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">retorno</text>
-    <text x="478" y="103" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">ok</text>
-    <text x="636" y="103" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">conectado</text>
-    <text x="794" y="103" fill="rgba(255,255,255,.25)" font-size="8" text-anchor="middle">encerra</text>
-
-    <!-- Step numbers -->
-    <text x="79"  y="76" text-anchor="middle" fill="rgba(98,54,255,.7)"   font-size="8" font-weight="700">0</text>
-    <text x="236" y="76" text-anchor="middle" fill="rgba(20,184,166,.7)"  font-size="8" font-weight="700">1</text>
-    <text x="399" y="76" text-anchor="middle" fill="rgba(98,54,255,.7)"   font-size="8" font-weight="700">2</text>
-    <text x="557" y="76" text-anchor="middle" fill="rgba(37,211,102,.7)"  font-size="8" font-weight="700">3</text>
-    <text x="715" y="76" text-anchor="middle" fill="rgba(37,211,102,.7)"  font-size="8" font-weight="700">4</text>
-    <text x="882" y="76" text-anchor="middle" fill="rgba(20,184,166,.7)"  font-size="8" font-weight="700">5</text>
-  </svg>
-  </div>
-</div>
-</section>
-
-<!-- C·S5 MOCKUP -->
-<section id="cs4" style="background:var(--bg2)">
-<div class="wrap">
-  <div class="tag tag-g rv">Simulação</div>
-  <h2 class="rv">Jornada típica — <span class="hl-t">horário comercial</span></h2>
-  <p class="lead rv">Cliente chega do bot principal para o CSC. Dentro do horário, sem feriado — transbordo direto e CSAT ao final.</p>
-  <div class="phone-scene rv">
-    <div class="phone">
-      <div class="ph-status"><span>14:22</span><span>▲▲ 📶 🔋</span></div>
-      <div class="ph-header">
-        <span class="ph-back">‹</span>
-        <div class="ph-av t">R</div>
-        <div class="ph-info"><div class="ph-name">Renner CSC ✓</div><div class="ph-sub">online agora</div></div>
-        <span class="ph-dots">⋮</span>
-      </div>
-      <div class="ph-body" id="c-body">
-        <div class="b-date">hoje</div>
-        <div class="b-typing" id="c-typing"><span></span><span></span><span></span></div>
-      </div>
-    </div>
-    <div class="phone-aside">
-      <div class="aside-block">
-        <div class="alabel">Etapas do fluxo</div>
-        <div class="flow-steps" id="c-steps">
-          <div class="fs-item active" data-step="0"><div class="fs-dot"></div>Entrada #start<span class="fs-hint">clique para avançar →</span></div>
-          <div class="fs-item locked" data-step="1"><div class="fs-dot"></div>Feriado → false</div>
-          <div class="fs-item locked" data-step="2"><div class="fs-dot"></div>Horário → dentro</div>
-          <div class="fs-item locked" data-step="3"><div class="fs-dot"></div>Pré-transbordo CSC</div>
-          <div class="fs-item locked" data-step="4"><div class="fs-dot"></div>Atendimento humano</div>
-          <div class="fs-item locked" data-step="5"><div class="fs-dot"></div>Consulta ticket (tag Nice)</div>
-          <div class="fs-item locked" data-step="6"><div class="fs-dot"></div>CSAT pós-atendimento</div>
         </div>
-        <button class="next-btn" id="c-next-btn" onclick="cChat.next()">Próxima etapa →</button>
-      </div>
-      <div class="aside-block">
-        <div class="alabel">Variáveis de controle</div>
-        <p><b>Feriado:</b> Não<br><b>horario:</b> true<br><b>messageCpf:</b> coletado (item falt.)<br><b>tag Nice:</b> ##Pesquisa → CSAT</p>
       </div>
     </div>
-  </div>
-</div>
-</section>
 
-<!-- C·S5 MELHORIAS -->
-<section id="cs5">
-<div class="wrap">
-  <div class="tag tag-b rv">Evolução</div>
-  <h2 class="rv">Pontos de melhoria — <span class="hl-t">CSC</span></h2>
-  <div class="compare-grid rv">
-    <div class="compare-col">
-      <div class="col-head det">🔒 Atual · Determinístico</div>
-      <div class="col-items">
-        <div class="col-item"><span class="badge lim">Limite</span><b>Dependência da API Nice/Renner.</b> Se a API de feriados/horários estiver fora do ar, o fluxo não consegue validar disponibilidade e pode bloquear o atendimento.</div>
-        <div class="col-item"><span class="badge lim">Limite</span><b>CSAT por palavras-chave regex.</b> "Muito satisfeito" com erro de digitação pode não ser capturado.</div>
-        <div class="col-item"><span class="badge lim">Limite</span><b>Tags Nice como saída.</b> O destino pós-atendimento depende do atendente colocar a tag correta.</div>
-        <div class="col-item"><span class="badge lim">Limite</span><b>Fila passiva.</b> Cliente que escolhe esperar não recebe estimativa de tempo.</div>
-      </div>
-    </div>
-    <div class="compare-col">
-      <div class="col-head agt">🤖 Proposto · Agente LLM</div>
-      <div class="col-items">
-        <div class="col-item"><span class="badge gain">Ganho</span><b>Fallback inteligente.</b> Se a API Nice/Renner falhar, agente decide por lógica alternativa — nunca bloqueia o atendimento por erro de integração.</div>
-        <div class="col-item"><span class="badge gain">Ganho</span><b>CSAT por compreensão natural.</b> LLM interpreta "adorei" = muito satisfeito sem regex frágil.</div>
-        <div class="col-item"><span class="badge gain">Ganho</span><b>Classificação automática pós-atendimento.</b> Agente lê resumo da conversa e decide destino sem depender de tag humana.</div>
-        <div class="col-item"><span class="badge gain">Ganho</span><b>Estimativa de espera.</b> Tool que consulta fila e informa ao cliente o tempo estimado.</div>
-      </div>
-    </div>
-  </div>
-</div>
-</section>
+    <!-- MAPA 2 — CSC e Redes Sociais (layout do print) -->
+    <div class="reveal" style="margin-top:4vh">
+      <div class="orgmap">
+        <div class="orgmap-head">Lojas Renner S.A.</div>
 
-</div>
-</div><!-- /page-csc -->
-
-
-<!-- ══════════════════════════════════════════
-     BOT 3 · PRINCIPAL
-═══════════════════════════════════════════ -->
-<div class="bot-page" id="page-principal">
-<div class="scroller" id="scroller-principal">
-
-<!-- P·S1 HERO -->
-<section id="ps1">
-<div class="wrap">
-  <div class="tag tag-b rv">● Determinístico · 424 blocos</div>
-  <h1 class="rv">Bot <span class="hl-b">Principal</span><br>Renner</h1>
-  <p class="lead rv" style="margin-top:14px">Hub central de atendimento — <b>menu, pedidos, trocas, devoluções, reembolso, cartões, quizzes sazonais</b> e autoatendimento com API de status.</p>
-  <div class="stat-row rv">
-    <div class="stat-item"><div class="lbl">Estados</div><div class="val">424</div></div>
-    <div class="stat-item"><div class="lbl">Subbots</div><div class="val">5+</div></div>
-    <div class="stat-item"><div class="lbl">Integrações API</div><div class="val">Status pedido · Devolução</div></div>
-    <div class="stat-item"><div class="lbl">Modelo</div><div class="val">Deterministico + híbrido</div></div>
-  </div>
-</div>
-</section>
-
-<!-- P·S2 OBJETIVOS -->
-<section id="ps2">
-<div class="wrap">
-<div class="two-col">
-  <div>
-    <div class="tag tag-b rv">Objetivos</div>
-    <h2 class="rv">O que o fluxo faz</h2>
-    <p class="lead rv">Bot de <b>maior complexidade</b> — cobre todo o pós-venda, campanhas sazonais, CSAT de autoatendimento e integração com Realize.</p>
-    <div class="obj-list rv">
-      <div class="obj-item"><div class="obj-num">1</div><div class="obj-text"><b>Menu principal adaptativo</b> — Loja Virtual, Cartões/Boletos, Meus Pedidos com roteamento por input de texto livre ou botões</div></div>
-      <div class="obj-item"><div class="obj-num">2</div><div class="obj-text"><b>Status de pedido via API</b> — busca por CPF ou número do pedido, 10 remessas consultadas sequencialmente, retorno com status detalhado</div></div>
-      <div class="obj-item"><div class="obj-num">3</div><div class="obj-text"><b>Autoatendimento de devolução</b> — solicita devolução via API, valida elegibilidade, gera código de postagem com CSAT pós-resolução</div></div>
-      <div class="obj-item"><div class="obj-num">4</div><div class="obj-text"><b>Troca e devolução CSC</b> — FAQ completo de regras de devolução, estorno, vale-troca, retirada em loja, cartão-presente</div></div>
-      <div class="obj-item"><div class="obj-num">5</div><div class="obj-text"><b>Quizzes sazonais</b> — Quiz "Quem se Cria" (Dia dos Pais), "Nossa Sintonia" (Namorados), com indicação de par e resultado personalizado</div></div>
-      <div class="obj-item"><div class="obj-num">6</div><div class="obj-text"><b>Onboarding LGPD + nome</b> — coleta de primeiro nome, optin de notificações, Speech-to-Text para áudios</div></div>
-    </div>
-  </div>
-  <div>
-    <div class="tag tag-b rv">Módulos detectados</div>
-    <h2 class="rv">O que está dentro</h2>
-    <p class="lead rv">424 estados organizados em <b>módulos funcionais</b>.</p>
-    <div class="ep-grid rv">
-      <div class="ep-card"><div class="ep-code">Menu · Saudação</div><div class="ep-label">LGPD, nome, optin, smalltalk</div></div>
-      <div class="ep-card"><div class="ep-code">Status de Pedido</div><div class="ep-label">CPF/número + 10 remessas API</div></div>
-      <div class="ep-card"><div class="ep-code">Troca e Devolução</div><div class="ep-label">FAQ + autoatendimento + API</div></div>
-      <div class="ep-card"><div class="ep-code">Entrega e Retirada</div><div class="ep-label">Prazo, rastreio, loja física</div></div>
-      <div class="ep-card"><div class="ep-code">Reembolso</div><div class="ep-label">Vale-troca, estorno, cartão pres.</div></div>
-      <div class="ep-card"><div class="ep-code">Cartões · Realize</div><div class="ep-label">Fatura, boleto, limite, saque</div></div>
-      <div class="ep-card"><div class="ep-code">Quiz Dia dos Pais</div><div class="ep-label">5 perfis, indicação, CSAT</div></div>
-      <div class="ep-card"><div class="ep-code">Quiz Namorados</div><div class="ep-label">5 perguntas, resultado de sintonia</div></div>
-      <div class="ep-card"><div class="ep-code">Connectly / BLU</div><div class="ep-label">Canal alternativo c/ roteador</div></div>
-      <div class="ep-card"><div class="ep-code">STT · Áudio</div><div class="ep-label">Speech-to-Text + transcrição</div></div>
-    </div>
-  </div>
-</div>
-</div>
-</section>
-
-<!-- P·S3 ARQUITETURA -->
-<section id="ps3">
-<div class="wrap">
-  <div class="tag tag-b rv">Macro arquitetura</div>
-  <h2 class="rv">Hub central de <span class="hl-b">6 domínios</span></h2>
-  <p class="lead rv">Fluxo mais complexo — <b>424 estados</b> organizados em camadas de entrada, roteamento e domínios funcionais.</p>
-  <div class="arch-grid rv" style="grid-template-columns:repeat(4,1fr)">
-    <div class="lane-hd" style="background:rgba(200,16,46,.07)">📥 Entrada</div>
-    <div class="lane-hd" style="background:rgba(98,54,255,.07)">🔀 Roteamento</div>
-    <div class="lane-hd" style="background:rgba(37,211,102,.07)">📦 Domínios</div>
-    <div class="lane-hd" style="background:rgba(255,255,255,.03)">🏁 Saída</div>
-    <div class="arch-lane">
-      <div class="a-node r">Entrypoints<small>campanha, loja, insta, Connectly, Google...</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node b">LGPD + Optin<small>B2C / Realize</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node b">Coleta nome<small>PN100 · primeiro contato</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node b">STT · Áudio<small>transcreve → texto</small></div>
-    </div>
-    <div class="arch-lane">
-      <div class="a-node b">I100 · Início<small>valida recontato diário</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node b">M100 · Menu principal<small>Loja Virtual / Cartões / Pedidos</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node n">Coleta CPF<small>status pedido / devol.</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node n">Roteador CSC<small>vale-troca / estorno / status</small></div>
-    </div>
-    <div class="arch-lane">
-      <div class="a-node g">Status Pedido<small>SP100–SP130 · 10 remessas</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node g">Troca e Devolução<small>TD100–TD122 + API</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node g">Reembolso<small>R100–R121 · estorno / vale</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node b">Quizzes Sazonais<small>Dia dos Pais · Namorados</small></div>
-    </div>
-    <div class="arch-lane">
-      <div class="a-node n">AM100 · Algo mais<small>loop de oferta</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node n">CSAT autoatendimento<small>acsat100 pós-resolução</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node r">Transbordo CSC/Vendas<small>redirect subbots</small></div>
-      <div class="a-arr">↓</div>
-      <div class="a-node r">F000 · Finalização<small>inatividade / encerramento</small></div>
-    </div>
-  </div>
-  <div class="sp-grid rv">
-    <div class="sp-card"><div class="sp-lbl">🔁 10 Remessas</div><p>Status de pedido consulta <b>até 10 remessas sequenciais via API</b> antes de exibir resultado</p></div>
-    <div class="sp-card"><div class="sp-lbl">🎯 Quiz com par</div><p>Quiz de Namorados <b>indica um segundo usuário</b> — resultado calculado cruzando respostas dos dois</p></div>
-    <div class="sp-card"><div class="sp-lbl">🔊 STT</div><p>Mensagens de áudio são <b>transcritas via Blip Speech-to-Text</b> antes do roteamento</p></div>
-  </div>
-</div>
-</section>
-
-<!-- P·S4 FLUXOGRAMA -->
-<section id="ps4f">
-<div class="wrap">
-  <div class="tag tag-b rv">Jornada de sucesso</div>
-  <h2 class="rv">Fluxo conversacional — <span class="hl-b">Bot Principal</span></h2>
-  <p class="lead rv" style="margin-bottom:32px">Onboarding → Menu com 3 grandes domínios — cada um pode resolver no autoatendimento ou redirecionar para um subbot especialista.</p>
-  <div class="rv" style="overflow-x:auto;padding-bottom:8px">
-  <svg viewBox="0 0 1100 420" xmlns="http://www.w3.org/2000/svg" style="min-width:900px;width:100%;font-family:'Inter',system-ui,sans-serif">
-    <defs>
-      <marker id="pArr" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
-        <path d="M0,0 L0,7 L8,3.5z" fill="rgba(255,255,255,.2)"/>
-      </marker>
-      <marker id="pArrR" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
-        <path d="M0,0 L0,7 L8,3.5z" fill="rgba(200,16,46,.5)"/>
-      </marker>
-      <marker id="pArrT" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
-        <path d="M0,0 L0,7 L8,3.5z" fill="rgba(20,184,166,.5)"/>
-      </marker>
-      <marker id="pArrA" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
-        <path d="M0,0 L0,7 L8,3.5z" fill="rgba(245,158,11,.5)"/>
-      </marker>
-    </defs>
-
-    <!-- ── COLUNA 1: ONBOARDING ── -->
-    <!-- LGPD + nome -->
-    <rect x="20" y="170" width="118" height="70" rx="9" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
-    <text x="79" y="193" text-anchor="middle" fill="#c8bfff" font-size="10.5" font-weight="700">👋 Onboarding</text>
-    <text x="79" y="207" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">LGPD · Nome</text>
-    <text x="79" y="220" text-anchor="middle" fill="rgba(200,191,255,.65)" font-size="9">Optin · STT</text>
-    <line x1="138" y1="205" x2="160" y2="205" stroke="rgba(255,255,255,.2)" stroke-width="1.5" marker-end="url(#pArr)"/>
-
-    <!-- ── COLUNA 2: MENU PRINCIPAL ── -->
-    <rect x="166" y="160" width="130" height="90" rx="9" fill="rgba(200,16,46,.15)" stroke="rgba(200,16,46,.5)" stroke-width="1.5"/>
-    <text x="231" y="185" text-anchor="middle" fill="#f4b0bc" font-size="10.5" font-weight="700">📋 Menu Principal</text>
-    <!-- 3 opções dentro do nó -->
-    <rect x="176" y="193" width="110" height="17" rx="4" fill="rgba(200,16,46,.12)"/>
-    <text x="231" y="205" text-anchor="middle" fill="rgba(244,176,188,.8)" font-size="8.5">🛍️ Loja Virtual</text>
-    <rect x="176" y="213" width="110" height="17" rx="4" fill="rgba(200,16,46,.12)"/>
-    <text x="231" y="225" text-anchor="middle" fill="rgba(244,176,188,.8)" font-size="8.5">📦 Meus Pedidos</text>
-    <rect x="176" y="233" width="110" height="17" rx="4" fill="rgba(200,16,46,.12)"/>
-    <text x="231" y="245" text-anchor="middle" fill="rgba(244,176,188,.8)" font-size="8.5">💳 Cartões / Realize</text>
-
-    <!-- Setas saindo do menu para 3 branches -->
-    <!-- → Loja Virtual (topo) -->
-    <line x1="296" y1="202" x2="336" y2="90"  stroke="rgba(255,255,255,.18)" stroke-width="1.4" marker-end="url(#pArr)"/>
-    <!-- → Pedidos (meio) -->
-    <line x1="296" y1="222" x2="336" y2="222" stroke="rgba(255,255,255,.18)" stroke-width="1.4" marker-end="url(#pArr)"/>
-    <!-- → Cartões (baixo) -->
-    <line x1="296" y1="242" x2="336" y2="350" stroke="rgba(255,255,255,.18)" stroke-width="1.4" marker-end="url(#pArr)"/>
-
-    <!-- ══════════ BRANCH 1: LOJA VIRTUAL (topo) ══════════ -->
-    <rect x="342" y="50" width="138" height="62" rx="9" fill="rgba(200,16,46,.1)" stroke="rgba(200,16,46,.35)" stroke-width="1.2"/>
-    <text x="411" y="72" text-anchor="middle" fill="#f4b0bc" font-size="10" font-weight="700">🛍️ Loja Virtual</text>
-    <text x="411" y="86" text-anchor="middle" fill="rgba(244,176,188,.65)" font-size="8.5">Catálogo · Estoque</text>
-    <text x="411" y="99" text-anchor="middle" fill="rgba(244,176,188,.65)" font-size="8.5">Campanhas · Quizzes</text>
-    <line x1="480" y1="81" x2="502" y2="81" stroke="rgba(200,16,46,.5)" stroke-width="1.4" marker-end="url(#pArrR)"/>
-    <!-- → Redirect Vendas -->
-    <rect x="508" y="50" width="148" height="62" rx="9" fill="rgba(200,16,46,.15)" stroke="rgba(200,16,46,.5)" stroke-width="1.5"/>
-    <text x="582" y="70" text-anchor="middle" fill="#f4b0bc" font-size="10" font-weight="700">🔴 Bot de Vendas</text>
-    <text x="582" y="84" text-anchor="middle" fill="rgba(244,176,188,.7)" font-size="8.5">Redirect → especialista</text>
-    <text x="582" y="97" text-anchor="middle" fill="rgba(244,176,188,.7)" font-size="8.5">de vendas Renner</text>
-    <!-- label -->
-    <text x="494" y="69" text-anchor="middle" fill="rgba(200,16,46,.6)" font-size="7.5">comprar aqui</text>
-
-    <!-- ══════════ BRANCH 2: MEUS PEDIDOS (meio) ══════════ -->
-    <rect x="342" y="185" width="138" height="80" rx="9" fill="rgba(98,54,255,.13)" stroke="rgba(98,54,255,.4)" stroke-width="1.2"/>
-    <text x="411" y="207" text-anchor="middle" fill="#c8bfff" font-size="10" font-weight="700">📦 Meus Pedidos</text>
-    <!-- submenus -->
-    <rect x="350" y="213" width="122" height="14" rx="3" fill="rgba(98,54,255,.1)"/>
-    <text x="411" y="223" text-anchor="middle" fill="rgba(200,191,255,.75)" font-size="8">Status · Rastreio (API)</text>
-    <rect x="350" y="230" width="122" height="14" rx="3" fill="rgba(98,54,255,.1)"/>
-    <text x="411" y="240" text-anchor="middle" fill="rgba(200,191,255,.75)" font-size="8">Troca · Devolução (API)</text>
-    <rect x="350" y="247" width="122" height="14" rx="3" fill="rgba(98,54,255,.1)"/>
-    <text x="411" y="257" text-anchor="middle" fill="rgba(200,191,255,.75)" font-size="8">Reembolso · Vale-troca</text>
-    <!-- Setas de Pedidos -->
-    <line x1="480" y1="215" x2="502" y2="215" stroke="rgba(255,255,255,.18)" stroke-width="1.4" marker-end="url(#pArr)"/>
-    <line x1="480" y1="237" x2="502" y2="237" stroke="rgba(20,184,166,.5)" stroke-width="1.4" marker-end="url(#pArrT)"/>
-    <!-- → Autoatendimento / Status -->
-    <rect x="508" y="195" width="148" height="36" rx="7" fill="rgba(37,211,102,.1)" stroke="rgba(37,211,102,.3)" stroke-width="1.2"/>
-    <text x="582" y="211" text-anchor="middle" fill="#a8e8c4" font-size="9.5" font-weight="700">✅ Autoatendimento</text>
-    <text x="582" y="224" text-anchor="middle" fill="rgba(168,232,196,.65)" font-size="8">Status + CSAT pós-resolução</text>
-    <!-- → CSC Transbordo -->
-    <rect x="508" y="218" width="148" height="36" rx="7" fill="rgba(20,184,166,.12)" stroke="rgba(20,184,166,.35)" stroke-width="1.2"/>
-    <text x="582" y="234" text-anchor="middle" fill="#a0e4e0" font-size="9.5" font-weight="700">🟢 Bot CSC</text>
-    <text x="582" y="247" text-anchor="middle" fill="rgba(160,228,224,.65)" font-size="8">Redirect → especialista CSC</text>
-    <!-- label CSC -->
-    <text x="494" y="246" text-anchor="middle" fill="rgba(20,184,166,.6)" font-size="7.5">suporte</text>
-
-    <!-- ══════════ BRANCH 3: CARTÕES / REALIZE (baixo) ══════════ -->
-    <rect x="342" y="318" width="138" height="80" rx="9" fill="rgba(245,158,11,.12)" stroke="rgba(245,158,11,.38)" stroke-width="1.2"/>
-    <text x="411" y="340" text-anchor="middle" fill="#fce4a0" font-size="10" font-weight="700">💳 Cartões · Realize</text>
-    <rect x="350" y="347" width="122" height="14" rx="3" fill="rgba(245,158,11,.08)"/>
-    <text x="411" y="357" text-anchor="middle" fill="rgba(252,228,160,.75)" font-size="8">Fatura · Boleto · Limite</text>
-    <rect x="350" y="364" width="122" height="14" rx="3" fill="rgba(245,158,11,.08)"/>
-    <text x="411" y="374" text-anchor="middle" fill="rgba(252,228,160,.75)" font-size="8">Saque · Bloqueio · Saldo</text>
-    <line x1="480" y1="360" x2="502" y2="360" stroke="rgba(245,158,11,.5)" stroke-width="1.4" marker-end="url(#pArrA)"/>
-    <!-- → Bot Realize -->
-    <rect x="508" y="330" width="148" height="60" rx="9" fill="rgba(245,158,11,.12)" stroke="rgba(245,158,11,.4)" stroke-width="1.5"/>
-    <text x="582" y="352" text-anchor="middle" fill="#fce4a0" font-size="10" font-weight="700">🟡 Bot Realize</text>
-    <text x="582" y="366" text-anchor="middle" fill="rgba(252,228,160,.7)" font-size="8.5">Redirect → especialista</text>
-    <text x="582" y="379" text-anchor="middle" fill="rgba(252,228,160,.7)" font-size="8.5">financeiro Realize</text>
-    <text x="494" y="348" text-anchor="middle" fill="rgba(245,158,11,.6)" font-size="7.5">precisa suporte</text>
-
-    <!-- ── COLUNA FINAL: CSAT / FIM ── -->
-    <!-- CSAT de autoatendimento (branch 2) -->
-    <line x1="656" y1="213" x2="720" y2="213" stroke="rgba(37,211,102,.3)" stroke-width="1.3" marker-end="url(#pArr)"/>
-    <rect x="726" y="185" width="148" height="60" rx="9" fill="rgba(37,211,102,.08)" stroke="rgba(37,211,102,.25)" stroke-width="1.2"/>
-    <text x="800" y="207" text-anchor="middle" fill="#a8e8c4" font-size="10" font-weight="700">⭐ CSAT Auto</text>
-    <text x="800" y="221" text-anchor="middle" fill="rgba(168,232,196,.6)" font-size="8.5">Satisfação pós-resolução</text>
-    <text x="800" y="234" text-anchor="middle" fill="rgba(168,232,196,.6)" font-size="8.5">+ Encerramento</text>
-
-    <!-- Step legend -->
-    <rect x="726" y="20" width="350" height="70" rx="8" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
-    <text x="742" y="40" fill="rgba(255,255,255,.4)" font-size="8.5" font-weight="700">LEGENDA</text>
-    <rect x="742" y="48" width="8" height="8" rx="2" fill="rgba(200,16,46,.4)"/>
-    <text x="756" y="57" fill="rgba(244,176,188,.7)" font-size="8">Fluxo principal / Bot Vendas</text>
-    <rect x="742" y="62" width="8" height="8" rx="2" fill="rgba(20,184,166,.4)"/>
-    <text x="756" y="71" fill="rgba(160,228,224,.7)" font-size="8">Bot CSC (suporte e trocas)</text>
-    <rect x="900" y="48" width="8" height="8" rx="2" fill="rgba(245,158,11,.4)"/>
-    <text x="914" y="57" fill="rgba(252,228,160,.7)" font-size="8">Bot Realize (financeiro)</text>
-    <rect x="900" y="62" width="8" height="8" rx="2" fill="rgba(37,211,102,.4)"/>
-    <text x="914" y="71" fill="rgba(168,232,196,.7)" font-size="8">Autoatendimento resolvido</text>
-  </svg>
-  </div>
-</div>
-</section>
-
-<!-- P·S5 MOCKUP -->
-<section id="ps4" style="background:var(--bg2)">
-<div class="wrap">
-  <div class="tag tag-g rv">Simulação</div>
-  <h2 class="rv">Jornada típica — <span class="hl-b">status de pedido</span></h2>
-  <p class="lead rv">Cliente primeiro contato — coleta de nome, LGPD, menu e consulta de status via CPF.</p>
-  <div class="phone-scene rv">
-    <div class="phone">
-      <div class="ph-status"><span>11:05</span><span>▲▲ 📶 🔋</span></div>
-      <div class="ph-header">
-        <span class="ph-back">‹</span>
-        <div class="ph-av p">R</div>
-        <div class="ph-info"><div class="ph-name">Renner ✓</div><div class="ph-sub">online agora</div></div>
-        <span class="ph-dots">⋮</span>
-      </div>
-      <div class="ph-body" id="p-body">
-        <div class="b-date">hoje</div>
-        <div class="b-typing" id="p-typing"><span></span><span></span><span></span></div>
-      </div>
-    </div>
-    <div class="phone-aside">
-      <div class="aside-block">
-        <div class="alabel">Etapas do fluxo</div>
-        <div class="flow-steps" id="p-steps">
-          <div class="fs-item active" data-step="0"><div class="fs-dot"></div>Saudação + LGPD<span class="fs-hint">clique para avançar →</span></div>
-          <div class="fs-item locked" data-step="1"><div class="fs-dot"></div>Coleta primeiro nome</div>
-          <div class="fs-item locked" data-step="2"><div class="fs-dot"></div>Optin de notificações</div>
-          <div class="fs-item locked" data-step="3"><div class="fs-dot"></div>Menu principal</div>
-          <div class="fs-item locked" data-step="4"><div class="fs-dot"></div>Solicita CPF</div>
-          <div class="fs-item locked" data-step="5"><div class="fs-dot"></div>Consulta API (10 remessas)</div>
-          <div class="fs-item locked" data-step="6"><div class="fs-dot"></div>Exibe status + Algo mais?</div>
+        <div class="orgmap-row">
+          <div class="orgmap-row-title">CSC - pós venda cliente</div>
+          <p>Renner: Autosserviços para entrega e retirada, Troca e Devolução, Reembolso e Status do pedido<br>
+          Camicado: atendimento com transbordo<br>
+          Realize: atendimento com transbordo</p>
         </div>
-        <button class="next-btn" id="p-next-btn" onclick="pChat.next()">Próxima etapa →</button>
-      </div>
-      <div class="aside-block">
-        <div class="alabel">Estados percorridos</div>
-        <p><b>I100</b> → Início<br><b>LG100</b> → LGPD<br><b>PN100</b> → Nome<br><b>ON100</b> → Optin<br><b>M100</b> → Menu<br><b>SP100</b> → Status Pedido<br><b>acsat100</b> → CSAT auto</p>
-      </div>
-    </div>
-  </div>
-</div>
-</section>
 
-<!-- P·S5 MELHORIAS -->
-<section id="ps5">
-<div class="wrap">
-  <div class="tag tag-b rv">Evolução</div>
-  <h2 class="rv">Pontos de melhoria — <span class="hl-b">Bot Principal</span></h2>
-  <div class="compare-grid rv">
-    <div class="compare-col">
-      <div class="col-head det">🔒 Atual · Determinístico</div>
-      <div class="col-items">
-        <div class="col-item"><span class="badge lim">Limite</span><b>424 estados para manter.</b> Qualquer novo serviço exige novos blocos, conexões e testes manuais.</div>
-        <div class="col-item"><span class="badge lim">Limite</span><b>10 chamadas de API sequenciais</b> para remessas — cada remessa é um bloco separado.</div>
-        <div class="col-item"><span class="badge lim">Limite</span><b>Quizzes hardcoded.</b> Cada edição sazonal exige novo fluxo — Dia dos Pais e Namorados são fluxos inteiros.</div>
-        <div class="col-item"><span class="badge lim">Limite</span><b>Coleta de nome manual.</b> Confirma nome com "Sim/Não" — fricção desnecessária.</div>
-        <div class="col-item"><span class="badge lim">Limite</span><b>Blocos duplicados.</b> Vários blocos de CPF, erro de CPF e CSAT repetidos com variações mínimas.</div>
-      </div>
-    </div>
-    <div class="compare-col">
-      <div class="col-head agt">🤖 Proposto · Agente LLM</div>
-      <div class="col-items">
-        <div class="col-item"><span class="badge gain">Ganho</span><b>Novos serviços via tool.</b> Adicionar funcionalidade = adicionar tool + descrição — sem novos blocos.</div>
-        <div class="col-item"><span class="badge gain">Ganho</span><b>API de pedido como tool única.</b> Uma chamada retorna todas as remessas — agente interpreta e responde.</div>
-        <div class="col-item"><span class="badge gain">Ganho</span><b>Quizzes gerativos.</b> LLM gera variações de quiz a partir de briefing — sem fluxo novo a cada edição.</div>
-        <div class="col-item"><span class="badge gain">Ganho</span><b>Nome extraído da conversa.</b> "Oi, sou a Ana" já captura o nome — sem pergunta explícita.</div>
-        <div class="col-item"><span class="badge gain">Ganho</span><b>Zero duplicação.</b> Um bloco de coleta de dado cobre todos os contextos — lógica centralizada.</div>
-      </div>
-    </div>
-  </div>
-  <div class="impr-grid rv" style="margin-top:28px">
-    <div class="impr-card"><div class="impr-ico">🔧</div><div class="impr-title">Tool de pedido unificada</div><div class="impr-text">Uma tool que retorna todas as remessas e o agente interpreta — acaba com os 10 blocos sequenciais de API.</div><span class="impr-badge tag-b">Alta prioridade</span></div>
-    <div class="impr-card"><div class="impr-ico">📦</div><div class="impr-title">Devolução conversacional</div><div class="impr-text">Agente guia a devolução perguntando apenas o que falta — sem árvore de decisão com 40+ blocos.</div><span class="impr-badge tag-b">Alta prioridade</span></div>
-    <div class="impr-card"><div class="impr-ico">🎉</div><div class="impr-title">Quizzes sazonais via prompt</div><div class="impr-text">Briefing + produtos Renner → LLM gera quiz — nova edição em minutos, não em semanas de desenvolvimento.</div><span class="impr-badge tag-g">Maior impacto</span></div>
-  </div>
-</div>
-</section>
+        <div class="orgmap-row">
+          <div class="orgmap-row-title">CSC - núcleo interno</div>
+          <p>- Atendimento 24x7 de chamados dos times de loja, fábrica e demais colaboradores no Brasil e fora</p>
+        </div>
 
+        <div class="orgmap-row">
+          <div class="orgmap-row-title">Atendimento de Redes Sociais (Stilingue)</div>
+          <p>- Monitoramento e atendimento: Instagram, Facebook, Youtube, Linkedin, TikTok, X<br>
+          - Renner BR/ARG/UY, Camicado, Youcom e Ashua</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="mres y reveal" style="margin-top:4vh"><b>A operação já é robusta.</b> A Renner opera em múltiplas marcas e canais. A oportunidade está em evoluir os fluxos determinísticos para agentes inteligentes — com IA, linguagem natural e checkout nativo.</div>
+  </div>
+</section>
 </div>
-</div><!-- /page-principal -->
+
+<!-- ═══════════════════════════════════
+     TAB 5 · PRÓXIMOS PASSOS
+═══════════════════════════════════ -->
+<div class="tabpanel" id="tab-proximo">
+<section style="padding-top:160px">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow g">Próximos passos</div>
+      <h2>Sugestão de <span class="g">roadmap.</span></h2>
+      <p class="lead">A conversa já está acontecendo. A pergunta é <span class="r">quanto dela pode virar venda e satisfação</span> — com o que a Renner já tem contratado.</p>
+    </div>
+    <div class="roadmap reveal">
+      <div class="rm-track"></div>
+      <div class="rm-step current">
+        <div class="rm-dot">1</div>
+        <div>
+          <div class="rm-badge">● Estamos aqui</div>
+          <div class="rm-title">Alinhamento estratégico</div>
+          <div class="rm-desc">Apresentação de plataforma e lupa na operação. Definir prioridades entre evolução e inovação junto com o time Renner.</div>
+        </div>
+      </div>
+      <div class="rm-step">
+        <div class="rm-dot">2</div>
+        <div>
+          <div class="rm-title">Deep dive técnico</div>
+          <div class="rm-desc">Mapear integrações existentes, entender o número POC de disparos e levantar oportunidades de cada frente com SCAPS e CS.</div>
+        </div>
+      </div>
+      <div class="rm-step">
+        <div class="rm-dot">3</div>
+        <div>
+          <div class="rm-title">Priorização e roadmap</div>
+          <div class="rm-desc">Definir o que é evolução (melhoria dos bots atuais) e o que é inovação (novas jornadas). Montar cronograma por impacto e viabilidade.</div>
+        </div>
+      </div>
+      <div class="rm-step">
+        <div class="rm-dot">4</div>
+        <div>
+          <div class="rm-title">Piloto da primeira frente</div>
+          <div class="rm-desc">Implementar o primeiro case e medir impacto em retenção, qualidade de lead e CSAT.</div>
+        </div>
+      </div>
+    </div>
+    <div class="mres r reveal" style="margin-top:5vh"><b>Time Blip envolvido nesta conta:</b><br>Larissa Almeida · CS<br>Marcelo Soares · FDE / Solutions Engineer<br>SCAPS + SA para apresentação de plataforma</div>
+  </div>
+</section>
+</div>
+
+<footer>Blip × Renner · Panorama e Plano de Evolução · Setembro de 2026<br>Documento confidencial.</footer>
 
 <script>
-// ── STATE ──
-let activeBot = 'vendas';
+(function(){
+"use strict";
 
-// ── SWITCH BOT ──
-function switchBot(bot) {
-  if (activeBot === bot) return;
-  document.getElementById('page-' + activeBot).classList.remove('active');
-  document.getElementById('tab-' + activeBot).classList.remove('active');
-  document.getElementById('page-' + bot).classList.add('active');
-  document.getElementById('tab-' + bot).classList.add('active');
-  activeBot = bot;
-  setupDots(bot);
+/* ═══ TABS ═══ */
+window.switchTab = function(id){
+  document.querySelectorAll('.tabpanel').forEach(function(p){p.classList.remove('on')});
+  document.querySelectorAll('.tabs .tb').forEach(function(t){t.classList.remove('on')});
+  document.getElementById('tab-'+id).classList.add('on');
+  document.querySelector('.tabs .tb[onclick*="\''+id+'\'"]').classList.add('on');
+  window.scrollTo(0,0);
+  setTimeout(function(){
+    document.querySelectorAll('.reveal').forEach(function(el){revIO.observe(el)});
+  },100);
+};
+
+/* ═══ PROGRESS ═══ */
+var prog = document.getElementById('progress');
+window.addEventListener('scroll',function(){
+  var h=document.documentElement, st=h.scrollTop||document.body.scrollTop, sh=h.scrollHeight-h.clientHeight;
+  prog.style.width = (sh>0?st/sh*100:0)+'%';
+});
+
+/* ═══ REVEAL ═══ */
+var revIO = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');revIO.unobserve(e.target)}});
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(function(el){revIO.observe(el)});
+
+/* ═══ ANIMATED COUNTER (Leroy style) ═══ */
+var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function animCount(el){
+  var to=parseFloat(el.dataset.to),pre=el.dataset.pre||'',suf=el.dataset.suf||'',dec=+(el.dataset.dec||0),dur=1300,t0=null;
+  function fmt(v){return v.toLocaleString('pt-BR',{minimumFractionDigits:dec,maximumFractionDigits:dec})}
+  if(rm){el.textContent=pre+fmt(to)+suf;return}
+  function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1),e=1-Math.pow(1-p,3);
+    el.textContent=pre+fmt(to*e)+suf;if(p<1)requestAnimationFrame(step)}
+  requestAnimationFrame(step);
 }
+var cIo=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){animCount(e.target);cIo.unobserve(e.target)}})},{threshold:.6});
+document.querySelectorAll('.count').forEach(function(el){cIo.observe(el)});
 
-// ── REVEAL ──
-const revealObs = new IntersectionObserver(es => {
-  es.forEach(e => e.target.classList.toggle('in', e.isIntersecting));
-}, { threshold: .15 });
-document.querySelectorAll('section').forEach(s => revealObs.observe(s));
-
-// ── DOTS ──
-function setupDots(bot) {
-  const dotsC = document.getElementById('dots');
-  dotsC.innerHTML = '';
-  const scroller = document.getElementById('scroller-' + bot);
-  const secs = scroller ? scroller.querySelectorAll('section') : [];
-  secs.forEach((_, i) => {
-    const b = document.createElement('button');
-    b.onclick = () => secs[i].scrollIntoView({ behavior: 'smooth' });
-    dotsC.appendChild(b);
-  });
-  function updateDots() {
-    const dots = [...dotsC.children];
-    let ci = 0;
-    secs.forEach((s, i) => { if (s.getBoundingClientRect().top < window.innerHeight / 2) ci = i; });
-    dots.forEach((d, i) => d.classList.toggle('active', i === ci));
-  }
-  if (scroller) scroller.addEventListener('scroll', updateDots);
-  updateDots();
-}
-setupDots('vendas');
-
-// ── CLICK-DRIVEN CHAT ENGINE ──
-// Each step groups messages by their `step` value.
-// Clicking the active step (or the "next" button) plays that step's messages,
-// then marks it done, unlocks + activates the next step, and shows the next-btn.
-
-function makeChat(bodyId, typingId, stepsId, nextBtnId, script) {
-  const body    = document.getElementById(bodyId);
-  const typing  = document.getElementById(typingId);
-  const stepEls = [...document.getElementById(stepsId).querySelectorAll('.fs-item')];
-  const nextBtn = document.getElementById(nextBtnId);
-
-  // Group messages by step index
-  const groups = {};
-  script.forEach(d => {
-    if (!groups[d.step]) groups[d.step] = [];
-    groups[d.step].push(d);
-  });
-  const totalSteps = stepEls.length;
-  let currentStep = 0;
-  let playing = false;
-
-  function renderStep(n) {
-    stepEls.forEach((el, i) => {
-      el.classList.remove('active', 'done', 'locked');
-      if (i < n)      el.classList.add('done');
-      else if (i === n) el.classList.add('active');
-      else             el.classList.add('locked');
-    });
-  }
-
-  function injectMsg(d) {
-    return new Promise(resolve => {
-      const isBot = d.type === 'in';
-      if (isBot) {
-        typing.style.display = 'flex';
-        body.appendChild(typing);
-        body.scrollTop = body.scrollHeight;
-      }
-      setTimeout(() => {
-        if (isBot) typing.style.display = 'none';
-        const div = document.createElement('div');
-        div.className = isBot ? 'b-in' : 'b-out';
-        const t = new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
-        div.innerHTML = d.text.replace(/\n/g,'<br>') + '<span class="t">' + t + (isBot ? ' ✓✓' : '') + '</span>';
-        div.style.opacity = '0'; div.style.transform = 'translateY(6px)';
-        body.insertBefore(div, typing);
-        requestAnimationFrame(() => {
-          div.style.transition = 'opacity .3s, transform .3s';
-          div.style.opacity = '1'; div.style.transform = 'none';
-        });
-        body.scrollTop = body.scrollHeight;
-        resolve();
-      }, isBot ? 700 : 120);
-    });
-  }
-
-  async function playStep(n) {
-    if (playing) return;
-    playing = true;
-    nextBtn.classList.remove('visible');
-
-    const msgs = groups[n] || [];
-    for (let i = 0; i < msgs.length; i++) {
-      await injectMsg(msgs[i]);
-      if (i < msgs.length - 1) await new Promise(r => setTimeout(r, 400));
-    }
-
-    // Mark step done
-    stepEls[n].classList.remove('active');
-    stepEls[n].classList.add('done');
-
-    currentStep = n + 1;
-    playing = false;
-
-    if (currentStep < totalSteps) {
-      stepEls[currentStep].classList.remove('locked');
-      stepEls[currentStep].classList.add('active');
-      nextBtn.textContent = currentStep < totalSteps - 1 ? 'Próxima etapa →' : 'Finalizar →';
-      nextBtn.classList.add('visible');
-    } else {
-      nextBtn.classList.remove('visible');
-    }
-  }
-
-  // Wire up clicks on each step item
-  stepEls.forEach((el, i) => {
-    el.addEventListener('click', () => {
-      if (el.classList.contains('active') && !playing) playStep(i);
-    });
-  });
-
-  // Initial state
-  renderStep(0);
-  nextBtn.classList.add('visible');
-  nextBtn.textContent = 'Próxima etapa →';
-
-  return {
-    next() { if (!playing && currentStep < totalSteps) playStep(currentStep); }
-  };
-}
-
-// ── SCRIPTS ──
-const vendasScript = [
-  { type:'in',  step:0, text:'Olá! 👋 Aqui é da <b>Renner</b>.\n\nVi que você tem interesse em nossas novidades. Estou aqui para te ajudar! 😊' },
-  { type:'in',  step:1, text:'Nossa equipe especialista está disponível agora para te atender. ✅' },
-  { type:'in',  step:2, text:'Para facilitar o seu atendimento, vou precisar do seu <b>CPF</b>. 😊\nÉ só enviar os <b>11 dígitos</b> por aqui.' },
-  { type:'out', step:2, text:'012.345.678-90' },
-  { type:'in',  step:3, text:'✅ <b>Obrigada por enviar!</b> 🥰\n\nAgora, me conta — como podemos te ajudar?' },
-  { type:'out', step:4, text:'Quero saber sobre as condições do cartão Renner' },
-  { type:'in',  step:5, text:'Perfeito! 🎉\n\nAguarde um momento que vou verificar se temos uma pessoa especialista disponível. ⏳' },
-  { type:'in',  step:6, text:'<b>Pronto! Uma pessoa especialista vai te atender agora.</b> 😉\n\nOi! Sou a Ana, especialista Renner. Como posso te ajudar com o cartão? 💳' },
+/* ═══ JOURNEY RING ═══ */
+var journeyData = [
+  {id:'escutar',step:'01',name:'Escutar',sub:'Stilingue by Blip',icon:'👂',
+   product:'Stilingue by Blip',
+   what:'O <b>Stilingue</b> é a ferramenta de escuta social da Blip. Monitora menções em redes sociais, Reclame Aqui, marketplaces e fóruns em tempo real, classificando automaticamente por tema, sentimento e praça.',
+   opp:'Ouvir o público para lançamentos e relançamentos de coleções. Identificar tendências de moda, insatisfações recorrentes e oportunidades de posicionamento antes da concorrência.'},
+  {id:'atrair',step:'02',name:'Atrair',sub:'Blip Marketing',icon:'📢',
+   product:'Blip Marketing',
+   what:'O <b>Blip Marketing</b> é o módulo de campanhas conversacionais da plataforma. Permite criar anúncios Click-to-WhatsApp (CTWA) que levam o consumidor direto para uma conversa no WhatsApp, com janela de 72h sem custo de mensageria.',
+   opp:'CTWA para impulsionar o canal de vendas com campanhas sazonais e de coleção. Durante as 72h de janela gratuita, a Renner pode engajar o consumidor sem custo adicional de services — qualificação, oferta e recompra no mesmo fluxo.'},
+  {id:'vender',step:'03',name:'Vender',sub:'Bot de Vendas + IA',icon:'🛍️',
+   product:'Blip Studio + IA',
+   what:'O <b>Blip Studio</b> é o construtor de fluxos e agentes inteligentes. Permite criar bots determinísticos e agentes LLM com linguagem natural, memória persistente e tools conectadas a APIs externas.',
+   opp:'Bot como canal auxiliar de vendas com IA para mapear o assunto da conversa e transbordo inteligente com baseline de ticket. O agente qualifica o lead antes de enviar ao humano — produto de interesse, urgência e faixa de preço.'},
+  {id:'pedido',step:'04',name:'Pedido',sub:'Notificações Ativas',icon:'📦',
+   product:'Notificações Ativas',
+   what:'As <b>Notificações Ativas</b> são mensagens disparadas proativamente pela marca via WhatsApp. Cobrem todo o ciclo de pós-compra: confirmação, separação, envio, rastreio, entrega e pós-entrega.',
+   opp:'Notificação ativa em 100% dos status do pedido. Cada mensagem de rastreio abre uma janela de conversa — oportunidade de cross-sell, pesquisa de satisfação e resolução proativa de problemas.'},
+  {id:'atender',step:'05',name:'Atender',sub:'CSC + Bot Principal',icon:'🎧',
+   product:'Blip Desk + Copilot',
+   what:'O <b>Blip Desk</b> é a ferramenta de atendimento humano com Copilot de IA. Bot para atendimento pós-venda com menu para classificação por assunto e disponibilidade de autosserviços.',
+   opp:'FAQ com IA para melhoria da experiência com linguagem natural. Resolução de temas não contemplados nos autosserviços, redução de transbordo e aumento de retenção com respostas contextuais.'},
+  {id:'reter',step:'06',name:'Reter',sub:'Recompra e NPS',icon:'🔄',
+   product:'Blip Marketing + IA',
+   what:'A <b>retenção conversacional</b> usa dados de comportamento e histórico de compras para criar campanhas inteligentes. Combina Blip Marketing com segmentação por IA para entregar a mensagem certa no momento certo.',
+   opp:'Mapear clientes insatisfeitos e oferecer algum benefício. Envio de NA de campanha baseado em perfil e interesse — não é blast genérico, é mensagem personalizada que converte.'}
 ];
 
-const cscScript = [
-  { type:'in',  step:0, text:'Olá! 😊 Você foi direcionado ao nosso <b>Central de Atendimento</b>.' },
-  { type:'in',  step:1, text:'Verificando feriados e disponibilidade... ✅ Hoje não é feriado.' },
-  { type:'in',  step:2, text:'Estamos dentro do horário de atendimento. 🟢\n\nPode falar!' },
-  { type:'in',  step:3, text:'Pronto! Agora uma pessoa especialista vai te ajudar por aqui. 😉\n\nEnquanto aguarda, se precisar pode me chamar!' },
-  { type:'out', step:3, text:'Preciso de ajuda com minha entrega' },
-  { type:'in',  step:4, text:'Oi! Aqui é o Carlos do time CSC Renner. Vou te ajudar com a entrega! 📦\n\nQual o número do seu pedido?' },
-  { type:'out', step:5, text:'1234567890' },
-  { type:'in',  step:5, text:'Perfeito! Localizei o seu pedido. Consultando ticket... ⏳' },
-  { type:'in',  step:6, text:'Seu atendimento foi finalizado.\n\nQue bom ter você aqui, Amanda! ❤️\n\nAvalie nosso atendimento:\n\n😃 <b>Muito satisfeito</b>  🙂 <b>Satisfeito</b>  🙁 <b>Insatisfeito</b>' },
-  { type:'out', step:6, text:'Muito satisfeito' },
-  { type:'in',  step:6, text:'Eba! Que bom que nosso time atendeu suas expectativas. 🥰\n\nObrigada! Sua avaliação vai nos ajudar a melhorar. 😊' },
-];
+var ringNodes = document.getElementById('ringNodes');
+var cyclePanel = document.getElementById('cyclePanel');
+var activeNode = 0;
+var cx=250,cy=250,rad=200;
 
-const principalScript = [
-  { type:'in',  step:0, text:'Olá! 😊\n\nSou a assistente virtual da <b>Lojas Renner</b> e por aqui consigo tirar suas dúvidas e ajudar com seus pedidos.' },
-  { type:'in',  step:0, text:'Por aqui prezamos muito pela segurança dos seus dados. Ao continuar, você concorda com nossa <b>Política de Privacidade</b>. 🔒' },
-  { type:'in',  step:1, text:'Para que eu possa te conhecer melhor, digite o seu <b>primeiro nome</b>. 😊' },
-  { type:'out', step:1, text:'Amanda' },
-  { type:'in',  step:2, text:'Que nome lindo! 😊\n\nPosso te enviar promoções e novidades por aqui?\n\n✅ <b>Aceito</b>  ·  ❌ <b>Não quero</b>' },
-  { type:'out', step:2, text:'Aceito' },
-  { type:'in',  step:3, text:'Oi, Amanda! 🥰 Sobre qual dos assuntos posso te ajudar?\n\n*1*. 🛍️ Loja Virtual\n*2*. 💳 Cartões e Boletos\n*3*. 📦 Meus Pedidos' },
-  { type:'out', step:3, text:'3' },
-  { type:'in',  step:4, text:'Certo!\n\nDigite o seu <b>CPF</b> ou o <b>número do pedido</b>. 😊' },
-  { type:'out', step:4, text:'012.345.678-90' },
-  { type:'in',  step:5, text:'Obrigada! Aguarde enquanto consulto as remessas do seu pedido. ⏳' },
-  { type:'in',  step:6, text:'Eba! A <b>Entrega 1</b> do seu pedido está <b>a caminho do seu endereço</b>. 🥰\n\nPrevisão: <b>amanhã até as 22h</b>.\n\nPosso te ajudar com mais alguma coisa?' },
-];
+journeyData.forEach(function(d,i){
+  var angle=(i/journeyData.length)*2*Math.PI - Math.PI/2;
+  var x=cx+rad*Math.cos(angle);
+  var y=cy+rad*Math.sin(angle);
+  var btn=document.createElement('button');
+  btn.className='rnode'+(i===0?' on':'');
+  btn.style.left=(x/500*100)+'%';
+  btn.style.top=(y/500*100)+'%';
+  btn.innerHTML='<div class="ric">'+d.icon+'</div><span class="rlb">'+d.name+'</span><span class="rsb">'+d.sub+'</span>';
+  btn.onclick=function(){showNode(i)};
+  ringNodes.appendChild(btn);
+});
 
-const vChat = makeChat('v-body', 'v-typing', 'v-steps', 'v-next-btn', vendasScript);
-const cChat = makeChat('c-body', 'c-typing', 'c-steps', 'c-next-btn', cscScript);
-const pChat = makeChat('p-body', 'p-typing', 'p-steps', 'p-next-btn', principalScript);
+function showNode(i){
+  activeNode=i;
+  var d=journeyData[i];
+  var nodes=ringNodes.querySelectorAll('.rnode');
+  nodes.forEach(function(n,j){n.className='rnode';if(j===i)n.classList.add('on')});
+  var dots='';
+  for(var j=0;j<journeyData.length;j++) dots+='<i'+(j===i?' class="on"':'')+' style="cursor:pointer" onclick="showNode('+j+')"></i>';
+  cyclePanel.innerHTML=
+    '<div class="cp-step">Etapa '+d.step+' de 06</div>'+
+    '<div class="cp-name">'+d.name+'</div>'+
+    '<span class="cp-product">'+d.product+'</span>'+
+    '<div class="cp-what">'+d.what+'</div>'+
+    '<div class="cp-opp"><div class="cp-lab">💡 Oportunidade</div><p>'+d.opp+'</p></div>'+
+    '<div class="cp-dots">'+dots+'</div>';
+}
+window.showNode=showNode;
+showNode(0);
+
+})();
 </script>
 </body>
 </html>
