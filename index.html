@@ -19,6 +19,7 @@
   --card:rgba(255,255,255,.05);--card-bd:rgba(255,255,255,.12);
   --f:'Inter',system-ui,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
   --r:22px;--r-s:14px;--mx:min(1240px,90vw);
+  --wa-bg:#efeae2;--wa-in:#FFFFFF;--wa-out:#D9FDD3;--wa-time:#667781;--wa-header:#075e54;--wa-green:#25D366;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -178,10 +179,112 @@ h3{font-size:clamp(17px,1.6vw,24px);font-weight:700;color:var(--head);margin-bot
 .ph-input{height:38px;background:#f0f0f0;display:flex;align-items:center;padding:0 10px;gap:8px}
 .ph-input .field{flex:1;background:#fff;border:1px solid #ddd;border-radius:16px;padding:6px 12px;font-size:10px;color:#888}
 
+/* ═══ INTERACTIVE WHATSAPP PHONE (Dell MPP model) ═══ */
+.phone-demo{width:100%;max-width:335px;margin:0 auto}
+.phone-i{width:100%;aspect-ratio:335/700;max-height:640px;background:#000;border-radius:44px;border:10px solid #16161f;
+  position:relative;overflow:hidden;display:flex;flex-direction:column;
+  box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 0 3px rgba(255,255,255,.06)}
+.phone-i .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:112px;height:22px;background:#16161f;border-radius:0 0 18px 18px;z-index:50}
+
+.wa-hdr{background:var(--wa-header);color:#fff;padding:26px 10px 8px;display:flex;align-items:center;z-index:20;gap:2px;flex-shrink:0}
+.wa-hdr .back{font-size:19px;margin-right:2px}
+.wa-hdr .avatar{width:32px;height:32px;border-radius:50%;background:var(--renner);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,.3);transition:.3s}
+.wa-hdr .info{margin-left:8px;flex:1;min-width:0}
+.wa-hdr .info h3{font-size:12.5px;font-weight:600;line-height:1.1;display:flex;align-items:center;gap:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wa-hdr .info h3 .badge{color:var(--wa-green);font-size:11px}
+.wa-hdr .info p{font-size:9px;color:rgba(255,255,255,.7);margin-top:1px}
+.wa-hdr .acts{display:flex;gap:9px;font-size:13px;color:rgba(255,255,255,.8);flex-shrink:0}
+
+.wa-chat{flex:1;background:var(--wa-bg);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cg fill='none' stroke='%23c8bda9' stroke-width='1.4' opacity='.3' stroke-linecap='round'%3E%3Cpath d='M18 22h20a4 4 0 014 4v8a4 4 0 01-4 4h-9l-5 5v-5h-6a4 4 0 01-4-4v-8a4 4 0 014-4z'/%3E%3Ccircle cx='100' cy='26' r='10'/%3E%3Cpath d='M96 26h8M100 22v8'/%3E%3Cpath d='M28 92c0-6 9-6 9 0 0-6 9-6 9 0 0 6-9 12-9 12s-9-6-9-12z'/%3E%3Cpath d='M92 78l6 6 12-12'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:260px;overflow-y:auto;padding:10px 7px;display:flex;flex-direction:column;gap:4px;z-index:10;position:relative}
+.wa-chat::-webkit-scrollbar{display:none}
+
+.msg{max-width:85%;padding:6px 9px;border-radius:8px;font-size:11.5px;line-height:1.4;color:#111b21;position:relative;word-wrap:break-word;animation:msgIn .35s ease-out forwards}
+.msg.in{background:var(--wa-in);align-self:flex-start;border-top-left-radius:2px;box-shadow:0 1px 1px rgba(0,0,0,.06)}
+.msg.out{background:var(--wa-out);align-self:flex-end;border-top-right-radius:2px;box-shadow:0 1px 1px rgba(0,0,0,.06)}
+.msg .ts{font-size:8.5px;color:var(--wa-time);float:right;margin:4px -2px -2px 10px;display:inline-flex;align-items:center;gap:2px;white-space:nowrap}
+.msg .ts .chk{color:#53bdeb;font-size:9.5px}
+@keyframes msgIn{from{opacity:0;transform:translateY(12px) scale(.96)}to{opacity:1;transform:none}}
+.wa-sys{align-self:center;background:#ffeecdd9;color:#543b0c;font-size:9px;padding:3px 8px;border-radius:6px;margin:4px 0}
+
+.typing{display:flex;gap:3px;padding:7px 10px}
+.typing span{width:5px;height:5px;border-radius:50%;background:#90a4ae;animation:dot 1.4s infinite ease-in-out both}
+.typing span:nth-child(1){animation-delay:-.32s}
+.typing span:nth-child(2){animation-delay:-.16s}
+@keyframes dot{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+
+.wa-btns{display:flex;flex-direction:column;gap:4px;max-width:85%;align-self:flex-start;animation:msgIn .35s ease-out forwards}
+.wa-btns button{background:#fff;color:#00a884;font-weight:600;font-size:11px;padding:7px 10px;border-radius:8px;border:1px solid #e8e8e8;cursor:pointer;text-align:center;transition:.15s;font-family:inherit;width:100%}
+.wa-btns button:hover{background:#f0faf7}
+.wa-btns button:active{transform:scale(.97)}
+.wa-btns.used{opacity:.4;pointer-events:none}
+
+.wa-bar{background:#f0f2f5;padding:6px 7px;display:flex;align-items:center;gap:6px;z-index:20;flex-shrink:0}
+.wa-bar .pill{flex:1;background:#fff;border-radius:20px;padding:6px 11px;font-size:11px;color:#667781;border:1px solid #e8e8e8;display:flex;align-items:center;gap:6px}
+.wa-bar .send{width:28px;height:28px;border-radius:50%;background:var(--wa-header);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;flex-shrink:0}
+
+/* Carousel — clickable product cards */
+.wa-carousel{align-self:flex-start;max-width:92%;display:flex;gap:6px;overflow-x:auto;padding:2px 1px 4px;margin-top:2px}
+.wa-card{flex:0 0 auto;width:112px;background:#fff;border-radius:9px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.wa-card-img{height:74px;display:flex;align-items:center;justify-content:center;font-size:24px}
+.wa-card-body{padding:6px 7px 7px}
+.wa-card-title{font-size:9px;font-weight:700;color:#111;line-height:1.25}
+.wa-card-price{font-size:9.5px;font-weight:800;color:#0a7d3c;margin-top:2px}
+.wa-card button.wa-card-btn{width:100%;margin-top:5px;font-size:8px;font-weight:700;text-align:center;color:#00a884;
+  border:0;border-top:1px solid #eee;padding-top:5px;background:none;cursor:pointer;font-family:inherit;padding-bottom:1px}
+.wa-card button.wa-card-btn:active{opacity:.6}
+
+/* List message submenu */
+.wa-list-menu{align-self:flex-start;max-width:85%;display:flex;flex-direction:column;gap:0;animation:msgIn .35s ease-out forwards;
+  background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.wa-list-menu .lm-hd{font-size:9.5px;font-weight:700;color:#667781;padding:8px 10px 5px;text-transform:uppercase;letter-spacing:.05em}
+.wa-list-menu button{background:#fff;border:0;border-top:1px solid #f1f1f1;padding:8px 10px;font-size:11px;text-align:left;color:#111;cursor:pointer;font-family:inherit}
+.wa-list-menu button:hover{background:#f7f7f7}
+
+/* pix / code block */
+.wa-code{align-self:flex-start;max-width:85%;background:#f6f6f6;border:1px dashed #c7c7c7;border-radius:7px;
+  padding:7px 8px;font-family:var(--mono);font-size:7.5px;color:#333;word-break:break-all;line-height:1.5;margin-top:2px}
+
+/* image / sticker placeholder inside bubble */
+.wa-media{align-self:flex-start;max-width:66%;border-radius:9px;overflow:hidden;margin-top:2px;
+  display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;font-size:30px}
+
+/* Flow Modal (Sheer-ID style form, repurposed to collect address/CPF) */
+.flow-overlay{position:absolute;inset:0;background:rgba(0,0,0,.4);z-index:60;opacity:0;pointer-events:none;transition:.3s}
+.flow-overlay.open{opacity:1;pointer-events:auto}
+.flow-modal{position:absolute;bottom:0;left:0;right:0;height:82%;background:#fff;border-radius:16px 16px 0 0;z-index:70;
+  transform:translateY(100%);transition:transform .4s cubic-bezier(.17,.88,.32,1.2);display:flex;flex-direction:column;overflow:hidden}
+.flow-modal.open{transform:translateY(0)}
+.flow-modal .fm-head{padding:11px 14px;border-bottom:1px solid #e8e8e8;display:flex;align-items:center;justify-content:space-between}
+.flow-modal .fm-head h4{flex:1;text-align:center;font-size:13px;font-weight:700;color:#111}
+.flow-modal .fm-head .cls{font-size:16px;cursor:pointer;color:#667781;padding:2px 6px}
+.flow-modal .fm-body{flex:1;overflow-y:auto;padding:16px 14px}
+.flow-modal .fm-body label{display:block;font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#667781;margin-bottom:4px;margin-top:12px}
+.flow-modal .fm-body label:first-child{margin-top:0}
+.flow-modal .fm-body input,.flow-modal .fm-body select{width:100%;padding:9px;font-size:12.5px;border:none;border-bottom:2px solid #e0e0e0;background:#f8f8f8;border-radius:6px 6px 0 0;outline:none;font-family:inherit;color:#111;transition:.2s}
+.flow-modal .fm-body input:focus,.flow-modal .fm-body select:focus{border-bottom-color:var(--wa-header);background:#f0faf7}
+.flow-modal .fm-foot{padding:10px 14px 20px;border-top:1px solid #eee}
+.flow-modal .fm-foot button{width:100%;padding:9px;border-radius:24px;background:var(--wa-header);color:#fff;font-size:12.5px;font-weight:700;border:none;cursor:pointer;font-family:inherit;transition:.15s}
+.flow-modal .fm-foot button:hover{background:#016d5a}
+.flow-modal .fm-foot button:active{transform:scale(.97)}
+
+/* Start / Restart overlay */
+.demo-start{position:absolute;inset:0;z-index:80;background:rgba(6,10,20,.7);backdrop-filter:blur(3px);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;text-align:center;padding:0 24px;transition:.3s}
+.demo-start.hide{opacity:0;pointer-events:none}
+.demo-start button{background:var(--renner);color:#fff;border:0;padding:11px 22px;border-radius:99px;font-size:12.5px;font-weight:700;
+  font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 10px 24px rgba(200,16,46,.35)}
+.demo-start button:hover{background:var(--renner-d)}
+.demo-start p{font-size:11px;color:var(--pale);font-weight:300;max-width:220px}
+.demo-restart{position:absolute;top:8px;right:8px;z-index:55;background:rgba(0,0,0,.4);color:#fff;border:0;
+  width:26px;height:26px;border-radius:50%;font-size:12px;cursor:pointer;display:none;align-items:center;justify-content:center}
+.demo-restart.show{display:flex}
+
 /* org chart - mapa de onde estamos */
 .orgmap{margin-top:32px;border-radius:var(--r);overflow:hidden;border:1px solid var(--card-bd);background:var(--card)}
 .orgmap-head{background:rgba(255,255,255,.08);padding:14px 20px;font-size:15px;font-weight:700;color:var(--head);text-align:center;border-bottom:1px solid var(--card-bd)}
-.orgmap-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.orgmap-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
 .orgmap-col{border-right:1px solid rgba(255,255,255,.06);padding:0}
 .orgmap-col:last-child{border-right:0}
 .orgmap-col-head{background:rgba(255,255,255,.06);padding:10px 14px;font-size:13px;font-weight:700;color:var(--head);text-align:center;border-bottom:1px solid rgba(255,255,255,.06)}
@@ -203,6 +306,43 @@ h3{font-size:clamp(17px,1.6vw,24px);font-weight:700;color:var(--head);margin-bot
 @media(max-width:500px){.orgmap-cols{grid-template-columns:1fr}
   .orgmap-col{border-right:0;border-bottom:1px solid rgba(255,255,255,.06)}
 }
+
+/* compare */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:32px}
+@media(max-width:760px){.compare{grid-template-columns:1fr}}
+.ccol{border-radius:14px;overflow:hidden;border:1px solid var(--card-bd)}
+.ccol-head{padding:14px 18px;font-size:12px;font-weight:700;letter-spacing:.4px;display:flex;align-items:center;gap:8px}
+.ccol-head.det{background:rgba(242,90,90,.08);color:var(--bad);border-bottom:1px solid rgba(242,90,90,.2)}
+.ccol-head.agt{background:var(--blip-lo);color:var(--blip);border-bottom:1px solid rgba(0,150,250,.2)}
+.ccol-items{display:flex;flex-direction:column}
+.ccol-item{padding:12px 18px;border-bottom:1px solid var(--card-bd);font-size:12px;color:var(--body);line-height:1.55}
+.ccol-item:last-child{border-bottom:0}
+.ccol-item b{color:var(--head);font-weight:600}
+.lim{display:inline-block;padding:1px 7px;border-radius:8px;font-size:9px;font-weight:700;margin-right:4px;
+  background:rgba(242,90,90,.15);color:#f4a0a8}
+.gain{display:inline-block;padding:1px 7px;border-radius:8px;font-size:9px;font-weight:700;margin-right:4px;
+  background:rgba(108,203,149,.15);color:#a0dab8}
+
+/* impact */
+.impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+@media(max-width:800px){.impact-grid{grid-template-columns:1fr}}
+.impact-card{background:var(--card);border:1px solid var(--card-bd);border-radius:var(--r);padding:24px 20px;text-align:center;transition:.3s}
+.impact-card:hover{border-color:rgba(0,150,250,.4);transform:translateY(-3px)}
+.impact-card .imp-ico{font-size:28px;margin-bottom:12px}
+.impact-card h4{font-size:15px;font-weight:700;color:var(--head);margin-bottom:6px}
+.impact-card p{font-size:12.5px;color:var(--body);line-height:1.5;font-weight:300}
+.impact-metrics{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px;justify-content:center}
+.imp-metric{background:var(--card);border:1px solid var(--card-bd);border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:10px}
+.imp-metric .im-arrow{font-size:16px}
+.imp-metric .im-label{font-size:12px;font-weight:700;color:var(--head)}
+.imp-metric .im-sub{font-size:10px;color:var(--dim);margin-top:2px}
+
+/* metric tags */
+.metric-tags{margin-top:18px}
+.mt-lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.mt-row{display:flex;flex-wrap:wrap;gap:7px}
+.metric-tag{font-size:11px;font-weight:500;color:var(--blip);background:var(--blip-lo);border:1px solid rgba(0,150,250,.25);
+  border-radius:99px;padding:5px 12px}
 
 /* roadmap */
 .roadmap{position:relative;padding-left:40px;margin-top:32px}
@@ -421,20 +561,23 @@ footer{padding:36px max(24px,4vw) 46px;border-top:1px solid rgba(255,255,255,.06
         <div class="orgmap-head">Lojas Renner S.A.</div>
         <div class="orgmap-cols">
 
-          <!-- Lojas Renner SA -->
+          <!-- Renner -->
           <div class="orgmap-col">
-            <div class="orgmap-col-head">Lojas Renner SA</div>
+            <div class="orgmap-col-head">Renner</div>
             <div class="orgmap-col-body">
               <div class="orgmap-block">
                 <div class="orgmap-block-title">Vendas</div>
                 <ul>
+                  <li>Entrada multicanal — Mídia paga, Instagram, lojas</li>
+                  <li>Bot realiza a triagem solicitando CPF do usuário</li>
                   <li>Transbordo para atendimento em loja (Blip desk)</li>
                   <li>Checkout no app/site</li>
-                  <li>Auxilia o usuários com problemas para concluir a compra no app/site, entregas no mesmo dia e compra presentes</li>
-                  <li>Parceria com logística para envio de NA de status do pedido</li>
-                  <li>Envio de NA de algumas campanhas</li>
-                  <li>BR, ARG e UY</li>
-                  <li>Número adicional de disparo de NA: +55 (11) 91719-3178</li>
+                  <li>Auxilia usuários com problemas para concluir a compra no app/site</li>
+                  <li>Parceria com logística para envio de NA de status de pedidos com problema</li>
+                  <li>Exibição de templates de campanhas sazonais</li>
+                  <li>Fluxo de vendas para BR, ARG e UY</li>
+                  <li>Número adicional de disparo de NA (+55 11 91719-3178)</li>
+                  <li>Pesquisa CSAT</li>
                 </ul>
               </div>
             </div>
@@ -468,71 +611,421 @@ footer{padding:36px max(24px,4vw) 46px;border-top:1px solid rgba(255,255,255,.06
             </div>
           </div>
 
-          <!-- Youcom -->
+          <!-- CSC -->
           <div class="orgmap-col">
-            <div class="orgmap-col-head">Youcom</div>
+            <div class="orgmap-col-head">CSC</div>
             <div class="orgmap-col-body">
               <div class="orgmap-block">
-                <div class="orgmap-block-title">Chat Receptivo</div>
+                <div class="orgmap-block-title">CSC — Pós-venda cliente</div>
                 <ul>
-                  <li>Transbordo para atendimento em loja (Blip desk)</li>
+                  <li>Renner: Autosserviços para entrega e retirada, Troca e Devolução, Reembolso e Status do pedido (Nice — ferramenta para atendimento humano)</li>
+                  <li>Camicado: atendimento com transbordo (Blip Desk)</li>
+                  <li>Realize: atendimento com transbordo (Blip Desk)</li>
                 </ul>
               </div>
-            </div>
-          </div>
-
-          <!-- Camicado -->
-          <div class="orgmap-col">
-            <div class="orgmap-col-head">Camicado</div>
-            <div class="orgmap-col-body">
               <div class="orgmap-block">
+                <div class="orgmap-block-title">CSC — Núcleo interno</div>
                 <ul>
-                  <li>Compra pelo WhatsApp (checkout no app/site)</li>
-                  <li>Meus pedidos</li>
-                  <li>Cadastro</li>
-                  <li>Benefícios e pagamentos</li>
-                  <li>Lista de presentes</li>
-                  <li>Parceiros Camicado</li>
-                  <li>Camicado empresas</li>
-                  <li>Camilovers</li>
-                  <li>Cartões</li>
-                  <li>Encontrar loja física</li>
+                  <li>Atendimento 24x7 de chamados dos times de loja, fábrica e demais colaboradores no Brasil e fora</li>
+                </ul>
+              </div>
+              <div class="orgmap-block">
+                <div class="orgmap-block-title">Redes Sociais (Stilingue)</div>
+                <ul>
+                  <li>Monitoramento e atendimento: Instagram, Facebook, Youtube, LinkedIn, TikTok, X</li>
+                  <li>Renner BR/ARG/UY, Camicado, Youcom e Ashua</li>
                 </ul>
               </div>
             </div>
           </div>
 
         </div>
-      </div>
-    </div>
-
-    <!-- MAPA 2 — CSC e Redes Sociais (layout do print) -->
-    <div class="reveal" style="margin-top:4vh">
-      <div class="orgmap">
-        <div class="orgmap-head">Lojas Renner S.A.</div>
-
-        <div class="orgmap-row">
-          <div class="orgmap-row-title">CSC - pós venda cliente</div>
-          <p>Renner: Autosserviços para entrega e retirada, Troca e Devolução, Reembolso e Status do pedido<br>
-          Camicado: atendimento com transbordo<br>
-          Realize: atendimento com transbordo</p>
-        </div>
-
-        <div class="orgmap-row">
-          <div class="orgmap-row-title">CSC - núcleo interno</div>
-          <p>- Atendimento 24x7 de chamados dos times de loja, fábrica e demais colaboradores no Brasil e fora</p>
-        </div>
-
-        <div class="orgmap-row">
-          <div class="orgmap-row-title">Atendimento de Redes Sociais (Stilingue)</div>
-          <p>- Monitoramento e atendimento: Instagram, Facebook, Youtube, Linkedin, TikTok, X<br>
-          - Renner BR/ARG/UY, Camicado, Youcom e Ashua</p>
-        </div>
-
       </div>
     </div>
 
     <div class="mres y reveal" style="margin-top:4vh"><b>A operação já é robusta.</b> A Renner opera em múltiplas marcas e canais. A oportunidade está em evoluir os fluxos determinísticos para agentes inteligentes — com IA, linguagem natural e checkout nativo.</div>
+
+    <!-- BLOCKERS, BACKLOG e OPORTUNIDADES -->
+    <div class="reveal" style="margin-top:6vh">
+      <div class="eyebrow" style="margin-bottom:14px">Diagnóstico operacional</div>
+      <h3>Blockers, backlog <span class="r">e oportunidades.</span></h3>
+      <p class="lead" style="margin-bottom:4vh">Levantamento do que trava a operação hoje, o que está em fila e o que pode ser transformado com IA e automação.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+
+        <!-- BLOCKERS -->
+        <div class="card" style="border-color:rgba(242,90,90,.35);background:rgba(242,90,90,.04)">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+            <span style="display:flex;width:32px;height:32px;border-radius:10px;background:rgba(242,90,90,.15);align-items:center;justify-content:center;font-size:16px">🚫</span>
+            <h4 style="font-size:14px;color:var(--bad)">Blockers</h4>
+          </div>
+          <ul style="list-style:none;padding:0">
+            <li style="font-size:12px;color:var(--body);line-height:1.55;font-weight:300;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)"><span class="lim">Blocker</span> <b style="color:var(--head)">Integração com CRM para disparo automatizado de campanhas</b> (ex: quarta-feira poder fazer um disparo para compra de presente de dia das mães para entrega em até 2 dias, embalado, com cartão)</li>
+            <li style="font-size:12px;color:var(--body);line-height:1.55;font-weight:300;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)"><span class="lim">Blocker</span> <b style="color:var(--head)">IA para reconhecer intenções, dar andamento a tratativas</b></li>
+            <li style="font-size:12px;color:var(--body);line-height:1.55;font-weight:300;padding:8px 0"><span class="lim">Blocker</span> <b style="color:var(--head)">API para consultar carrinhos abandonados</b> para envio de NA e ajuda na finalização do pagamento pelo WA</li>
+          </ul>
+        </div>
+
+        <!-- BACKLOG -->
+        <div class="card" style="border-color:rgba(255,198,41,.35);background:rgba(255,198,41,.04)">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+            <span style="display:flex;width:32px;height:32px;border-radius:10px;background:var(--pz-lo);align-items:center;justify-content:center;font-size:16px">📋</span>
+            <h4 style="font-size:14px;color:var(--pz)">Backlog</h4>
+          </div>
+          <ul style="list-style:none;padding:0">
+            <li style="font-size:12px;color:var(--body);line-height:1.55;font-weight:300;padding:8px 0"><b style="color:var(--head)">Implementado recentemente um campo aberto de "motivo de contato"</b> para ouvir esse usuário e decidir por uma clusterização de menus e direcionamentos depois</li>
+          </ul>
+        </div>
+
+        <!-- OPORTUNIDADES -->
+        <div class="card" style="border-color:rgba(108,203,149,.35);background:rgba(108,203,149,.04)">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+            <span style="display:flex;width:32px;height:32px;border-radius:10px;background:var(--verde-lo);align-items:center;justify-content:center;font-size:16px">💡</span>
+            <h4 style="font-size:14px;color:var(--verde)">Oportunidades de Evolução / Inovação</h4>
+          </div>
+          <ul style="list-style:none;padding:0">
+            <li style="font-size:12px;color:var(--body);line-height:1.55;font-weight:300;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)"><span class="gain">Opp</span> <b style="color:var(--head)">IA para identificar intenção dos usuários</b> e o que merece resposta</li>
+            <li style="font-size:12px;color:var(--body);line-height:1.55;font-weight:300;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)"><span class="gain">Opp</span> <b style="color:var(--head)">Personalização de experiência para entrega pela loja mais próxima</b> — foi retirado o pedido de CEP para transbordo, mas poderia ser uma etapa pensando em personalização</li>
+            <li style="font-size:12px;color:var(--body);line-height:1.55;font-weight:300;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)"><span class="gain">Opp</span> Ajuste no cadastro (problemas com acessos para finalizar compras)</li>
+            <li style="font-size:12px;color:var(--body);line-height:1.55;font-weight:300;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)"><span class="gain">Opp</span> <b style="color:var(--head)">Canal WA como impulsionador para campanhas/sazonalidade</b></li>
+            <li style="font-size:12px;color:var(--body);line-height:1.55;font-weight:300;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)"><span class="gain">Opp</span> Problema na finalização de compra no site/app e cai para atendente</li>
+            <li style="font-size:12px;color:var(--body);line-height:1.55;font-weight:300;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)"><span class="gain">Opp</span> <b style="color:var(--head)">NA de carrinho abandonado</b> oferecendo ajuda de atendente</li>
+            <li style="font-size:12px;color:var(--body);line-height:1.55;font-weight:300;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)"><span class="gain">Opp</span> Relatoria mais estruturada para entender insights de melhorias nas jornadas, evolução de comunicação etc.</li>
+            <li style="font-size:12px;color:var(--body);line-height:1.55;font-weight:300;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)"><span class="gain">Opp</span> Mais integrações para fornecer outros autosserviços relevantes para o cliente final (ex.: troca de senha)</li>
+            <li style="font-size:12px;color:var(--body);line-height:1.55;font-weight:300;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)"><span class="gain">Opp</span> <b style="color:var(--head)">Implementar msg/banner fixo para divulgar coleções e promoções</b> como acontece para Renner</li>
+            <li style="font-size:12px;color:var(--body);line-height:1.55;font-weight:300;padding:8px 0"><span class="gain">Opp</span> <b style="color:var(--head)">Implementar QR Code na loja</b> que leva para o fluxo e o usuário pode consultar cashback disponível</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PILAR 01 · EVOLUÇÃO -->
+<section>
+  <div class="wrap" style="text-align:center">
+    <div class="reveal">
+      <div class="eyebrow b">Pilar 01</div>
+      <h2>Evolução — o que <span class="b">já existe pode ser melhor.</span></h2>
+      <p class="lead" style="margin:0 auto">Melhorias que transformam os fluxos determinísticos atuais em operações mais inteligentes, com menos transbordo, mais retenção e melhor experiência para o cliente.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EVO 1 REMOVIDO -->
+
+<!-- EVO 2 · COPILOT -->
+<section>
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow b">Evolução · Case 02</div>
+      <h2>O especialista de vendas com <span class="b">Copilot de IA</span> ao lado.</h2>
+      <p class="lead">O atendimento consultivo da Renner permanece humano. O Copilot funciona como uma <b>base de conhecimento inteligente</b> que apoia o especialista de vendas e o time CSC — com contexto, histórico e sugestão de resposta em tempo real.</p>
+    </div>
+    <div class="g2 reveal">
+      <div class="card"><div class="ic g">⚡</div><h4>Para o especialista de vendas</h4><p>Resumo do lead qualificado pelo agente, produto de interesse, histórico de compras, sugestão de oferta e condições do cartão Renner — tudo na tela antes de digitar.</p></div>
+      <div class="card"><div class="ic g">🎧</div><h4>Para o time CSC</h4><p>Status do pedido, histórico de contatos anteriores, regras de troca e devolução consultadas em tempo real. Reduz TMA e acelera o onboarding de novos atendentes.</p></div>
+    </div>
+    <div class="metric-tags reveal">
+      <div class="mt-lbl">📊 Métricas impactadas</div>
+      <div class="mt-row">
+        <span class="metric-tag">TMA e TME</span>
+        <span class="metric-tag">Produtividade do time</span>
+        <span class="metric-tag">Aceleração de onboarding</span>
+        <span class="metric-tag">CSAT</span>
+      </div>
+    </div>
+
+    <!-- CASO DE USO 1 · Mockup -->
+    <div class="reveal" style="margin-top:6vh">
+      <div style="text-align:center;max-width:680px;margin:0 auto 4vh">
+        <div class="eyebrow g" style="margin-bottom:14px">Caso de uso 1</div>
+        <h3 style="font-size:clamp(18px,2vw,24px)">Dúvida sobre entrega rápida <span class="g">e transbordo humano.</span></h3>
+        <p class="lead" style="margin:10px auto 0">O bot resolve a triagem (CEP, produto, disponibilidade) e transfere para a vendedora com o contexto pronto — o Copilot já entrega o resumo do lead antes da primeira mensagem.</p>
+      </div>
+
+      <div class="g2" style="align-items:start;gap:28px">
+        <div>
+          <div class="card" style="margin-bottom:10px"><h4 style="font-size:12.5px;display:flex;align-items:center;gap:8px"><span class="badge badge-b" style="margin:0">Texto simples</span></h4><p style="margin-top:6px">Cliente pergunta se uma peça chega no mesmo dia — sem precisar navegar por menus.</p></div>
+          <div class="card" style="margin-bottom:10px"><h4 style="font-size:12.5px;display:flex;align-items:center;gap:8px"><span class="badge badge-b" style="margin:0">Quick reply</span></h4><p style="margin-top:6px">Bot oferece só duas opções claras. Máximo de 3 botões, 20 caracteres cada — boa prática de UX conversacional.</p></div>
+          <div class="card" style="margin-bottom:10px"><h4 style="font-size:12.5px;display:flex;align-items:center;gap:8px"><span class="badge badge-g" style="margin:0">Triagem automática</span></h4><p style="margin-top:6px">Bot coleta CEP e link do produto, consulta disponibilidade e já prepara o transbordo qualificado.</p></div>
+          <div class="card"><h4 style="font-size:12.5px;display:flex;align-items:center;gap:8px"><span class="badge badge-g" style="margin:0">Transbordo com Copilot</span></h4><p style="margin-top:6px">Camila recebe o resumo pronto — produto, preço e disponibilidade — e fecha a venda com link de pagamento direto na conversa.</p></div>
+        </div>
+
+        <div class="phone-demo">
+          <div class="phone-i" id="ph1">
+            <div class="notch"></div>
+            <button class="demo-restart" id="restart1" onclick="startDemo1()">↻</button>
+            <div class="wa-hdr">
+              <span class="back">‹</span>
+              <div class="avatar" id="av1">R</div>
+              <div class="info">
+                <h3 id="hname1">Renner <span class="badge">✓</span></h3>
+                <p id="hsub1">assistente virtual · online</p>
+              </div>
+              <div class="acts">📹 📞 ⋮</div>
+            </div>
+            <div class="wa-chat" id="chat1">
+              <div class="wa-sys" style="align-self:center;display:block;text-align:center;width:fit-content;margin:6px auto">🔒 Mensagens protegidas de ponta a ponta</div>
+            </div>
+            <div class="wa-bar">
+              <span style="font-size:16px;color:#667781">＋</span>
+              <div class="pill">😊 Mensagem</div>
+              <div class="send">🎤</div>
+            </div>
+            <div class="demo-start" id="start1">
+              <button onclick="startDemo1()">▶ Iniciar simulação</button>
+              <p>Clique para ver a conversa completa, com transbordo real para a consultora.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVO 3 · PAYMENTS -->
+<section>
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow b">Evolução · Case 03</div>
+      <h2>Checkout dentro da <span class="b">conversa.</span></h2>
+      <p class="lead">O Blip Payments transforma o WhatsApp em um canal de venda real — Pix, Open Finance e checkout nativo, sem que o cliente precise abrir o site, refazer login ou copiar código. Integra com o <b>gateway que a Renner já utiliza</b>.</p>
+    </div>
+    <div class="g3 reveal">
+      <div class="card"><div class="ic y">💠</div><h4>Pix Copia e Cola</h4><p>Código gerado na hora dentro do chat, com confirmação em tempo real. Zero redirecionamento.</p></div>
+      <div class="card"><div class="ic y">🏦</div><h4>Open Finance</h4><p>Cliente escolhe o banco, autoriza e volta para a conversa. Pagamento ponta a ponta sem sair do app.</p></div>
+      <div class="card"><div class="ic y">📊</div><h4>Conciliação no fluxo</h4><p>Pagamento confirmado, o fluxo avança: confirma pedido, dispara rastreio e libera o próximo passo automaticamente.</p></div>
+    </div>
+    <div class="metric-tags reveal">
+      <div class="mt-lbl">📊 Métricas impactadas</div>
+      <div class="mt-row">
+        <span class="metric-tag">Conversão no WhatsApp</span>
+        <span class="metric-tag">Abandono de carrinho</span>
+        <span class="metric-tag">Menos fricção</span>
+      </div>
+    </div>
+
+    <!-- CASO DE USO 2 · Mockup -->
+    <div class="reveal" style="margin-top:6vh">
+      <div style="text-align:center;max-width:680px;margin:0 auto 4vh">
+        <div class="eyebrow y" style="margin-bottom:14px">Caso de uso 2</div>
+        <h3 style="font-size:clamp(18px,2vw,24px)">Compra 100% automatizada <span class="y">com catálogo, Flows e Pix.</span></h3>
+        <p class="lead" style="margin:10px auto 0">Do "quero comprar roupas" ao pedido pago, sem sair do WhatsApp e sem atendente humano — lista de categorias, carrossel de produtos, formulário nativo (Flows) e Pix Copia e Cola.</p>
+      </div>
+
+      <div class="g2" style="align-items:start;gap:28px">
+        <div>
+          <div class="card" style="margin-bottom:10px"><h4 style="font-size:12.5px;display:flex;align-items:center;gap:8px"><span class="badge badge-y" style="margin:0">Lista (List Message)</span></h4><p style="margin-top:6px">Categorias organizadas em menu nativo — o cliente encontra o caminho de forma intuitiva, sem digitar nada.</p></div>
+          <div class="card" style="margin-bottom:10px"><h4 style="font-size:12.5px;display:flex;align-items:center;gap:8px"><span class="badge badge-y" style="margin:0">Carrossel multi-produto</span></h4><p style="margin-top:6px">Vitrine deslizável com foto, título e preço — o cliente compra direto do card, como em um mini-catálogo.</p></div>
+          <div class="card" style="margin-bottom:10px"><h4 style="font-size:12.5px;display:flex;align-items:center;gap:8px"><span class="badge badge-y" style="margin:0">WhatsApp Flows</span></h4><p style="margin-top:6px">Formulário nativo do WhatsApp para endereço e CPF — sem redirecionar para site, sem perder o cliente no caminho.</p></div>
+          <div class="card"><h4 style="font-size:12.5px;display:flex;align-items:center;gap:8px"><span class="badge badge-g" style="margin:0">Pix Copia e Cola</span></h4><p style="margin-top:6px">Chave gerada na hora, pagamento identificado automaticamente e rastreio enviado — checkout fim a fim dentro do chat.</p></div>
+        </div>
+
+        <div class="phone-demo">
+          <div class="phone-i" id="ph2">
+            <div class="notch"></div>
+            <button class="demo-restart" id="restart2" onclick="startDemo2()">↻</button>
+            <div class="wa-hdr">
+              <span class="back">‹</span>
+              <div class="avatar" id="av2">R</div>
+              <div class="info">
+                <h3>Renner <span class="badge">✓</span></h3>
+                <p>loja virtual · online</p>
+              </div>
+              <div class="acts">📹 📞 ⋮</div>
+            </div>
+            <div class="wa-chat" id="chat2">
+              <div class="wa-sys" style="align-self:center;display:block;text-align:center;width:fit-content;margin:6px auto">🔒 Mensagens protegidas de ponta a ponta</div>
+            </div>
+
+            <!-- Flow Modal — coleta de endereço e CPF -->
+            <div class="flow-overlay" id="flowOverlay2"></div>
+            <div class="flow-modal" id="flowModal2">
+              <div class="fm-head"><span class="cls" id="flowClose2">✕</span><h4>Dados de entrega</h4><span style="width:20px"></span></div>
+              <div class="fm-body">
+                <div style="display:flex;align-items:center;gap:6px;color:var(--wa-header);margin-bottom:12px"><span>🚚</span><span style="font-size:11px;font-weight:700">WhatsApp Flow · Renner</span></div>
+                <h3 style="font-size:16px;font-weight:700;color:#111;margin-bottom:4px">Informe seu endereço</h3>
+                <p style="font-size:11.5px;color:#667781;margin-bottom:14px">Preencha rapidinho para calcularmos o frete e emitirmos a nota fiscal.</p>
+                <label>CEP</label>
+                <input type="text" id="flowCep" placeholder="00000-000" inputmode="numeric">
+                <label>Rua</label>
+                <input type="text" id="flowRua" placeholder="Nome da rua">
+                <label>Número</label>
+                <input type="text" id="flowNum" placeholder="Ex: 120">
+                <label>CPF</label>
+                <input type="text" id="flowCpf" placeholder="000.000.000-00" inputmode="numeric">
+              </div>
+              <div class="fm-foot"><button id="flowSubmit2">Enviar dados</button><p style="text-align:center;font-size:8.5px;color:#aaa;margin-top:6px">🔒 Seus dados estão criptografados</p></div>
+            </div>
+
+            <div class="wa-bar">
+              <span style="font-size:16px;color:#667781">＋</span>
+              <div class="pill">😊 Mensagem</div>
+              <div class="send">🎤</div>
+            </div>
+            <div class="demo-start" id="start2">
+              <button onclick="startDemo2()">▶ Iniciar simulação</button>
+              <p>Clique para ver a jornada de compra completa — do catálogo ao Pix.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVOLUÇÃO IMPACTO -->
+<section>
+  <div class="wrap" style="text-align:center">
+    <div class="reveal">
+      <div class="eyebrow b">Pilar 01 · Resumo de impacto</div>
+      <h2>O que a <span class="b">Evolução</span> entrega para a operação</h2>
+      <p class="lead" style="margin:0 auto">Os cases de evolução atacam os maiores gargalos da operação atual: o tempo gasto em cada atendimento e a fricção que impede a venda de acontecer dentro da conversa.</p>
+    </div>
+    <div class="impact-grid reveal" style="grid-template-columns:repeat(2,1fr)">
+      <div class="impact-card"><div class="imp-ico">🧠</div><h4>Copilot</h4><p>Base de conhecimento que empodera o humano — produtividade, onboarding mais rápido, menos TMA.</p></div>
+      <div class="impact-card"><div class="imp-ico">💳</div><h4>Blip Payments</h4><p>Checkout nativo no WhatsApp. Menos abandono, mais conversão, menos fricção.</p></div>
+    </div>
+    <div class="impact-metrics reveal">
+      <div class="imp-metric"><div class="im-arrow">📉</div><div><div class="im-label">TMA e TME</div><div class="im-sub">Atendimento mais rápido</div></div></div>
+      <div class="imp-metric"><div class="im-arrow">📈</div><div><div class="im-label">Contexto no transbordo</div><div class="im-sub">Humano recebe informação rica</div></div></div>
+      <div class="imp-metric"><div class="im-arrow">📈</div><div><div class="im-label">Conversão</div><div class="im-sub">Checkout sem sair do app</div></div></div>
+      <div class="imp-metric"><div class="im-arrow">📉</div><div><div class="im-label">Transbordo</div><div class="im-sub">IA resolve antes do humano</div></div></div>
+      <div class="imp-metric"><div class="im-arrow">📈</div><div><div class="im-label">CSAT</div><div class="im-sub">Experiência mais fluida</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PILAR 2 · INOVAÇÃO -->
+<section>
+  <div class="wrap" style="text-align:center">
+    <div class="reveal">
+      <div class="eyebrow y">Pilar 02</div>
+      <h2>Inovação — <span class="y">jornadas que ainda não existem.</span></h2>
+      <p class="lead" style="margin:0 auto">Novos casos de uso que diferenciam a Renner no mercado e abrem novas frentes de conversão pelo WhatsApp.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INOV 1 · PERSONAL STYLIST + CASE C&A -->
+<section>
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow y">Inovação · Case 01</div>
+      <h2>Um <span class="y">Personal Stylist de IA</span> dentro do WhatsApp.</h2>
+      <p class="lead">O bot entende o que o cliente busca — "preciso de um look pra um casamento informal" — e traz um carrossel com opções curadas do catálogo Renner, com foto, preço e botão de compra. Não é menu: é <b>conversa consultiva automatizada</b>.</p>
+    </div>
+    <div class="g2 reveal">
+      <div>
+        <div class="card" style="margin-bottom:16px"><div class="ic y">👗</div><h4>Curadoria por IA</h4><p>O agente entende contexto, ocasião, estilo e orçamento. Sugere combinações e cross-sell inteligente — como faria um consultor de loja, mas 24/7 e sem ocupar atendente.</p></div>
+        <div class="card"><div class="ic y">💳</div><h4>Da conversa ao pagamento</h4><p>O cliente escolhe, o bot monta o carrinho e o pagamento acontece dentro do WhatsApp via Blip Payments. Sem redirecionamento, sem login.</p></div>
+      </div>
+      <div class="phone reveal" style="position:relative">
+        <div class="ph-status"><span>9:41</span><span>📶 🔋</span></div>
+        <div class="ph-head"><div class="ph-av">R</div><div><div class="ph-name">Renner · Personal Stylist ✓</div><div class="ph-sub">especialista em moda · online</div></div></div>
+        <div class="ph-body">
+          <div class="bub out">Oi! Preciso de um look pra um casamento informal 👰</div>
+          <div class="bub in">Oi, Amanda! 😊 Casamento informal pede algo elegante mas confortável. Separei duas opções que estão fazendo sucesso:<span class="t">14:02</span></div>
+          <div class="bub in"><b>1.</b> Vestido Midi Floral — R$ 189,90<br><b>2.</b> Conjunto Linho Off-White — R$ 249,90<br><br>Quer ver fotos ou já escolher? 💛<span class="t">14:02</span></div>
+          <div class="bub out">Gostei do vestido! Quero esse 😍<span class="t">14:03</span></div>
+          <div class="bub in">Ótima escolha! ✨ Adicionei ao carrinho.<br>Total: <b>R$ 189,90</b><br>Frete: <b>Grátis</b><br><br>💠 Pix ou 🏦 Open Finance?<span class="t">14:03</span></div>
+        </div>
+        <div class="ph-input"><div class="field">Mensagem</div></div>
+      </div>
+    </div>
+
+    <!-- CASE C&A -->
+    <div class="reveal" style="margin-top:6vh">
+      <div class="mres y" style="padding:28px 26px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--pz);margin-bottom:14px">📌 Case de referência · C&A</div>
+        <h3 style="font-size:clamp(18px,2vw,26px);line-height:1.2;margin-bottom:14px;color:var(--head)">De Canal de Comunicação a Máquina de Vendas: Como o "Comprador Pessoal" com GenAI gerou R$ 7 milhões para a C&A no WhatsApp.</h3>
+        <p class="lead" style="margin-bottom:20px;max-width:100%">A C&A implementou um agente de IA estilo Personal Shopper no WhatsApp usando a plataforma Blip. O resultado foi uma máquina de vendas conversacional que superou todas as metas estabelecidas para o período.</p>
+        <div class="g3" style="margin-top:0">
+          <div class="card" style="text-align:center;border-color:rgba(255,198,41,.35)"><div style="font-size:28px;font-weight:900;color:var(--pz)">R$ 7 Mi</div><p style="margin-top:6px">receita influenciada</p></div>
+          <div class="card" style="text-align:center;border-color:rgba(108,203,149,.35)"><div style="font-size:28px;font-weight:900;color:var(--verde)">+42%</div><p style="margin-top:6px">acima da meta de receita</p></div>
+          <div class="card" style="text-align:center;border-color:rgba(0,150,250,.35)"><div style="font-size:28px;font-weight:900;color:var(--blip)">+26,4%</div><p style="margin-top:6px">crescimento na conversão</p></div>
+        </div>
+        <div class="g3" style="margin-top:14px">
+          <div class="card" style="text-align:center;border-color:rgba(255,198,41,.35)"><div style="font-size:28px;font-weight:900;color:var(--pz)">32.646</div><p style="margin-top:6px">vendas concretizadas</p></div>
+          <div class="card" style="text-align:center;border-color:rgba(108,203,149,.35)"><div style="font-size:28px;font-weight:900;color:var(--verde)">+47%</div><p style="margin-top:6px">acima da meta de volume</p></div>
+          <div class="card" style="text-align:center;border-color:rgba(0,150,250,.35)"><div style="font-size:28px;font-weight:900;color:var(--blip)">R$ 215,06</div><p style="margin-top:6px">ticket médio saudável</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="metric-tags reveal">
+      <div class="mt-lbl">📊 Métricas impactadas</div>
+      <div class="mt-row">
+        <span class="metric-tag">Novas vendas pelo canal</span>
+        <span class="metric-tag">Conversão no WhatsApp</span>
+        <span class="metric-tag">Ticket médio</span>
+        <span class="metric-tag">Engajamento</span>
+        <span class="metric-tag">Receita influenciada</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INOV 2 · BUSCA POR IMAGEM -->
+<section>
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow y">Inovação · Case 02</div>
+      <h2>O cliente manda uma foto, a IA acha a <span class="y">peça certa.</span></h2>
+      <p class="lead">O cliente viu uma roupa no Instagram, na rua ou numa revista. Manda a foto no WhatsApp e a IA identifica a peça mais parecida no catálogo da Renner — com cross-sell em carrossel e checkout nativo.</p>
+    </div>
+    <div class="g3 reveal">
+      <div class="card"><div class="ic y">📷</div><h4>Reconhecimento visual</h4><p>Visão computacional identifica tipo de peça, cor, textura e estilo. Busca no catálogo as opções mais próximas.</p></div>
+      <div class="card"><div class="ic y">🛍️</div><h4>Cross-sell automático</h4><p>Após identificar a peça, o bot sugere complementos que combinam — em carrossel visual — aumentando o ticket sem esforço humano.</p></div>
+      <div class="card"><div class="ic y">💳</div><h4>Foto → Pagamento</h4><p>Da foto ao checkout em uma conversa. O cliente não precisa saber o nome da peça para comprar.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- INOV 3 · NOTIFICAÇÃO INTELIGENTE -->
+<section>
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow y">Inovação · Case 03</div>
+      <h2>Notificação ativa que <span class="y">vira conversa.</span></h2>
+      <p class="lead">A Renner já dispara notificações de logística (pedido processado, saiu para entrega). O próximo passo é transformar cada notificação em uma <b>oportunidade de venda e engajamento</b> — com recompra, NPS e recomendação pós-compra.</p>
+    </div>
+    <div class="g2 reveal">
+      <div class="card"><div class="ic y">📦</div><h4>Pós-entrega conversacional</h4><p>"Seu pedido chegou! Gostou? Veja peças que combinam com o que você comprou." Cada notificação de logística abre uma janela de recompra.</p></div>
+      <div class="card"><div class="ic y">🔔</div><h4>Campanhas segmentadas por IA</h4><p>Disparo inteligente baseado em histórico de compras, sazonalidade e comportamento. Não é blast genérico — é mensagem personalizada que converte.</p></div>
+    </div>
+    <div class="metric-tags reveal">
+      <div class="mt-lbl">📊 Métricas impactadas</div>
+      <div class="mt-row">
+        <span class="metric-tag">Recompra</span>
+        <span class="metric-tag">LTV do cliente</span>
+        <span class="metric-tag">Engajamento pós-venda</span>
+        <span class="metric-tag">Aproveitamento de base</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INOVAÇÃO IMPACTO -->
+<section>
+  <div class="wrap" style="text-align:center">
+    <div class="reveal">
+      <div class="eyebrow y">Pilar 02 · Resumo de impacto</div>
+      <h2>O que a <span class="y">Inovação</span> abre de novo para a operação</h2>
+    </div>
+    <div class="impact-grid reveal">
+      <div class="impact-card"><div class="imp-ico">👗</div><h4>Personal Stylist</h4><p>Bot consultor de moda que vende 24/7. Nova frente de receita 100% automatizada pelo WhatsApp.</p></div>
+      <div class="impact-card"><div class="imp-ico">📷</div><h4>Busca por imagem</h4><p>O cliente manda foto e compra sem saber o nome da peça. Cross-sell automático aumenta o ticket.</p></div>
+      <div class="impact-card"><div class="imp-ico">🔔</div><h4>Notificação → Venda</h4><p>Cada notificação de logística vira oportunidade de recompra e engajamento pós-venda.</p></div>
+    </div>
+    <div class="impact-metrics reveal">
+      <div class="imp-metric"><div class="im-arrow">📈</div><div><div class="im-label">Novas vendas pelo canal</div><div class="im-sub">Jornadas que não existiam</div></div></div>
+      <div class="imp-metric"><div class="im-arrow">📈</div><div><div class="im-label">Ticket médio</div><div class="im-sub">Cross-sell e curadoria por IA</div></div></div>
+      <div class="imp-metric"><div class="im-arrow">📈</div><div><div class="im-label">Recompra</div><div class="im-sub">Pós-venda conversacional</div></div></div>
+      <div class="imp-metric"><div class="im-arrow">🆕</div><div><div class="im-label">Diferenciação</div><div class="im-sub">Experiências únicas no varejo</div></div></div>
+    </div>
   </div>
 </section>
 </div>
@@ -692,6 +1185,218 @@ function showNode(i){
 }
 window.showNode=showNode;
 showNode(0);
+
+/* ═══════════════════════════════════════
+   INTERACTIVE WHATSAPP DEMOS (Dell MPP engine)
+═══════════════════════════════════════ */
+function delay(ms){return new Promise(function(r){setTimeout(r,ms)})}
+function getTime(){var n=new Date();return String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')}
+
+function makeEngine(chatEl){
+  var typingEl=null;
+  function scrollChat(){chatEl.scrollTo({top:chatEl.scrollHeight,behavior:'smooth'})}
+  function showTyping(){
+    if(typingEl)return;
+    typingEl=document.createElement('div');
+    typingEl.className='msg in';
+    typingEl.innerHTML='<div class="typing"><span></span><span></span><span></span></div>';
+    chatEl.appendChild(typingEl);scrollChat();
+  }
+  function hideTyping(){if(typingEl){typingEl.remove();typingEl=null}}
+  function addMsg(html,sender){
+    hideTyping();
+    var d=document.createElement('div');
+    d.className='msg '+(sender==='bot'?'in':'out');
+    var ts=sender==='bot'?getTime():getTime()+' <span class="chk">✓✓</span>';
+    d.innerHTML='<span>'+html+'</span><span class="ts">'+ts+'</span>';
+    chatEl.appendChild(d);scrollChat();
+    return d;
+  }
+  function botSay(html,wait){
+    wait=wait||1100;
+    showTyping();
+    return delay(wait).then(function(){addMsg(html,'bot')});
+  }
+  function addButtons(btns){
+    var w=document.createElement('div');w.className='wa-btns';
+    btns.forEach(function(b){
+      var btn=document.createElement('button');btn.textContent=b.text;
+      btn.onclick=function(){w.classList.add('used');b.fn()};
+      w.appendChild(btn);
+    });
+    chatEl.appendChild(w);scrollChat();
+    return w;
+  }
+  function addNode(el){chatEl.appendChild(el);scrollChat()}
+  return {addMsg:addMsg,botSay:botSay,addButtons:addButtons,addNode:addNode,scrollChat:scrollChat};
+}
+
+var SYS_HTML='<div class="wa-sys" style="align-self:center;display:block;text-align:center;width:fit-content;margin:6px auto">🔒 Mensagens protegidas de ponta a ponta</div>';
+
+/* ---------- DEMO 1 · Entrega rápida + transbordo ---------- */
+var e1=null;
+function resetChat1(){
+  var chat=document.getElementById('chat1');
+  chat.innerHTML=SYS_HTML;
+  document.getElementById('av1').textContent='R';
+  document.getElementById('av1').style.background='';
+  document.getElementById('hname1').innerHTML='Renner <span class="badge">✓</span>';
+  document.getElementById('hsub1').textContent='assistente virtual · online';
+  e1=makeEngine(chat);
+}
+window.startDemo1=function(){
+  document.getElementById('start1').classList.add('hide');
+  document.getElementById('restart1').classList.add('show');
+  resetChat1();
+  e1.addMsg('Oi! Vi uma jaqueta no site de vocês e queria saber se eu comprar agora, chega hoje ainda? Moro em SP.','user');
+  e1.botSay("Olá! 💖 Que bom ter você por aqui. Conseguimos entregar no mesmo dia para várias regiões! 🛵💨<br><br>Para eu verificar a disponibilidade para você, preciso de duas informações rápidas:<br>1️⃣ O seu CEP<br>2️⃣ O link da peça no nosso site<br><br>Você tem essas informações em mãos?",1400)
+    .then(function(){e1.addButtons([{text:'✅ Sim, tenho tudo!',fn:d1_help_or_go},{text:'🙋 Preciso de ajuda',fn:d1_help}])});
+};
+function d1_help(){
+  e1.addMsg('Preciso de ajuda','user');
+  e1.botSay("Sem problemas! Me chama por aqui quando tiver o CEP e o link em mãos que eu continuo te ajudando. 😉",1000);
+}
+function d1_help_or_go(){
+  e1.addMsg('Sim, tenho tudo!','user');
+  e1.botSay("Perfeito! Pode me enviar o seu CEP e o link da jaqueta aqui mesmo na conversa, por favor? 👇",1000)
+    .then(function(){e1.addButtons([{text:'📍 Enviar CEP e link do produto',fn:d1_sendinfo}])});
+}
+function d1_sendinfo(){
+  e1.addMsg('01310-100<br>renner.com.br/jaqueta-puffer-preta','user');
+  e1.botSay("Consultando aqui... ⏳",900)
+    .then(function(){return e1.botSay("Boas notícias! 🎉 Entregamos hoje mesmo no seu endereço via Motoboy Express.<br><br>Vou transferir você agora mesmo para uma de nossas consultoras de moda finalizar o seu pedido bem rapidinho. Só um instante! ✨",1600)})
+    .then(function(){return delay(700)})
+    .then(function(){
+      var lbl=document.createElement('div');lbl.innerHTML=SYS_HTML;e1.addNode(lbl.firstChild);
+      document.getElementById('av1').textContent='C';
+      document.getElementById('av1').style.background='#0a7d3c';
+      document.getElementById('hname1').innerHTML='Camila · Consultora';
+      document.getElementById('hsub1').textContent='Blip Desk + Copilot';
+      return e1.botSay("Oie! Aqui é a Camila, vendedora da Renner. Tudo bem? 🥰<br><br>Já vi aqui a Jaqueta Puffer Preta que você escolheu. Excelente escolha para o clima de hoje! O total com a entrega expressa fica R$ 259,90.<br><br>Para finalizarmos e eu já chamar o motoboy, segue o link de pagamento seguro. Assim que pagar, me avisa! 🛍️",1700);
+    })
+    .then(function(){
+      var media=document.createElement('div');media.className='wa-media';media.style.cssText='background:linear-gradient(135deg,#eef3ff,#dce8ff);color:#1968F0';media.textContent='🔗';
+      e1.addNode(media);
+      e1.addMsg('🔗 renner.com.br/pagamento/seguro','bot');
+      e1.addButtons([{text:'💳 Simular pagamento',fn:d1_pay}]);
+    });
+}
+function d1_pay(){
+  e1.addMsg('Pago!','user');
+  e1.botSay("Pagamento confirmadíssimo! ✅<br><br>Seu pedido já está sendo embalado com muito carinho. O motoboy chega no seu endereço até as 18h de hoje.<br><br>Qualquer dúvida, é só me chamar. Muito obrigada por escolher a Renner e arrase com sua jaqueta nova! 💖🧥",1700)
+    .then(function(){
+      var media=document.createElement('div');media.className='wa-media';media.style.cssText='background:linear-gradient(135deg,var(--renner-lo),rgba(200,16,46,.22))';media.textContent='🧥💕';
+      e1.addNode(media);
+      return delay(600);
+    })
+    .then(function(){e1.addMsg('❤️','user')});
+}
+
+/* ---------- DEMO 2 · Compra automatizada + Flows + Pix ---------- */
+var e2=null;
+function resetChat2(){
+  var chat=document.getElementById('chat2');
+  chat.innerHTML=SYS_HTML;
+  e2=makeEngine(chat);
+}
+window.startDemo2=function(){
+  document.getElementById('start2').classList.add('hide');
+  document.getElementById('restart2').classList.add('show');
+  resetChat2();
+  e2.addMsg('Olá, quero comprar roupas.','user');
+  e2.botSay("Olá! Bem-vindo(a) à nossa loja virtual no WhatsApp. 🛍️<br><br>O que você está buscando hoje? Clique no menu abaixo para ver nossas categorias.",1300)
+    .then(function(){e2.addButtons([{text:'📋 Ver Categorias',fn:d2_showlist}])});
+};
+function d2_showlist(){
+  e2.addMsg('Ver Categorias','user');
+  delay(500).then(function(){
+    var menu=document.createElement('div');menu.className='wa-list-menu';
+    menu.innerHTML='<div class="lm-hd">📋 Categorias</div>';
+    ['Lançamentos','Promoções','Moda Feminina','Moda Masculina','Acessórios'].forEach(function(cat){
+      var b=document.createElement('button');b.textContent=cat;
+      b.onclick=function(){
+        menu.querySelectorAll('button').forEach(function(x){x.disabled=true;x.style.opacity=.45});
+        d2_carousel(cat);
+      };
+      menu.appendChild(b);
+    });
+    e2.addNode(menu);
+  });
+}
+function d2_carousel(cat){
+  e2.addMsg(cat,'user');
+  e2.botSay("Ótima escolha! Aqui estão os nossos lançamentos da semana. Deslize para o lado para ver todos! ✨",1300)
+    .then(function(){
+      var wrap=document.createElement('div');wrap.className='wa-carousel';
+      var items=[
+        {emoji:'👗',bg:'linear-gradient(135deg,#ffe1ea,#ffc6d8)',title:'Vestido Midi Floral',price:'R$ 149,90'},
+        {emoji:'🧥',bg:'linear-gradient(135deg,#e1ecff,#c7dbff)',title:'Jaqueta Jeans Oversized',price:'R$ 219,90'},
+        {emoji:'👜',bg:'linear-gradient(135deg,#fff2cf,#ffe9a8)',title:'Bolsa Tote Palha',price:'R$ 99,90'}
+      ];
+      items.forEach(function(it){
+        var card=document.createElement('div');card.className='wa-card';
+        card.innerHTML='<div class="wa-card-img" style="background:'+it.bg+'">'+it.emoji+'</div>'+
+          '<div class="wa-card-body"><div class="wa-card-title">'+it.title+'</div><div class="wa-card-price">'+it.price+'</div>'+
+          '<button class="wa-card-btn" type="button">Comprar Agora</button><button class="wa-card-btn" type="button">Ver Detalhes</button></div>';
+        var buyBtn=card.querySelectorAll('.wa-card-btn')[0];
+        buyBtn.onclick=function(){
+          wrap.querySelectorAll('button').forEach(function(x){x.disabled=true;x.style.opacity=.45});
+          d2_cart(it.title,it.price);
+        };
+        wrap.appendChild(card);
+      });
+      e2.addNode(wrap);
+    });
+}
+function d2_cart(title,price){
+  e2.addMsg('Comprar Agora — '+title,'user');
+  e2.botSay('Adicionado ao carrinho! 🛒 '+title+' - '+price+'.<br><br>Para calcularmos o frete e emitirmos sua nota fiscal, preencha rapidamente seus dados de entrega clicando no botão abaixo:',1300)
+    .then(function(){
+      var w=document.createElement('div');w.className='wa-btns';
+      var btn=document.createElement('button');btn.textContent='📝 Informar Endereço';btn.style.color='var(--wa-header)';btn.style.fontWeight='700';
+      btn.onclick=function(){w.classList.add('used');openFlow2()};
+      w.appendChild(btn);e2.addNode(w);
+    });
+}
+
+var flowOverlay2=document.getElementById('flowOverlay2');
+var flowModal2=document.getElementById('flowModal2');
+document.getElementById('flowClose2').onclick=closeFlow2;
+flowOverlay2.onclick=closeFlow2;
+document.getElementById('flowSubmit2').onclick=d2_submitFlow;
+function openFlow2(){flowOverlay2.classList.add('open');flowModal2.classList.add('open')}
+function closeFlow2(){flowOverlay2.classList.remove('open');flowModal2.classList.remove('open')}
+
+function d2_submitFlow(){
+  closeFlow2();
+  e2.addMsg('📋 Endereço enviado via formulário','user');
+  e2.botSay('Tudo certo com o endereço! 📍 O frete para sua região fica R$ 10,00 (Total: R$ 159,90).<br><br>Para finalizar sua compra via PIX (aprovação imediata), toque no botão abaixo para gerar a chave:',1300)
+    .then(function(){e2.addButtons([{text:'💳 Gerar Chave PIX',fn:d2_pix},{text:'Cancelar Pedido',fn:d2_cancel}])});
+}
+function d2_cancel(){
+  e2.addMsg('Cancelar Pedido','user');
+  e2.botSay('Sem problemas! Seu carrinho foi salvo. Quando quiser retomar, é só me chamar por aqui. 👋',1200);
+}
+function d2_pix(){
+  e2.addMsg('Gerar Chave PIX','user');
+  e2.botSay('Aqui está sua chave PIX Copia e Cola! Ela é válida por 15 minutos. ⏱️<br><br>Assim que você realizar o pagamento, nosso sistema identificará automaticamente e te enviará o código de rastreio.',1300)
+    .then(function(){
+      var code=document.createElement('div');code.className='wa-code';
+      code.textContent='00020126580014BR.GOV.BCB.PIX0136renner-pay-8f21ab...5204000053039865406159.905802BR5909RENNERSA6009SAOPAULO62070503***6304A1B2';
+      e2.addNode(code);
+      var w=document.createElement('div');w.className='wa-btns';
+      var btn=document.createElement('button');btn.textContent='✅ Simular pagamento';
+      btn.onclick=function(){w.classList.add('used');d2_confirm()};
+      w.appendChild(btn);e2.addNode(w);
+    });
+}
+function d2_confirm(){
+  e2.botSay('🎉 Uhuuul! Pagamento recebido com sucesso!<br><br>Seu pedido já está sendo preparado. Seu número de rastreio é o BR987654321.<br><br>Obrigado por comprar com a gente! Quando o pacote sair para entrega, te avisaremos por aqui. 🥰',1700)
+    .then(function(){
+      var media=document.createElement('div');media.className='wa-media';media.style.cssText='background:linear-gradient(135deg,var(--pz-lo),rgba(255,198,41,.3))';media.textContent='🎁';
+      e2.addNode(media);
+    });
+}
 
 })();
 </script>
